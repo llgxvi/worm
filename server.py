@@ -116,7 +116,8 @@ while True:
      
       break
 
-    if data == 'exit':
+    # client's respond msg to exit cmd
+    if data == 'exit ok':
       active = False
       pr('Exit.')
 
