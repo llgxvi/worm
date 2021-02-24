@@ -3,27 +3,8 @@
 import os
 import sys
 import socket
-from Crypto.Cipher import AES
-from base64 import b64encode, b64decode
-
-Encode = lambda c, x: b64encode(c.encrypt(x))
-Decode = lambda c, x: c.decrypt(b64decode(x))
-
-def pr(s):
-  print(s + '\n')
-
-def get_cipher():
-  key = b'xxxx cccc vvvv b'
-  iv  = b'gggg hhhh jjjj k'
-  
-  cipher = AES.new(key, AES.MODE_CFB, iv)
-
-  return cipher
-
-# clear
-if os.name == 'posix': s = 'clear' # linux
-if os.name == 'nt':    s = 'cls'   # windows
-clear = lambda: os.system(s)
+from common import pr, clear, get_cipher
+from common import Encode, Decode, Send, Receive
 
 # server socket
 from socket import AF_INET, SOCK_STREAM
@@ -35,23 +16,6 @@ server.listen()
 socks = []
 clients = []
 active = False
-
-# data: cmd/data
-def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
-  sock.sendall(Encode(cipher, data + end))
-
-def Receive(sock, end='EOFEOFEOFEOFEOFX'):
-  data = ''
-
-  d = sock.recv(1024)
-  while(d):
-    data += Decode(cipher, d)
-    if data.endswith(end):
-      break
-    else:
-      d = sock.recv(1024)
-
-  return data[:-len(end)]
 
 def download(sock, file):
     try:
