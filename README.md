@@ -5,3 +5,6 @@ https://docs.python.org/3/library/socket.html
 https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 
 `pip3 install pycrypto`
+
+### subprocess
+https://docs.python.org/3/library/subprocess.html#popen-constructor
