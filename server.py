@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 import sys
 import socket
 from common import pr, clear, get_cipher
@@ -25,7 +24,6 @@ def download(sock, file):
         return
 
     Send(sock, 'download ' + file)
-
     pr('Downloading ' + file)
 
     d = Receive(sock)
@@ -40,7 +38,6 @@ def upload(sock, file):
         return
 
     Send(sock, 'upload ' + file)
-
     pr('Uploading ' + file)
 
     while True:
