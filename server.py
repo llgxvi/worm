@@ -89,6 +89,7 @@ while True:
       f = open(nc.split(' ')[1], 'rb')
       d = f.read()
       Send(sock, d, '')
+      Send(sock, '')
       f.close()
 
     Send(sock, nc)
