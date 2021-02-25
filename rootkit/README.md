@@ -1,13 +1,13 @@
+### insert module
+`insmod rooty.ko && dmesg | grep rooty`
+
+### remove module
+`rmmod rooty.ko && dmesg | grep rooty`
+
+### other
 ```
-insmod rooty.ko
-dmesg | grep rooty
-
-rmmod rooty.ko
-dmesg | grep rooty
-
-# /proc/modules
-# /sys/module
-
-grep rooty /proc/modules
-
+/proc/modules
+/sys/module
 ```
+
+`grep rooty /proc/modules`
