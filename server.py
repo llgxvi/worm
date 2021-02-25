@@ -72,7 +72,6 @@ while True:
 
     if data == 'exit ok':
       active = False
-      pr('Exit.')
       close(sock, client)
       break
 
