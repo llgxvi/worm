@@ -18,15 +18,6 @@ socks = []
 clients = []
 active = False
 
-def upload(sock, file):
-  Send(sock, 'upload ' + file)
-  pr('Uploading ' + file)
-
-  f = open(file, 'rb')
-  d = f.read()
-  Send(sock, d, '')
-  f.close()
-
 def close(sock, client):
   sock.close()
   socks.remove(sock)
@@ -34,16 +25,13 @@ def close(sock, client):
   refresh()
 
 def refresh():
-  clear()
   pr('Listening for clients...')
 
-  l = len(clients)
-
-  if l == 0:
+  if not clients:
     pr('...')
     return
 
-  for i in range(0, l):
+  for i in range(0, len(clients)):
     pr('Client %d: %s' % (i, clients[i]))
 
   pr('Press Ctrl+C to interact with client.')
@@ -98,6 +86,9 @@ while True:
       f.close()
 
     elif nc.startswith('upload '):
-      upload(sock, nc.split(' ')[1])
+      f = open(nc.split(' ')[1], 'rb')
+      d = f.read()
+      Send(sock, d, '')
+      f.close()
 
     Send(sock, nc)
