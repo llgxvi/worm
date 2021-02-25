@@ -29,7 +29,6 @@ def close(sock, client):
   refresh()
 
 def refresh():
-  clear()
   pr('Listening for clients...')
 
   if not clients:
@@ -81,7 +80,6 @@ while True:
       f.write(data.encode())
       f.close()
       dl_fn = ''
-      Send(sock, 'cd')
 
     if data == 'exit ok':
       active = False
