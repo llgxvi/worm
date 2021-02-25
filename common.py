@@ -10,8 +10,8 @@ def pr(s):
 
 def get_cipher():
   # TODO
-  key = b'xxxx cccc vvvv b'
-  iv  = b'gggg hhhh jjjj k'
+  key = 'xxxx cccc vvvv b'
+  iv  = 'gggg hhhh jjjj k'
   cipher = AES.new(key, AES.MODE_CFB, iv)
   return cipher
 
@@ -41,3 +41,9 @@ def Receive(sock, end='EOFEOFEOFEOFEOFX'):
       d = sock.recv(1024)
 
   return data[:-len(end)]
+
+if __name__ == '__main__':
+  a = Encode('abc')
+  b = Decode(a)
+  pr(a)
+  pr(b)
