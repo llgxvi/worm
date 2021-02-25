@@ -23,12 +23,7 @@ def download(sock, file):
   Send(sock, 'download ' + file)
   pr('Downloading ' + file)
 
-  try:
-    f = open(file, 'wb')
-  except IOError:
-    pr('Error opening file.')
-    return
-
+  f = open(file, 'wb')
   d = Receive(sock)
   f.write(d)
   f.close()
@@ -38,23 +33,16 @@ def upload(sock, file):
   Send(sock, 'upload ' + file)
   pr('Uploading ' + file)
 
-  try:
-    f = open(file, 'rb')
-  except IOError:
-    pr('Error opening file.')
-    return
-
+  f = open(file, 'rb')
   while True:
     d = f.read()
     if not d: 
       break
     Send(sock, d, '')
-
   f.close()
 
 def refresh():
   clear()
-
   pr('Listening for clients...')
 
   l = len(clients)
