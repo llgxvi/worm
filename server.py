@@ -18,15 +18,6 @@ socks = []
 clients = []
 active = False
 
-def download(sock, file):
-  Send(sock, 'download ' + file)
-  pr('Downloading ' + file)
-
-  f = open(file, 'wb')
-  d = Receive(sock)
-  f.write(d)
-  f.close()
-
 def upload(sock, file):
   Send(sock, 'upload ' + file)
   pr('Uploading ' + file)
@@ -91,22 +82,22 @@ while True:
       close(sock, client)
       break
 
-    # client's respond msg to exit cmd
     if data == 'exit ok':
       active = False
       pr('Exit.')
       close(sock, client)
       break
 
-    elif data != '':
-      sys.stdout.write(data)
-      nc = raw_input() # next cmd
+    sys.stdout.write(data)
+    nc = raw_input() # next cmd
 
-      if nc.startswith('download '):
-        download(sock, nc.split(' ')[1])
+    if nc.startswith('download '):
+      f = open(nc.split(' ')[1], 'wb')
+      d = Receive(sock)
+      f.write(d)
+      f.close()
 
-      elif nc.startswith('upload '):
-        upload(sock, nc.split(' ')[1])
+    elif nc.startswith('upload '):
+      upload(sock, nc.split(' ')[1])
 
-      elif nc != '':
-        Send(sock, nc)
+    Send(sock, nc)
