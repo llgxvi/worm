@@ -1,6 +1,10 @@
-Obj-m := rooty.o
+CONFIG_MODULE_SIG=n
+CONFIG_MODULE_SIG_ALL=n
 
-KERNEL_DIR=/lib/modules/$(uname -r)/build
+obj-m += rooty.o
 
 all:
-  $(MAKE) -C $(KERNEL_DIR) M=$(PWD)
+        make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+        make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
