@@ -10,8 +10,8 @@ from urllib.request import urlopen
 from common import pr, clear, get_cipher
 from common import Encode, Decode, Send, Receive
 
-HOST = '47.240.60.51'
-PORT = 443
+HOST = '127.0.0.1'
+PORT = 2000
 
 active = False
 sock = None
@@ -85,7 +85,7 @@ while True:
 
     cipher = get_cipher()
 
-    data = Receive(s)
+    data = Receive(sock)
 
     if data == 'activate':
       active = True
