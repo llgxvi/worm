@@ -40,12 +40,15 @@ def Download(sock, file):
 
 # download from url (unencrypted)
 def Downhttp(sock, url):
-  filename = url.split('/')[-1].split('#')[0].split('?')[0]
-  g = open(filename, 'wb')
-  u = urlopen(url)
-  g.write(u.read())
-  g.close()
-  return "Finished download."
+  fn = url.split('/')[-1]
+  fn = fn.split('?')[0]
+  fn = fn.split('#')[0]
+
+  f = open(fn, 'wb')
+  f.write(urlopen(url).read())
+  f.close()
+
+  return "Download finished 🍺"
 
 # persistence
 def Persist(sock, redown=None, newdir=None):
