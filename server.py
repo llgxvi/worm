@@ -74,7 +74,7 @@ while True:
 
     if dl_fn:
       try:
-        f = open(dl_fn, 'wb')
+        f = open(dl_fn, 'w+b')
       except IOError:
         print('Error opening file')
       f.write(data.encode())
