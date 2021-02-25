@@ -9,10 +9,5 @@ dmesg | grep rooty
 # /sys/module
 
 grep rooty /proc/modules
-ls /sys/modules | grep rooty
-modinfo rooty
-modprobe -c | grep rooty
-grep rooty /proc/kallsyms 
-
 
 ```
