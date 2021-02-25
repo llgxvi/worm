@@ -24,6 +24,7 @@ clear = lambda: os.system(s)
 
 # TODO
 cipher = get_cipher()
+decipher = get_cipher()
 
 # data: cmd/data
 def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
@@ -43,7 +44,7 @@ def Receive(sock, end='EOFEOFEOFEOFEOFX'):
   return data[:-len(end)]
 
 if __name__ == '__main__':
-  a = Encode('abc')
-  b = Decode(a)
+  a = Encode(cipher, 'abc')
+  b = Decode(decipher, a)
   pr(a)
   pr(b)
