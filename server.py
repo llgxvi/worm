@@ -12,6 +12,7 @@ from common import Encode, Decode, Send, Receive
 server = socket.socket(AF_INET, SOCK_STREAM)
 server.bind(('', 2000))
 server.listen()
+server.settimeout(10)
 
 # client sockets
 socks = []
@@ -38,7 +39,6 @@ def refresh():
 
 while True:
   refresh()
-  server.settimeout(10)
   try:
     try:
       s, a = server.accept()
