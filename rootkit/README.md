@@ -2,7 +2,7 @@
 `insmod rooty.ko`
 
 ### remove module
-`rmmod rooty.ko`
+`rmmod rooty`
 
 ### other
 ```
