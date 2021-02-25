@@ -45,4 +45,4 @@ def Receive(sock, end='EOFEOFEOFEOFEOFX'):
     else:
       d = sock.recv(1024)
 
-  return ''.join(data[:-1])
+  return ''.join(data).split(end)[0]
