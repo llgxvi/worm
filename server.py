@@ -80,13 +80,19 @@ while True:
     nc = input() # next cmd
 
     if nc.startswith('download '):
-      f = open(nc.split(' ')[1], 'wb')
+      try:
+        f = open(nc.split(' ')[1], 'wb')
+      except IOError:
+        return 'Error opening file' 
       d = Receive(sock)
       f.write(d)
       f.close()
 
     elif nc.startswith('upload '):
-      f = open(nc.split(' ')[1], 'rb')
+      try:
+        f = open(nc.split(' ')[1], 'rb')
+      except IOError:
+        return 'Error opening file'
       d = f.read()
       Send(sock, d, '')
       Send(sock, '')
