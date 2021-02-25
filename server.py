@@ -5,8 +5,8 @@
 import sys
 import socket
 from socket import AF_INET, SOCK_STREAM
-from common import pr, clear, get_cipher
-from common import Encode, Decode, Send, Receive
+from common import pr, clear
+from common import Send, Receive
 
 # server socket
 server = socket.socket(AF_INET, SOCK_STREAM)
@@ -18,6 +18,9 @@ server.settimeout(10)
 socks = []
 clients = []
 active = False
+
+#
+dl_fn = ''
 
 def close(sock, client):
   sock.close()
@@ -56,7 +59,6 @@ while True:
     Send(socks[activate], 'activate')
     pr('Activating client ' + str(activate))
 
-    cipher = get_cipher()
     active = True
 
   while active:
@@ -71,6 +73,16 @@ while True:
       close(sock, client)
       break
 
+    if dl_fn:
+      try:
+        f = open(dl_fn, 'wb')
+      except IOError:
+        return 'Error opening file'
+      f.write(data)
+      f.close()
+      dl_fn = ''
+      continue
+
     if data == 'exit ok':
       active = False
       close(sock, client)
@@ -80,14 +92,8 @@ while True:
     nc = input() # next cmd
 
     if nc.startswith('download '):
-      try:
-        f = open(nc.split(' ')[1], 'wb')
-      except IOError:
-        return 'Error opening file' 
-      d = Receive(sock)
-      f.write(d)
-      f.close()
-
+      dl_fn = nc.split(' ')[1]
+      
     elif nc.startswith('upload '):
       try:
         f = open(nc.split(' ')[1], 'rb')
