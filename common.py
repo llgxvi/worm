@@ -28,7 +28,9 @@ decipher = get_cipher()
 
 # data: cmd/data
 def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
-  sock.sendall(Encode(cipher, data + end))
+  if end:
+    data += end
+  sock.sendall(Encode(cipher, data))
 
 def Receive(sock, end='EOFEOFEOFEOFEOFX'):
   data = ''
