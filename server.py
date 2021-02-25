@@ -38,6 +38,12 @@ def upload(sock, file):
   Send(sock, d, '')
   f.close()
 
+def close(sock, client):
+  sock.close()
+  socks.remove(sock)
+  clients.remove(client)
+  refresh()
+
 def refresh():
   clear()
   pr('Listening for clients...')
@@ -97,24 +103,14 @@ while True:
     except:
       active = False
       pr('Client %s disconnected.' % client)
-
-      sock.close()
-      socks.remove(sock)
-      clients.remove(client)
-      refresh()
-     
+      close(sock, client)
       break
 
     # client's respond msg to exit cmd
     if data == 'exit ok':
       active = False
       pr('Exit.')
-
-      sock.close()
-      socks.remove(sock)
-      clients.remove(client)
-      refresh()
-
+      close(sock, client)
       break
 
     elif data != '':
