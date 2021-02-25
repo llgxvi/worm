@@ -24,7 +24,7 @@ def Upload(sock, file):
     return 'Error opening file'
   d = f.read(1024)
   while(d):
-    Send(sock, d, '')
+    sock.send(d)
     d = f.read(1024)
   time.sleep(1)
   Send(sock, '')
