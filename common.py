@@ -6,9 +6,10 @@ Encode = lambda c, x: b64encode(c.encrypt(x))
 Decode = lambda c, x: c.decrypt(b64decode(x))
 
 def pr(s):
-  print(s + '\n')
+  print(s)
 
 def get_cipher():
+  # TODO
   key = b'xxxx cccc vvvv b'
   iv  = b'gggg hhhh jjjj k'
   cipher = AES.new(key, AES.MODE_CFB, iv)
@@ -20,6 +21,9 @@ if os.name == 'posix':
 if os.name == 'nt':
   s = 'cls'   # windows
 clear = lambda: os.system(s)
+
+# TODO
+cipher = get_cipher()
 
 # data: cmd/data
 def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
