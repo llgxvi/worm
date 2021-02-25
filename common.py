@@ -33,11 +33,19 @@ def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
   sock.sendall(Encode(cipher, data))
 
 def Receive(sock, end='EOFEOFEOFEOFEOFX'):
-  data = ''
+  if end:
+    data = ''
+  else:
+    data = b''
 
   d = sock.recv(1024)
   while(d):
-    data += Decode(decipher, d).decode('utf-8') 
+    dec = Decode(decipher, d)
+    if end:
+      data += dec.decode('utf-8')
+    else:
+      data += dec
+
     if data.endswith(end):
       break
     else:
