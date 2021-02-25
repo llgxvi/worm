@@ -32,22 +32,17 @@ def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
     data += end
   sock.sendall(Encode(cipher, data))
 
-def Receive(sock, end=b'EOFEOFEOFEOFEOFX'):
+def Receive(sock, end='EOFEOFEOFEOFEOFX'):
   data = []
 
   d = sock.recv(1024)
   while(d):
-    dec = Decode(decipher, d)
+    dec = Decode(decipher, d).decode('utf-8')
     data.append(dec)
-    if data[-1] == end:
+    print(data)
+    if end in data[-1]:
       break
     else:
       d = sock.recv(1024)
 
   return ''.join(data[:-1])
-
-if __name__ == '__main__':
-  a = Encode(cipher, 'abc')
-  b = Decode(decipher, a)
-  pr(a)
-  pr(b)
