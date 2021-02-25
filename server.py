@@ -34,11 +34,8 @@ def upload(sock, file):
   pr('Uploading ' + file)
 
   f = open(file, 'rb')
-  while True:
-    d = f.read()
-    if not d: 
-      break
-    Send(sock, d, '')
+  d = f.read()
+  Send(sock, d, '')
   f.close()
 
 def refresh():
