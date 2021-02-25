@@ -1,3 +1,6 @@
+# make
+# make clean
+
 Obj-m := rooty.o
 
 KERNEL_DIR = /lib/modules/$(shell uname -r)/build
