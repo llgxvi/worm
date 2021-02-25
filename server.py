@@ -77,8 +77,8 @@ while True:
       try:
         f = open(dl_fn, 'wb')
       except IOError:
-        return 'Error opening file'
-      f.write(data)
+        print('Error opening file')
+      f.write(data.encode())
       f.close()
       dl_fn = ''
       continue
@@ -98,7 +98,7 @@ while True:
       try:
         f = open(nc.split(' ')[1], 'rb')
       except IOError:
-        return 'Error opening file'
+        print('Error opening file')
       d = f.read()
       Send(sock, d, '')
       Send(sock, '')
