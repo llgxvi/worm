@@ -81,14 +81,15 @@ while True:
       f.write(data.encode())
       f.close()
       dl_fn = ''
-      continue
+      Send(sock, 'cd')
 
     if data == 'exit ok':
       active = False
       close(sock, client)
       break
 
-    sys.stdout.write(data)
+    if not dl_fn:
+      sys.stdout.write(data)
     nc = input() # next cmd
 
     if nc.startswith('download '):
