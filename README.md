@@ -1,3 +1,6 @@
+### python
+`not [] is True`
+
 ### socket
 https://docs.python.org/3/library/socket.html
 
