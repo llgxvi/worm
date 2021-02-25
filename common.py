@@ -35,7 +35,7 @@ def Receive(sock, end='EOFEOFEOFEOFEOFX'):
 
   d = sock.recv(1024)
   while(d):
-    data += Decode(cipher, d)
+    data += Decode(decipher, d)
     if data.endswith(end):
       break
     else:
