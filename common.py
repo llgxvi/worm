@@ -35,5 +35,6 @@ def Receive(sock):
     print('🥃 sock.recv: ', d)
     if not d:
       print('🥤 sock.recv empty')
+      break
 
   return data[:-6]
