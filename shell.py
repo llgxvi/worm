@@ -12,14 +12,16 @@ PORT = 1000
 sock = None
 active = False
 
-# ⬆️ ul file
+# ⬆️
 def upload(sock, fn):
   try:
     f = open(fn, 'rb')
     d = f.read()
     f.close()
+
     Send(sock, d, 1)
     time.sleep(1)
+
     return 'File sent 🍺'
   except IOError:
     return 'Error opening file ⚠️'
@@ -68,7 +70,6 @@ while True:
         sock.close()
         break
 
-      # ⬇️ dl file
       if type(data) == str:
         if data.startswith('dl '):
           ret = upload(sock, data[3:])
@@ -81,14 +82,16 @@ while True:
 
         Send(sock, cwd(ret))
 
+      # ⬇️
       else:
         try:
           f = open(data[0], 'wb')
           f.write(data[1])
           f.close()
+          rete = 'File received 🍺'
         except IOError:
           ret = 'Error opening file ⚠️'     
-        ret = 'File received 🍺'
+       
         Send(sock, cwd(ret))
 
   except socket.error:
