@@ -99,7 +99,7 @@ while True:
 
     # ⬆️ ul file
     elif nc.startswith('ul '):
-      fn = nc.split(' ')[1]
+      fn = nc[3:]
       try:
         f = open(fn, 'rb')
       except IOError:
