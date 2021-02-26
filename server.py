@@ -50,7 +50,7 @@ while True:
     pr('\n')
     activate = int(input('Enter option: '))
     
-    Send(socks[activate], 'activate')
+    Send(socks[activate], 'activateEODXXX')
     pr('Activating client ' + str(activate))
 
     sock = socks[activate]
