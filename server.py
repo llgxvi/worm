@@ -20,7 +20,6 @@ def close(sock, client):
   socks.remove(sock)
   clients.remove(client)
   sock.close()
-  refresh()
 
 def refresh():
   pr('Listening for clients...')
@@ -92,6 +91,7 @@ while True:
       Send(sock, 'deactivate')
 
     if nc == '-2':
+      active = False
       close(sock, client)
       break
 
