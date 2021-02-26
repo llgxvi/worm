@@ -65,10 +65,10 @@ while True:
       data = Receive(sock)
 
       # server closed
-      if False and not data:
-        active = False
-        sock.close()
-        break
+      # if not data:
+      #   active = False
+      #   sock.close()
+      #   break
 
       if type(data) == str:
         if data.startswith('dl '):
@@ -88,7 +88,7 @@ while True:
           f = open(data[0], 'wb')
           f.write(data[1])
           f.close()
-          rete = 'File received 🍺'
+          ret = 'File received 🍺'
         except IOError:
           ret = 'Error opening file ⚠️'     
        
