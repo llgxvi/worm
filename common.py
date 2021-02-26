@@ -6,6 +6,7 @@ Encode = lambda c, x: b64encode(c.encrypt(x))
 Decode = lambda c, x: c.decrypt(b64decode(x))
 
 def pr(s):
+  # TODO
   print(s)
 
 def get_cipher():
@@ -15,34 +16,21 @@ def get_cipher():
   cipher = AES.new(key, AES.MODE_CFB, iv)
   return cipher
 
-# clear
-if os.name == 'posix':
-  s = 'clear' # linux
-if os.name == 'nt':
-  s = 'cls'   # windows
-clear = lambda: os.system(s)
-
 # TODO
 cipher = get_cipher()
 decipher = get_cipher()
 
-# data: cmd/data
-def Send(sock, data, end='EOFEOFEOFEOFEOFX'):
-  if end:
-    data += end
+def Send(sock, data):
   sock.sendall(Encode(cipher, data))
 
-def Receive(sock, end='EOFEOFEOFEOFEOFX'):
-  data = []
+def Receive(sock):
+  data = ''
 
   d = sock.recv(1024)
-  while(d):
-    dec = Decode(decipher, d).decode('utf-8')
-    data.append(dec)
-    print(data)
-    if end in data[-1]:
+  while(True):
+    data += Decode(decipher, d).decode('utf-8')
+    if data.endswith('EODXXX')
       break
-    else:
-      d = sock.recv(1024)
+    d = sock.recv(1024)
 
-  return ''.join(data).split(end)[0]
+  return data[:-6]
