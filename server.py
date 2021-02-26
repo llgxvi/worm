@@ -68,7 +68,7 @@ while True:
 
     if data.endswith(d'FILEXXX'):
       data = data[:-7].split(d'FILENAMEXXX')
-      d = ''.join(data[:-1])
+      d = b''.join(data[:-1])
       fn = data[-1].decode()
       try:
         f = open(fn, 'wb')
