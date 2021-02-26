@@ -67,10 +67,10 @@ while True:
       close(sock, client)
       break
 
-    if not data:
-      active = False
-      close(sock, client)
-      break
+    # if not data:
+    #   active = False
+    #   close(sock, client)
+    #   break
 
     if type(data) == str:
       print(data, end='')
