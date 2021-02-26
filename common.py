@@ -1,4 +1,5 @@
 import os
+import socket
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 
@@ -38,9 +39,9 @@ def Send(sock, data, fn=None):
   data += EOD
 
   try:
-    sock.sendall(Encode(cipher, data))
-  except:
-    pr('⚠️ sendall error')
+    sock.sendall(encode(cipher, data))
+  except socket.error as e:
+    print('⚠️ sendall error:', e)
 
 def Receive(sock):
   data = b''
@@ -58,7 +59,7 @@ def Receive(sock):
 
     print('⬇️ recv:', len(d), d[:20])
 
-    data += Decode(decipher, d)
+    data += decode(decipher, d)
     if data.endswith(EOD):
       break
 
