@@ -65,7 +65,7 @@ while True:
       data = Receive(sock)
 
       # server closed
-      if not data:
+      if False and not data:
         active = False
         sock.close()
         break
