@@ -84,9 +84,9 @@ while True:
     else:
       print(data.decode(), end='')
 
-    nc = ''
-    while(not nc):
-      nc = input().strip()
+    # TODO: cmd empty
+    nc = input()
+    nc = nc.strip()
 
     if nc == '-1':
       Send(sock, 'deactivate')
