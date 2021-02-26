@@ -1,14 +1,11 @@
-#!/usr/bin/env python3
-
 import sys
 import time
 import socket
-from socket import AF_INET, SOCK_STREAM
 from common import pr, clear, Send, Receive
 
 # server socket
-server = socket.socket(AF_INET, SOCK_STREAM)
-server.bind(('', 2000))
+server = socket.socket()
+server.bind(('', 1000))
 server.listen()
 server.settimeout(10)
 
@@ -34,6 +31,7 @@ def refresh():
   pr('Press Ctrl+C to interact with client.')
 
 while True:
+  clear()
   refresh()
 
   try:
@@ -70,21 +68,24 @@ while True:
       close(sock, client)
       break
 
-    # ⬇️ dl file
-    if data.endswith(b'FILEXXX'):
-      data = data[:-7].split(b'FILENAMEXXX')
-      d = b''.join(data[:-1])
-      fn = data[-1].decode() # to str
-      try:
-        f = open(fn, 'wb')
-      except IOError:
-        print('Error opening file')
-      f.write(d)
-      f.close()
-      continue # recv more
+    if not data:
+      active = False
+      close(sock, client)
+      break
 
+    if type(data) == str:
+      print(data, end='')
+
+    # ⬇️
     else:
-      print(data.decode(), end='')
+      try:
+        f = open(data[0], 'wb')
+        f.write(d)
+        f.close()
+      except IOError:
+        pr('Error opening file')
+     
+      continue # recv more
 
     # TODO: cmd empty
     nc = input()
@@ -92,20 +93,18 @@ while True:
 
     if nc == '-1':
       active = False
-      Send(sock, 'deactivate')
-      time.sleep(1)
       close(sock, client)
       break
 
-    # ⬆️ ul file
+    # ⬆️
     elif nc.startswith('ul '):
       fn = nc[3:]
       try:
         f = open(fn, 'rb')
         d = f.read()
         f.close()
-        d += b'FILENAMEXXX%sFILEXXX' % fn.encode()
-        Send(sock, d)
+
+        Send(sock, d, fn)
         time.sleep(1)
       except IOError:
         print('Error opening file')
