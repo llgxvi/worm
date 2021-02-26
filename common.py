@@ -28,7 +28,7 @@ def Receive(sock):
   d = sock.recv(1024)
   while(True):
     data += Decode(decipher, d).decode('utf-8')
-    if data.endswith('EODXXX')
+    if data.endswith('EODXXX'):
       break
     d = sock.recv(1024)
 
