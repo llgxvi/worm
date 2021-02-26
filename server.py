@@ -29,7 +29,7 @@ def refresh():
   for i in range(0, len(clients)):
     pr('➡️ Client %d: %s' % (i, clients[i]))
 
-  pr('Press Ctrl+C to interact with client.')
+  pr('Press Ctrl+C to interact with client')
 
 while True:
   refresh()
@@ -61,7 +61,8 @@ while True:
   while active:
     try:
       data = Receive(sock)
-    except:
+    except Exception as e:
+      print(e)
       pr('Client %s disconnected' % client)
       active = False
       close(sock, client)
