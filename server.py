@@ -26,7 +26,6 @@ def refresh():
   pr('Listening for clients...')
 
   if not clients:
-    pr('...')
     return
 
   for i in range(0, len(clients)):
