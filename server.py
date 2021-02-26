@@ -4,7 +4,7 @@ import sys
 import time
 import socket
 from socket import AF_INET, SOCK_STREAM
-from common import pr, Send, Receive
+from common import pr, clear, Send, Receive
 
 # server socket
 server = socket.socket(AF_INET, SOCK_STREAM)
@@ -35,18 +35,20 @@ def refresh():
 
 while True:
   refresh()
+
   try:
     try:
       s, a = server.accept()
     except socket.timeout:
       continue
-
     s.settimeout(None)
     socks.append(s)
     clients.append(str(a))
+    clear()
     refresh()
+
   except KeyboardInterrupt:
-    pr('\r\r')
+    pr('\r')
     activate = int(input('Enter option: '))
 
     if activate == -1:
@@ -89,12 +91,13 @@ while True:
     nc = nc.strip()
 
     if nc == '-1':
-      Send(sock, 'deactivate')
       active = False
+      Send(sock, 'deactivate')
       time.sleep(1)
       close(sock, client)
       break
 
+    # ⬆️ ul file
     elif nc.startswith('ul '):
       fn = nc.split(' ')[1]
       try:
@@ -103,7 +106,7 @@ while True:
         print('Error opening file')
       d = f.read()
       f.close()
-      d += 'FILENAMEXXX%sFILEXXX' % fn
+      d += b'FILENAMEXXX%sFILEXXX' % fn.encode()
       Send(sock, d)
     
     else:
