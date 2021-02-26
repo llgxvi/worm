@@ -40,7 +40,7 @@ def Send(sock, data, fn=None):
   try:
     sock.sendall(Encode(cipher, data))
   except:
-    pass
+    pr('⚠️ sendall error')
 
 def Receive(sock):
   data = b''
