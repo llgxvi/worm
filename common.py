@@ -14,6 +14,10 @@ def clear():
       s = 'clear'
     os.system(s)
 
+EOD = b'EOD-EOD-EOD'
+EOF = b'EOF-EOF-EOF'
+FN = b'FN-FN-FN'
+
 # TODO
 def get_cipher():
   key = 'xxxx cccc vvvv b'
@@ -25,11 +29,13 @@ def get_cipher():
 cipher = get_cipher()
 decipher = get_cipher()
 
-def Send(sock, data, flag=0):
-  if flag == 0:
+def Send(sock, data, fn=None):
+  if not fn:
     data = data.encode()
+  else:
+    data = data + FN + fn + EOF
 
-  data += b'EOD-EOD-EOD'
+  data += EOD
 
   try:
     sock.sendall(Encode(cipher, data))
@@ -43,6 +49,7 @@ def Receive(sock):
     try:
       d = sock.recv(1024)
     except:
+      pr('⚠️ recv error')
       return ''
 
     if not d:
@@ -52,11 +59,11 @@ def Receive(sock):
     print('⬇️ recv:', len(d), d[:20])
 
     data += Decode(decipher, d)
-    if data.endswith(b'EOD-EOD-EOD'):
+    if data.endswith(EOD):
       break
 
-  data = data[:-11]
-  if data.endswith(b'EOF-EOF-EOF'):
-    return data[:-11].split('FILENAME')
+  data = data[:-len(EOD)]
+  if data.endswith(EOF):
+    return data[:-len(EOF)].split(FN)
   else: 
     return data.decode()
