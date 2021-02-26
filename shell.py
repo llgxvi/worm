@@ -93,11 +93,11 @@ while True:
         fn = data[-1].decode() # to str
         try:
           f = open(fn, 'wb')
+          f.write(d)
+          f.close()
         except IOError:
-          print('Error opening file ⚠️')
-        f.write(d)
-        f.close()
-        continue # recv more
+          ret = 'Error opening file ⚠️'     
+        ret = 'File received 🍺'
       else:
         data = data.decode()
 
