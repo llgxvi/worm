@@ -1,8 +1,10 @@
 ### python
 `not [] is True`
 
-`[] * 2 is []`
-`[None] * 2 is [None, None]`
+```
+[] * 2 is []
+[None] * 2 is [None, None]
+```
 
 ### socket
 **https://docs.python.org/2/howto/sockets.html**
