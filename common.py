@@ -40,5 +40,5 @@ def Receive(sock):
       print('🥤 sock.recv empty')
       break
 
-  print('⚽️ type(data)')
+  print('⚽️', type(data))
   return data[:-6]
