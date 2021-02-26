@@ -61,7 +61,7 @@ def Receive(sock):
 
     data += decode(decipher, d)
 
-    print('🌐', data[:30])
+    print('🌐', data[-30:])
 
     if data.endswith(EOD):
       break
