@@ -66,8 +66,8 @@ while True:
       close(sock, client)
       break
 
-    if data.endswith(d'FILEXXX'):
-      data = data[:-7].split(d'FILENAMEXXX')
+    if data.endswith(b'FILEXXX'):
+      data = data[:-7].split(b'FILENAMEXXX')
       d = b''.join(data[:-1])
       fn = data[-1].decode()
       try:
