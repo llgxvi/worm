@@ -95,5 +95,6 @@ while True:
       f.close()
       d += 'FILENAMEXXX%sFILEXXXEODXXX' % fn
       Send(sock, d)
-
-    Send(sock, nc + 'EODXXX')
+    
+    else:
+      Send(sock, nc + 'EODXXX')
