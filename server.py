@@ -89,10 +89,13 @@ while True:
       nc = input().strip()
 
     if nc == '-1':
+      Send(sock, 'deactivate')
+
+    if nc == '-2':
       close(sock, client)
       break
 
-    if nc.startswith('ul '):
+    elif nc.startswith('ul '):
       fn = nc.split(' ')[1]
       try:
         f = open(fn, 'rb')
