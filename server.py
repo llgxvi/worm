@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import time
 import socket
 from socket import AF_INET, SOCK_STREAM
 from common import pr, Send, Receive
@@ -89,9 +90,8 @@ while True:
 
     if nc == '-1':
       Send(sock, 'deactivate')
-
-    if nc == '-2':
       active = False
+      time.sleep(1)
       close(sock, client)
       break
 
