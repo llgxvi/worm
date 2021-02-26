@@ -7,8 +7,7 @@ import socket
 import subprocess as sp
 from socket import AF_INET, SOCK_STREAM
 from urllib.request import urlopen
-from common import pr, clear, get_cipher
-from common import Encode, Decode, Send, Receive
+from common import pr, Send, Receive
 
 HOST = '127.0.0.1'
 PORT = 2000
