@@ -2,20 +2,20 @@ import os
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 
-Encode = lambda c, x: b64encode(c.encrypt(x))
-Decode = lambda c, x: c.decrypt(b64decode(x))
+encode = lambda c, x: b64encode(c.encrypt(x))
+decode = lambda c, x: c.decrypt(b64decode(x))
 
-def pr(s):
-  # TODO
-  print(s)
+pr = lambda s: print(s)
 
 def clear():
-    if os.name == 'nt': c = 'cls'
-    else: c = 'clear'
-    os.system(c)
+    if os.name == 'nt':
+      s = 'cls'
+    else: 
+      s = 'clear'
+    os.system(s)
 
+# TODO
 def get_cipher():
-  # TODO
   key = 'xxxx cccc vvvv b'
   iv  = 'gggg hhhh jjjj k'
   cipher = AES.new(key, AES.MODE_CFB, iv)
@@ -25,15 +25,15 @@ def get_cipher():
 cipher = get_cipher()
 decipher = get_cipher()
 
-def Send(sock, data):
-  if type(data).__name__ == 'str':
+def Send(sock, data, flag=0):
+  if flag == 0:
     data = data.encode()
-  data += b'EODXXX'
+
+  data += b'EOD-EOD-EOD'
 
   try:
     sock.sendall(Encode(cipher, data))
   except:
-    # TODO
     pass
 
 def Receive(sock):
@@ -43,17 +43,20 @@ def Receive(sock):
     try:
       d = sock.recv(1024)
     except:
-      # TODO
-      break
+      return ''
 
     if not d:
-      print('🥅 recv empty')
+      pr('🥅 recv empty')
       return ''
 
     print('⬇️ recv:', len(d), d[:20])
 
     data += Decode(decipher, d)
-    if data.endswith(b'EODXXX'):
+    if data.endswith(b'EOD-EOD-EOD'):
       break
 
-  return data[:-6]
+  data = data[:-11]
+  if data.endswith(b'EOF-EOF-EOF'):
+    return data[:-11].split('FILENAME')
+  else: 
+    return data.decode()
