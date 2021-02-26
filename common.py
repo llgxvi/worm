@@ -33,7 +33,7 @@ def Send(sock, data, fn=None):
   if not fn:
     data = data.encode()
   else:
-    data = data + FN + fn + EOF
+    data = data + FN + fn.encode() + EOF
 
   data += EOD
 
