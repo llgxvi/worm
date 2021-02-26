@@ -67,8 +67,10 @@ while True:
       break
 
     if data.endswith('FILEXXX'):
-      d = data[:-7]
-      d, fn = d.split('FILENAMEXXX')
+      data = data[:-7].split('FILENAMEXXX')
+      d = data[0]
+      fn = data[1]
+      
       try:
         f = open(fn, 'w+b')
       except IOError:
