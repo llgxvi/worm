@@ -82,6 +82,8 @@ def run(s):
                stdout=sp.PIPE, 
                stderr=sp.PIPE)
   out, err = c.communicate()
+  print(out)
+  print(err)
   out = out.decode('utf-8')
   err = err.decode('utf-8')
   return out + err
@@ -102,7 +104,7 @@ while True:
       data = Receive(sock)
 
       if data == 'exit':
-        Send(sock, 'exit ok')
+        Send(sock, 'exit okEODXXX')
         break
         # TODO
 
