@@ -17,9 +17,9 @@ clients = []
 active = False
 
 def close(sock, client):
-  sock.close()
   socks.remove(sock)
   clients.remove(client)
+  sock.close()
   refresh()
 
 def refresh():
@@ -30,7 +30,7 @@ def refresh():
     return
 
   for i in range(0, len(clients)):
-    pr('Client %d: %s' % (i, clients[i]))
+    pr('➡️ Client %d: %s' % (i, clients[i]))
 
   pr('Press Ctrl+C to interact with client.')
 
