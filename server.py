@@ -77,6 +77,7 @@ while True:
         print('Error opening file')
       f.write(d)
       f.close()
+      continue # recv more
 
     else:
       print(data.decode())
