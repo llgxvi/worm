@@ -20,6 +20,9 @@ cipher = get_cipher()
 decipher = get_cipher()
 
 def Send(sock, data):
+  if type(data).__name__ == 'str':
+    data = data.encode()
+  data += b'EODXXX'
   sock.sendall(Encode(cipher, data))
 
 def Receive(sock):
