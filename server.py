@@ -76,16 +76,14 @@ while True:
         print('Error opening file')
       f.write(d)
       f.close()
-    else:
-      data = data.decode()
 
-    if data == 'exit ok':
+    elif data.decode() == 'exit ok':
       active = False
       close(sock, client)
       break
 
     else:
-      sys.stdout.write(data)
+      sys.stdout.write(data.decode())
 
     nc = input() # next cmd
 
