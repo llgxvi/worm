@@ -105,7 +105,7 @@ while True:
       data = Receive(sock).decode()
 
       if data == 'deactivate':
-        Send(sock, 'Deactivated 🍺')
+        Send(sock, 'Deactivated 🍺\n' + os.getcwd() + '>')
         active = False
         break
 
