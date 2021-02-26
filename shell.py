@@ -20,14 +20,14 @@ ret = ''
 def Upload(sock, file):
   try:
     f = open(file, 'rb')
+    d = f.read()
+    f.close()
+    Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
+    time.sleep(1)
+    return 'File sent 🍺'
   except IOError:
     return 'Error opening file ⚠️'
-  d = f.read()
-  f.close()
-  Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
-  time.sleep(1)
-  return 'File sent 🍺'
- 
+
 # TODO: ssl
 def Downhttp(sock, url):
   fn = url.split('/')[-1]
