@@ -2,6 +2,7 @@
 `not [] is True`
 
 ### socket
+**https://docs.python.org/2/howto/sockets.html**
 https://docs.python.org/3/library/socket.html
 
 bind() empty string
