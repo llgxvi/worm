@@ -86,6 +86,12 @@ while True:
     while active:
       data = Receive(sock)
 
+      # server closed
+      if not data:
+        active = False
+        sock.close()
+        break
+
       # ⬇️ dl file
       if data.endswith(b'FILEXXX'):
         data = data[:-7].split(b'FILENAMEXXX')
