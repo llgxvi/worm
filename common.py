@@ -55,7 +55,7 @@ def Receive(sock):
 
     if not d:
       pr('🥅 recv empty')
-      return ''
+      break
 
     print('⬇️ recv:', len(d), d[:20])
 
