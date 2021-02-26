@@ -68,14 +68,14 @@ while True:
 
     if data.endswith('FILEXXX'):
       data = data[:-7].split('FILENAMEXXX')
-      d = data[0]
-      fn = data[1]
+      d = ''.join(data[:-1])
+      fn = data[-1]
       
       try:
-        f = open(fn, 'w+b')
+        f = open(fn, 'w+')
       except IOError:
         print('Error opening file')
-      f.write(d.encode())
+      f.write(d)
       f.close()
 
     elif data == 'exit ok':
