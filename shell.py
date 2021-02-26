@@ -22,8 +22,9 @@ def Upload(sock, file):
   except IOError:
     return 'Error opening file'
   d = f.read()
-  Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
   f.close()
+  Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
+  time.sleep(1)
   return 'File sent 🍺'
 
 def Download(sock, file):
