@@ -23,18 +23,19 @@ def Send(sock, data):
   sock.sendall(Encode(cipher, data))
 
 def Receive(sock):
-  data = ''
+  data = b''
 
   d = sock.recv(1024)
-  print('🥃 sock.recv: ', d)
+  print('🥃 sock.recv: ', len(d), d)
   while(True):
-    data += Decode(decipher, d).decode('utf-8')
-    if data.endswith('EODXXX'):
+    data += Decode(decipher, d)
+    if data.endswith(b'EODXXX'):
       break
     d = sock.recv(1024)
-    print('🥃 sock.recv: ', d)
+    print('🥃 sock.recv: ', len(d), d)
     if not d:
       print('🥤 sock.recv empty')
       break
 
+  print('⚽️ type(data)')
   return data[:-6]
