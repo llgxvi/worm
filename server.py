@@ -76,12 +76,13 @@ while True:
       f.write(d.encode())
       f.close()
 
-    if data == 'exit ok':
+    elif data == 'exit ok':
       active = False
       close(sock, client)
       break
 
-    sys.stdout.write(data)
+    else:
+      sys.stdout.write(data)
 
     nc = input() # next cmd
 
