@@ -20,6 +20,7 @@ def close(sock, client):
   sock.close()
 
 def refresh():
+  clear()
   pr('Listening for clients...')
 
   if not clients:
@@ -31,7 +32,6 @@ def refresh():
   pr('Press Ctrl+C to interact with client.')
 
 while True:
-  clear()
   refresh()
 
   try:
@@ -42,7 +42,6 @@ while True:
     s.settimeout(None)
     socks.append(s)
     clients.append(str(a))
-    clear()
     refresh()
 
   except KeyboardInterrupt:
@@ -63,8 +62,8 @@ while True:
     try:
       data = Receive(sock)
     except:
+      pr('Client %s disconnected' % client)
       active = False
-      pr('Client %s disconnected.' % client)
       close(sock, client)
       break
 
@@ -80,7 +79,7 @@ while True:
     else:
       try:
         f = open(data[0], 'wb')
-        f.write(d)
+        f.write(data[1])
         f.close()
       except IOError:
         pr('Error opening file')
@@ -107,7 +106,7 @@ while True:
         Send(sock, d, fn)
         time.sleep(1)
       except IOError:
-        print('Error opening file')
+        pr('Error opening file')
 
     else:
       Send(sock, nc)
