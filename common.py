@@ -44,6 +44,5 @@ def Receive(sock):
     data += Decode(decipher, d)
     if data.endswith(b'EODXXX'):
       break
-   
 
   return data[:-6]
