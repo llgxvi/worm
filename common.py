@@ -32,5 +32,6 @@ def Receive(sock):
     if data.endswith('EODXXX'):
       break
     d = sock.recv(1024)
+    print('🥃 sock.recv: ', d)
 
   return data[:-6]
