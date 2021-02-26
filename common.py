@@ -65,6 +65,8 @@ def Receive(sock):
 
   data = data[:-len(EOD)]
   if data.endswith(EOF):
-    return data[:-len(EOF)].split(FN)
+    data = data[:-len(EOF)].split(FN)
+    data[0] = data[0].decode()
+    return data
   else: 
     return data.decode()
