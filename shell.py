@@ -21,7 +21,7 @@ def Upload(sock, file):
     f = open(file, 'rb')
   except IOError:
     return 'Error opening file'
-  d = f.read()
+  d = f.read().decode('utf-8')
   Send(sock, d + 'FILENAMEXXX%sFILEXXXEODXXX' % file)
   f.close()
   return 'File sent 🍺'
