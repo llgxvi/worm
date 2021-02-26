@@ -106,6 +106,7 @@ while True:
 
       if data == 'deactivate':
         Send(sock, 'Deactivated 🍺\n' + os.getcwd() + '>')
+        time.sleep(10)
         active = False
         break
 
