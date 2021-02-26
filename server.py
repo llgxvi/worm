@@ -88,6 +88,9 @@ while True:
 
     nc = input() # next cmd
 
+    if not nc.strip():
+      continue
+
     if nc.startswith('ul '):
       fn = nc.split(' ')[1]
       try:
