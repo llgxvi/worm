@@ -29,16 +29,15 @@ def Receive(sock):
   data = b''
 
   d = sock.recv(1024)
-  print('🥃 sock.recv: ', len(d), d[:10])
+  print('⚽️ sock.recv:', len(d), d[:10])
   while(True):
     data += Decode(decipher, d)
     if data.endswith(b'EODXXX'):
       break
     d = sock.recv(1024)
-    print('🥃 sock.recv: ', len(d), d[:10])
+    print('⚽️ sock.recv:', len(d), d[:10])
     if not d:
-      print('🥤 sock.recv empty')
+      print('🥅 sock.recv empty')
       break
 
-  print('⚽️', type(data))
   return data[:-6]
