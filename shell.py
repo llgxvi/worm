@@ -98,6 +98,8 @@ while True:
         except IOError:
           ret = 'Error opening file ⚠️'     
         ret = 'File received 🍺'
+        Sent('%s\n%s>' % (ret, os.getcwd()))
+        continue
       else:
         data = data.decode()
 
