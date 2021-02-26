@@ -65,10 +65,10 @@ while True:
       data = Receive(sock)
 
       # server closed
-      # if not data:
-      #   active = False
-      #   sock.close()
-      #   break
+      if not data:
+        active = False
+        sock.close()
+        break
 
       if type(data) == str:
         if data.startswith('dl '):
