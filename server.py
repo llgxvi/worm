@@ -80,7 +80,7 @@ while True:
       continue # recv more
 
     else:
-      print(data.decode())
+      print(data.decode(), end='')
 
     nc = ''
     while(not nc):
