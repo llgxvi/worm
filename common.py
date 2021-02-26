@@ -1,3 +1,4 @@
+import os
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 
@@ -7,6 +8,11 @@ Decode = lambda c, x: c.decrypt(b64decode(x))
 def pr(s):
   # TODO
   print(s)
+
+def clear():
+    if os.name == 'nt': c = 'cls'
+    else: c = 'clear'
+    os.system(c)
 
 def get_cipher():
   # TODO
