@@ -102,13 +102,13 @@ while True:
       fn = nc[3:]
       try:
         f = open(fn, 'rb')
+        d = f.read()
+        f.close()
+        d += b'FILENAMEXXX%sFILEXXX' % fn.encode()
+        Send(sock, d)
+        time.sleep(1)
       except IOError:
         print('Error opening file')
-      d = f.read()
-      f.close()
-      d += b'FILENAMEXXX%sFILEXXX' % fn.encode()
-      Send(sock, d)
-      time.sleep(1)
-    
+
     else:
       Send(sock, nc)
