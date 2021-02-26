@@ -23,7 +23,12 @@ def Send(sock, data):
   if type(data).__name__ == 'str':
     data = data.encode()
   data += b'EODXXX'
-  sock.sendall(Encode(cipher, data))
+
+  try:
+    sock.sendall(Encode(cipher, data))
+  except:
+    # TODO
+    pass
 
 def Receive(sock):
   data = b''
