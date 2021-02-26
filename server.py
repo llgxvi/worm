@@ -108,6 +108,7 @@ while True:
       f.close()
       d += b'FILENAMEXXX%sFILEXXX' % fn.encode()
       Send(sock, d)
+      time.sleep(1)
     
     else:
       Send(sock, nc)
