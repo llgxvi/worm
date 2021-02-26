@@ -26,6 +26,7 @@ def Receive(sock):
   data = ''
 
   d = sock.recv(1024)
+  print('🥃 sock.recv: ', d)
   while(True):
     data += Decode(decipher, d).decode('utf-8')
     if data.endswith('EODXXX'):
