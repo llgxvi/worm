@@ -21,7 +21,7 @@ def upload(sock, fn):
     d = f.read()
     f.close()
     Send(sock, cipher, d, fn)
-    time.sleep(1)
+    time.sleep(1) # TODO
     return 'File sent 🍺'
   except Exception as e:
     return str(e) + ' ⚠️'
@@ -49,13 +49,10 @@ def run(s):
       return str(e) + ' ⚠️'
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = p.communicate()
-  out = out.decode('utf-8')
-  err = err.decode('utf-8')
-  pr('⚽️', out, err)
   if out:
-    return out
+    return out.decode()
   else:
-    return err
+    return err.decode()
 
 def res(prev=None):
   global cwd
