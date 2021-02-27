@@ -7,11 +7,10 @@ def get_cipher():
   global key, iv
   return AES.new(key, AES.MODE_CFB, iv)
 
-
 if __name__ == '__main__':
-  c1 = get_cipher(key, iv)
-  c2 = get_cipher(key, iv)
-  c3 = get_cipher(key, iv)
+  c1 = get_cipher()
+  c2 = get_cipher()
+  c3 = get_cipher()
 
   a = c1.encrypt('abc')
   b = c1.encrypt('abc')
