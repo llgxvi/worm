@@ -32,3 +32,6 @@ https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 
 ### subprocess
 https://docs.python.org/3/library/subprocess.html#popen-constructor
+
+Subprocess change directory
+https://stackoverflow.com/questions/21406887/subprocess-changing-directory
