@@ -20,7 +20,7 @@ def upload(sock, fn):
     d = f.read()
     f.close()
 
-    Send(sock, d, fn)
+    Send(sock, cipher, d, fn)
     time.sleep(1)
 
     return 'File sent 🍺'
