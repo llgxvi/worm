@@ -3,7 +3,8 @@ from Crypto.Cipher import AES
 key = b'xxxx cccc vvvv b'
 iv  = b'gggg hhhh jjjj k'
 
-def get_cipher(key, iv):
+def get_cipher():
+  global key, iv
   return AES.new(key, AES.MODE_CFB, iv)
 
 
