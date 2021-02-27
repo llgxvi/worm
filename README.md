@@ -9,6 +9,8 @@
 int() will strip first
 `int('  1  ')`
 
+`os.chdir('  /  ')` won't trim for you
+
 ### socket
 **https://docs.python.org/2/howto/sockets.html**
 https://docs.python.org/3/library/socket.html
