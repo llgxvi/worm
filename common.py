@@ -38,9 +38,10 @@ def Send(sock, data, fn=None):
     data = fn + EFN + data + EOF
 
   data += EOD
+  data = encode(cipher, data)
 
   try:
-    sock.sendall(encode(cipher, data))
+    sock.sendall(data)
   except socket.error as e:
     pr('⚠️ sendall:', e)
 
@@ -55,7 +56,7 @@ def Receive(sock):
       break
 
     if not d:
-      pr('🥅 recv empty')
+      pr('⚠️ recv: 🥅 empty')
       break
 
     pr('⬇️ recv:', len(d), d[:20])
