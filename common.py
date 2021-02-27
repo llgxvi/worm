@@ -70,7 +70,7 @@ def Receive(sock):
 
   if d.endswith(EOF):
     d = d[:-len(EOF)]
-    d = d.split(EFN)
+    d = d.split(EFN, 1)
     d[0] = d[0].decode()
   elif d: 
     d = d.decode()
