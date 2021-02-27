@@ -1,14 +1,17 @@
 from Crypto.Cipher import AES
-from base64 import b64encode, b64decode
 
-encode = lambda c, x: b64encode(c.encrypt(x))
-decode = lambda c, x: c.decrypt(b64decode(x))
+key = b'xxxx cccc vvvv b'
+iv  = b'gggg hhhh jjjj k'
 
-def get_cipher():
-  key = b'xxxx cccc vvvv b'
-  iv  = b'gggg hhhh jjjj k'
-  cipher = AES.new(key, AES.MODE_CFB, iv)
-  return cipher
+def get_cipher(key, iv):
+  return AES.new(key, AES.MODE_CFB, iv)
 
-cipher = get_cipher()
-decipher = get_cipher()
+if __name__ == '__main__':
+  cipher = get_cipher(key, iv)
+  decipher = get_cipher(key, iv)
+
+  a = cipher.encrypt('abc')
+  b = decipher.decrypt(a)
+  
+  print(a, b)
+  
