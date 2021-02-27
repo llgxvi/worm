@@ -5,16 +5,10 @@ from base64 import b64encode, b64decode
 
 pr = print
 lamb = lambda
+cls = os.system('cls' if os.name == 'nt' else 'clear')
 
 encode = lamb c, x: b64encode(c.encrypt(x))
 decode = lamb c, x: c.decrypt(b64decode(x))
-
-def cls():
-    if os.name == 'nt':
-      s = 'cls'
-    else: 
-      s = 'clear'
-    os.system(s)
 
 EOD = b'EOD-EOD-EOD' # end of data
 EOF = b'EOF-EOF-EOF' # end of file
