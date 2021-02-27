@@ -19,9 +19,9 @@ if __name__ == '__main__':
   e = c3.decrypt(a)
   f = c3.decrypt(b)
 
-  print(a)
-  print(b)
-  print(c)
-  print(d)
-  print(e)
-  print(f)
+  print(a) # b'\xb2\x9f\xa4'
+  print(b) # b'\xa7;:'
+  print(c) # b'abc'
+  print(d) # b't85'
+  print(e) # b'abc'
+  print(f) # b'abc'
