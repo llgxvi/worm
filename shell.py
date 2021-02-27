@@ -42,6 +42,7 @@ def dlhttp(sock, url):
     return str(e) + ' ⚠️'
 
 def run(s):
+  global cwd 
   old = s
   s = 'cd ' + cwd + ' && ' + old
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
@@ -57,6 +58,7 @@ def run(s):
     return err
 
 def res(prev=None):
+  global cwd
   if prev:
     return prev + '\n' + cwd + '>'
   else:
