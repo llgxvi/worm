@@ -1,30 +1,15 @@
 import os
 import socket
-from Crypto.Cipher import AES
-from base64 import b64encode, b64decode
+from b64 import encode, decode
 
 pr = print
 cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
-
-encode = lambda c, x: b64encode(c.encrypt(x))
-decode = lambda c, x: c.decrypt(b64decode(x))
 
 EOD = b'EOD-EOD-EOD' # end of data
 EOF = b'EOF-EOF-EOF' # end of file
 EFN = b'EFN-EFN-EFN' # end of file name
 
-# TODO
-def get_cipher():
-  key = b'xxxx cccc vvvv b'
-  iv  = b'gggg hhhh jjjj k'
-  cipher = AES.new(key, AES.MODE_CFB, iv)
-  return cipher
-
-# TODO
-cipher = get_cipher()
-decipher = get_cipher()
-
-def Send(sock, data, fn=None):
+def Send(sock, cipher, data, fn=None):
   if not fn:
     data = data.encode()
   else:
@@ -39,7 +24,7 @@ def Send(sock, data, fn=None):
   except socket.error as e:
     pr('⚠️ sendall:', e)
 
-def Receive(sock):
+def Receive(sock, decipher):
   data = b''
 
   while True:
