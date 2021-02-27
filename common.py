@@ -9,7 +9,7 @@ lamb = lambda
 encode = lamb c, x: b64encode(c.encrypt(x))
 decode = lamb c, x: c.decrypt(b64decode(x))
 
-def clear():
+def cls():
     if os.name == 'nt':
       s = 'cls'
     else: 
