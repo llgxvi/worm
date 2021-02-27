@@ -15,9 +15,9 @@ def clear():
       s = 'clear'
     os.system(s)
 
-EOD = b'EOD-EOD-EOD'
-EOF = b'EOF-EOF-EOF'
-FN = b'FN-FN-FN'
+EOD = b'EOD-EOD-EOD' # end of data
+EOF = b'EOF-EOF-EOF' # end of file
+EFN = b'EFN-EFN-EFN' # end of file name
 
 # TODO
 def get_cipher():
@@ -34,14 +34,15 @@ def Send(sock, data, fn=None):
   if not fn:
     data = data.encode()
   else:
-    data = data + FN + fn.encode() + EOF
+    fn = fn.encode()
+    data = fn + EFN + data + EOF
 
   data += EOD
 
   try:
     sock.sendall(encode(cipher, data))
   except socket.error as e:
-    print('⚠️ sendall error:', e)
+    print('⚠️ sendall:', e)
 
 def Receive(sock):
   data = b''
@@ -49,9 +50,9 @@ def Receive(sock):
   while(True):
     try:
       d = sock.recv(1024)
-    except:
-      pr('⚠️ recv error')
-      return ''
+    except socket.error as e:
+      print('⚠️ recv:', e)
+      break
 
     if not d:
       pr('🥅 recv empty')
@@ -61,19 +62,18 @@ def Receive(sock):
 
     data += decode(decipher, d)
 
-    print('🌐', data[-30:])
-
     if data.endswith(EOD):
       break
 
-  data = data[:-len(EOD)]
-  if data.endswith(EOF):
-    data = data[:-len(EOF)].split(FN)
-    arr = [None] * 2
-    arr[0] = data[1].decode()
-    arr[1] = data[0]
-    return arr
-  elif data: 
-    return data.decode()
-  else:
-     return ''
+  print('⬇️⬇️', data[-30:])
+
+  d = data[:-len(EOD)]
+
+  if d.endswith(EOF):
+    d = d[:-len(EOF)]
+    d = d.split(EFN)
+    d[0] = d[0].decode()
+  elif d: 
+    d = d.decode()
+
+  return d
