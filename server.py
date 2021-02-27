@@ -33,7 +33,6 @@ def refresh():
 
 while True:
   refresh()
-
   try:
     try:
       s, a = server.accept()
@@ -43,7 +42,6 @@ while True:
     socks.append(s)
     clients.append(str(a))
     refresh()
-
   except KeyboardInterrupt:
     pr('\r')
     n = input('Enter option: ')
@@ -58,7 +56,6 @@ while True:
     sock = socks[n]
     client = clients[n]
     active = True
-
   while active:
     try:
       data = Receive(sock)
@@ -76,8 +73,6 @@ while True:
 
     if type(data) == str:
       pr(data, end='')
-
-    # ⬇️
     else:
       try:
         f = open(data[0], 'wb')
@@ -85,19 +80,19 @@ while True:
         f.close()
       except Exception as e:
         pr('⚠️', e)
-     
-      continue # recv more
+      continue # more data to recv after file
 
-    # TODO: cmd empty
-    nc = input()
-    nc = nc.strip()
+    while True:
+      nc = input()
+      nc = nc.strip()
+      if nc:
+        break
 
     if nc == '-1':
       active = False
       close(sock, client)
       break
 
-    # ⬆️
     elif nc.startswith('ul '):
       fn = nc[3:]
       try:
