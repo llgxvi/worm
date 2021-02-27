@@ -54,6 +54,8 @@ while True:
       if n not in range(0, len(socks)):
         pr('⚠️ Index out of range')
         continue
+      else:
+        break
 
     sock = socks[n]
     client = clients[n]
