@@ -3,7 +3,7 @@
 import sys
 import time
 import socket
-from cipher import get_cipher, key, iv
+from cipher import get_cipher
 from common import pr, cls, Send, Receive
 
 # server socket
@@ -63,8 +63,8 @@ while True:
 
     sock = socks[n]
     client = clients[n]
-    cipher = get_cipher(key, iv)
-    decipher = get_cipher(key, iv)
+    cipher = get_cipher()
+    decipher = get_cipher()
     active = True
 
     Send(sock, cipher, 'pwd')
