@@ -62,6 +62,10 @@ def Receive(sock):
 
   pr('⬇️⬇️ recv:', data[-30:])
 
+  if data and not data.endswith(EOD):
+    pr('⚠️ Data not end with EOD')
+    return ''
+
   d = data[:-len(EOD)]
 
   if d.endswith(EOF):
