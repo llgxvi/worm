@@ -17,9 +17,11 @@ if __name__ == '__main__':
   c = c2.decrypt(a)
   d = c2.decrypt(a)
   e = c3.decrypt(a)
+  f = c3.decrypt(b)
 
   print(a)
   print(b)
   print(c)
   print(d)
   print(e)
+  print(f)
