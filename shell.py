@@ -45,7 +45,7 @@ def run(s):
   global cwd 
   if s.startswith('cd'):
     try:
-      os.chdir(s[2:])
+      os.chdir(s[3:].strip())
       cwd = os.getcwd()
       return ''
     except Exception as e:
