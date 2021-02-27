@@ -43,16 +43,16 @@ def dlhttp(sock, url):
 
 def run(s):
   global cwd 
-  old = s
-  s = 'cd ' + cwd + ' && ' + old
+  if s.startswith('cd'):
+    os.chdir(s[2:])
+    cwd = os.getcwd()
+    return ''
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = p.communicate()
   out = out.decode('utf-8')
   err = err.decode('utf-8')
   pr('⚽️', out, err)
   if out:
-    if old.startswith('cd'):
-      cwd = out
     return out
   else:
     return err
