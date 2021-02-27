@@ -22,8 +22,8 @@ EFN = b'EFN-EFN-EFN' # end of file name
 
 # TODO
 def get_cipher():
-  key = 'xxxx cccc vvvv b'
-  iv  = 'gggg hhhh jjjj k'
+  key = b'xxxx cccc vvvv b'
+  iv  = b'gggg hhhh jjjj k'
   cipher = AES.new(key, AES.MODE_CFB, iv)
   return cipher
 
