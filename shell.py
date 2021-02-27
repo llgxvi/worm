@@ -94,6 +94,6 @@ while True:
         f.close()
         ret = 'File received 🍺'
       except Exception as e:
-        ret = str(e) + ' ⚠️'     
-       
+        ret = str(e) + ' ⚠️'
+
     Send(sock, cipher, res(ret))
