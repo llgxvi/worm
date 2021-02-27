@@ -5,9 +5,9 @@ import sys
 import time
 import socket
 import subprocess as sp
+from cipher import get_cipher
 from urllib.request import urlopen
 from common import pr, Send, Receive
-from cipher import get_cipher, key, iv
 
 HOST = '127.0.0.1'
 PORT = 1000
@@ -72,8 +72,8 @@ while True:
     sock = socket.socket()
     sock.connect((HOST, PORT))
 
-    cipher = get_cipher(key, iv)
-    decipher = get_cipher(key, iv)
+    cipher = get_cipher()
+    decipher = get_cipher()
 
     while True:
       data = Receive(sock, decipher)
