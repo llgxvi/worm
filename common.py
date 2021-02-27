@@ -4,11 +4,10 @@ from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 
 pr = print
-lamb = lambda
 cls = os.system('cls' if os.name == 'nt' else 'clear')
 
-encode = lamb c, x: b64encode(c.encrypt(x))
-decode = lamb c, x: c.decrypt(b64decode(x))
+encode = lambda c, x: b64encode(c.encrypt(x))
+decode = lambda c, x: c.decrypt(b64decode(x))
 
 EOD = b'EOD-EOD-EOD' # end of data
 EOF = b'EOF-EOF-EOF' # end of file
