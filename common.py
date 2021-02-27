@@ -4,7 +4,7 @@ from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 
 pr = print
-cls = os.system('cls' if os.name == 'nt' else 'clear')
+cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 encode = lambda c, x: b64encode(c.encrypt(x))
 decode = lambda c, x: c.decrypt(b64decode(x))
