@@ -67,7 +67,7 @@ def Receive(sock):
     if data.endswith(EOD):
       break
 
-  pr('⬇️⬇️:', data[-30:])
+  pr('⬇️⬇️ recv:', data[-30:])
 
   d = data[:-len(EOD)]
 
