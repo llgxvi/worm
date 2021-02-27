@@ -44,29 +44,34 @@ while True:
     refresh()
   except KeyboardInterrupt:
     pr('\r')
-    n = input('Enter option: ')
-    n = int(n)
+    while True:
+      n = input('Enter option: ')
+      n = int(n)
 
-    if n == -1:
-      sys.exit()
-    
-    Send(socks[n], 'activate')
-    pr('Activating client ' + str(n))
+      if n == -1:
+        sys.exit()
+
+      if n not in range(0, len(socks)):
+        pr('⚠️ Index out of range')
+        continue
 
     sock = socks[n]
     client = clients[n]
     active = True
+
+    Send(sock, 'activate')
+    pr('Activating client...')
   while active:
     try:
       data = Receive(sock)
     except Exception as e:
       pr('⚠️', e)
-      pr('⚠️ Client %s disconnected' % client)
       active = False
       close(sock, client)
       break
 
     if not data:
+      pr('⚠️ Client %s disconnected' % client)
       active = False
       close(sock, client)
       break
