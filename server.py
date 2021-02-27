@@ -1,7 +1,7 @@
 import sys
 import time
 import socket
-from common import pr, clear, Send, Receive
+from common import pr, cls, Send, Receive
 
 # server socket
 server = socket.socket()
@@ -17,10 +17,10 @@ active = False
 def close(sock, client):
   socks.remove(sock)
   clients.remove(client)
-  sock.close()
+  sock.close() # rm first
 
 def refresh():
-  clear()
+  cls()
   pr('Listening for clients...')
 
   if not clients:
@@ -46,35 +46,36 @@ while True:
 
   except KeyboardInterrupt:
     pr('\r')
-    activate = int(input('Enter option: '))
+    n = input('Enter option: ')
+    n = int(n)
 
-    if activate == -1:
+    if n == -1:
       sys.exit()
     
-    Send(socks[activate], 'activate')
-    pr('Activating client ' + str(activate))
+    Send(socks[n], 'activate')
+    pr('Activating client ' + str(n))
 
-    sock = socks[activate]
-    client = clients[activate]
+    sock = socks[n]
+    client = clients[n]
     active = True
 
   while active:
     try:
       data = Receive(sock)
     except Exception as e:
-      print(e)
-      pr('Client %s disconnected' % client)
+      pr('⚠️', e)
+      pr('⚠️ Client %s disconnected' % client)
       active = False
       close(sock, client)
       break
 
-    # if not data:
-    #   active = False
-    #   close(sock, client)
-    #   break
+    if not data:
+      active = False
+      close(sock, client)
+      break
 
     if type(data) == str:
-      print(data, end='')
+      pr(data, end='')
 
     # ⬇️
     else:
@@ -82,8 +83,8 @@ while True:
         f = open(data[0], 'wb')
         f.write(data[1])
         f.close()
-      except IOError:
-        pr('Error opening file')
+      except Exception as e:
+        pr('⚠️', e)
      
       continue # recv more
 
@@ -103,11 +104,10 @@ while True:
         f = open(fn, 'rb')
         d = f.read()
         f.close()
-
         Send(sock, d, fn)
         time.sleep(1)
-      except IOError:
-        pr('Error opening file')
+      except Exception as e:
+        pr('⚠️', e)
 
     else:
       Send(sock, nc)
