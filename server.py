@@ -5,6 +5,7 @@ from common import pr, cls, Send, Receive
 
 # server socket
 server = socket.socket()
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind(('', 1000))
 server.listen()
 server.settimeout(10)
