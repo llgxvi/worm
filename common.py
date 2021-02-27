@@ -1,6 +1,6 @@
 import os
 import socket
-from b64 import encode, decode
+from codec import encode, decode
 
 pr = print
 cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
