@@ -49,7 +49,7 @@ def Receive(sock, decipher):
 
   if data and not data.endswith(EOD):
     pr('⚠️ Data not end with EOD')
-    return ''
+    return b''
 
   d = data[:-len(EOD)]
 
