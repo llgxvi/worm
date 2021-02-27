@@ -6,7 +6,7 @@ from base64 import b64encode, b64decode
 encode = lambda c, x: b64encode(c.encrypt(x))
 decode = lambda c, x: c.decrypt(b64decode(x))
 
-pr = lambda s: print(s)
+pr = print
 
 def clear():
     if os.name == 'nt':
@@ -42,7 +42,7 @@ def Send(sock, data, fn=None):
   try:
     sock.sendall(encode(cipher, data))
   except socket.error as e:
-    print('⚠️ sendall:', e)
+    pr('⚠️ sendall:', e)
 
 def Receive(sock):
   data = b''
@@ -51,21 +51,21 @@ def Receive(sock):
     try:
       d = sock.recv(1024)
     except socket.error as e:
-      print('⚠️ recv:', e)
+      pr('⚠️ recv:', e)
       break
 
     if not d:
       pr('🥅 recv empty')
       break
 
-    print('⬇️ recv:', len(d), d[:20])
+    pr('⬇️ recv:', len(d), d[:20])
 
     data += decode(decipher, d)
 
     if data.endswith(EOD):
       break
 
-  print('⬇️⬇️', data[-30:])
+  pr('⬇️⬇️:', data[-30:])
 
   d = data[:-len(EOD)]
 
