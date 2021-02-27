@@ -6,6 +6,9 @@
 [None] * 2 is [None, None]
 ```
 
+int() will strip first
+`int('  1  ')`
+
 ### socket
 **https://docs.python.org/2/howto/sockets.html**
 https://docs.python.org/3/library/socket.html
