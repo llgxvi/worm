@@ -49,7 +49,7 @@ def Send(sock, data, fn=None):
 def Receive(sock):
   data = b''
 
-  while(True):
+  while True:
     try:
       d = sock.recv(1024)
     except socket.error as e:
