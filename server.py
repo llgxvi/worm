@@ -62,8 +62,7 @@ while True:
     client = clients[n]
     active = True
 
-    Send(sock, 'activate')
-    pr('Activating client...')
+    Send(sock, 'pwd')
   while active:
     try:
       data = Receive(sock)
