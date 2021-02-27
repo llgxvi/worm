@@ -110,6 +110,7 @@ while True:
         time.sleep(1)
       except Exception as e:
         pr('⚠️', e)
+        Send(sock, 'cd')
 
     else:
       Send(sock, nc)
