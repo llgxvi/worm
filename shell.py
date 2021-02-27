@@ -10,7 +10,6 @@ HOST = '127.0.0.1'
 PORT = 1000
 
 sock = None
-active = False
 
 def upload(sock, fn):
   try:
@@ -56,15 +55,10 @@ while True:
     sock = socket.socket()
     sock.connect((HOST, PORT))
 
-    if Receive(sock) == 'activate':
-      active = True
-      Send(sock, cwd())
-
-    while active:
+    while True:
       data = Receive(sock)
 
       if not data:
-        active = False
         sock.close()
         break
 
