@@ -15,6 +15,9 @@ int() will strip first
 
 ⚠️ Blocking socket needs to work with KeyboardInterupt (ctrl + c)
 
+`os.chdir('~')`
+https://stackoverflow.com/questions/41733251/os-chdir-to-relative-home-directory-home-usr
+
 ### socket
 https://docs.python.org/2/howto/sockets.html
 https://docs.python.org/3/library/socket.html
