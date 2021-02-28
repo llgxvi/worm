@@ -1,21 +1,14 @@
 ### python
-`None == '' is False`
+❌ `None == ''`
+✅ `not [] == True`
+✅ `[] * 2 == []`
+✅ `[None] * 2 == [None, None]`
 
-`not [] is True`
-
-```
-[] * 2 is []
-[None] * 2 is [None, None]
-```
-
-int() will strip first
-`int('  1  ')`
+`int('  1  ')` strip first
 
 `os.chdir('  /  ')` won't trim for you
 
 `open(' x.jpg  ')` raise error
-
-⚠️ Blocking socket needs to work with KeyboardInterupt (ctrl + c)
 
 `os.chdir('~')`
 https://stackoverflow.com/questions/41733251/os-chdir-to-relative-home-directory-home-usr
