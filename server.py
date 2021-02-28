@@ -97,6 +97,7 @@ while True:
       except Exception as e:
         pr('⚠️', e)
       Send(sock, cipher, 'pwd')
+      continue
 
     nc = _input()
 
@@ -112,10 +113,9 @@ while True:
         d = f.read()
         f.close()
         Send(sock, cipher, d, fn)
-        time.sleep(1)
       except Exception as e:
         pr('⚠️', e)
-        Send(sock, cipher, 'pwd') # TODO
+        Send(sock, cipher, 'pwd')
 
     else:
       Send(sock, cipher, nc)
