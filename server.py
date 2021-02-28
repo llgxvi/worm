@@ -51,7 +51,7 @@ while True:
 
   except KeyboardInterrupt:
     while True:
-      o = input('Enter option: ')
+      o = input('\rEnter option: ') # \r clears print of ctrl + c (^C)
       o = o.strip()
       if o:
         break
