@@ -5,6 +5,14 @@ from codec import encode, decode
 pr = print
 cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
+def _input(s):
+  while True:
+    i = input(s + ': ')
+    i = i.strip()
+    if not i:
+      break
+  return i
+
 EOD = b'EOD-EOD-EOD' # end of data
 EOF = b'EOF-EOF-EOF' # end of file
 EFN = b'EFN-EFN-EFN' # end of file name
