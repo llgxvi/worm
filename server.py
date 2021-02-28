@@ -78,7 +78,7 @@ while True:
       break
 
     if not data:
-      pr('⚠️ Client %s disconnected' % client)
+      pr('⚠️ Client disconnected')
       active = False
       close(sock, client)
       break
@@ -92,7 +92,7 @@ while True:
         f.close()
       except Exception as e:
         pr('⚠️', e)
-      continue # more data to recv after file
+      continue # ‼️ file transmission related data come immediately after
 
     while True:
       nc = input()
@@ -106,7 +106,7 @@ while True:
       break
 
     elif nc.startswith('ul '):
-      fn = nc[3:]
+      fn = nc[3:].strip()
       try:
         f = open(fn, 'rb')
         d = f.read()
@@ -115,7 +115,7 @@ while True:
         time.sleep(1)
       except Exception as e:
         pr('⚠️', e)
-        Send(sock, cipher, 'cd')
+        Send(sock, cipher, 'pwd') # TODO
 
     else:
       Send(sock, cipher, nc)
