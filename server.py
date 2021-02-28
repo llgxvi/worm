@@ -93,9 +93,9 @@ while True:
         f = open(data[0], 'wb')
         f.write(data[1])
         f.close()
+        pr('🍺 File dl success')
       except Exception as e:
         pr('⚠️', e)
-      continue # ‼️ file transmission related data come immediately after
 
     nc = _input()
 
