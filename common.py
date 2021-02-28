@@ -11,7 +11,7 @@ def _input(s=''):
   while True:
     i = input(s)
     i = i.strip()
-    if not i:
+    if i:
       break
   return i
 
