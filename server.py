@@ -96,6 +96,7 @@ while True:
         pr('🍺 File dl success')
       except Exception as e:
         pr('⚠️', e)
+      Send(sock, cipher, 'pwd')
 
     nc = _input()
 
