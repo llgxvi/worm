@@ -1,8 +1,20 @@
 ### python
-❌ `None == ''`
-✅ `not [] == True`
-✅ `[] * 2 == []`
-✅ `[None] * 2 == [None, None]`
+People choose python for its simplicity (like implicit typing);
+this should also be the guiding principle in `if` condition - 
+unless necessary, make it as short as possible.
+
+Some function will trim its string argument,
+problem is we'll never remember which one.
+Intuition doesn't always work (I thought this function should do it for me 🤷🏿).
+It's a good consideration until it becomes just one more memory load.
+Just trim all string (input) first.
+
+```
+❌ None == ''
+✅ not [] == True
+✅ [] * 2 == []
+✅ [None] * 2 == [None, None]
+```
 
 `int('  1  ')` strip first
 
