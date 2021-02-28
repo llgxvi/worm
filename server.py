@@ -4,7 +4,7 @@ import sys
 import time
 import socket
 from cipher import get_cipher
-from common import pr, cls, Send, Receive
+from common import pr, cls, _input, Send, Receive
 
 # server socket
 server = socket.socket()
@@ -50,12 +50,7 @@ while True:
     refresh()
 
   except KeyboardInterrupt:
-    while True:
-      o = input('\rEnter option: ') # \r clears print of ctrl + c (^C)
-      o = o.strip()
-      if o:
-        break
-
+    o = _input('\rEnter option') # \r clears print of ctrl + c (^C)
     o = int(o)
 
     if o == -1:
@@ -102,11 +97,7 @@ while True:
         pr('⚠️', e)
       continue # ‼️ file transmission related data come immediately after
 
-    while True:
-      nc = input()
-      nc = nc.strip()
-      if nc:
-        break
+    nc = _input()
 
     if nc == '-1':
       active = False
