@@ -11,6 +11,8 @@ int() will strip first
 
 `os.chdir('  /  ')` won't trim for you
 
+⚠️ Blocking socket needs to work with KeyboardInterupt (ctrl + c)
+
 ### socket
 https://docs.python.org/2/howto/sockets.html
 https://docs.python.org/3/library/socket.html
