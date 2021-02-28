@@ -6,8 +6,10 @@ pr = print
 cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 def _input(s=''):
+  if s:
+    s += ': '
   while True:
-    i = input(s + ': ')
+    i = input(s)
     i = i.strip()
     if not i:
       break
