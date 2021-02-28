@@ -12,8 +12,9 @@ int() will strip first
 `os.chdir('  /  ')` won't trim for you
 
 ### socket
-**https://docs.python.org/2/howto/sockets.html**
+https://docs.python.org/2/howto/sockets.html
 https://docs.python.org/3/library/socket.html
+https://docs.python.org/3/library/signal.html
 
 bind() empty string
 https://stackoverflow.com/questions/39815633/i-have-get-really-confused-in-ip-types-with-sockets-empty-string-local-host
