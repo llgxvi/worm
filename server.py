@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import sys
-import time
 import socket
 from cipher import get_cipher
 from common import pr, cls, _input, Send, Receive
@@ -72,13 +71,7 @@ while True:
     Send(sock, cipher, 'pwd')
 
   while active:
-    try:
-      data = Receive(sock, decipher)
-    except Exception as e:
-      pr('⚠️', e)
-      active = False
-      close(sock, client)
-      break
+    data = Receive(sock, decipher)
 
     if not data:
       pr('⚠️ Client disconnected')
