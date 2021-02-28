@@ -1,4 +1,6 @@
 ### python
+`None == '' is False`
+
 `not [] is True`
 
 ```
