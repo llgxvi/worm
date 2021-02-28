@@ -21,7 +21,7 @@ def upload(sock, fn):
     d = f.read()
     f.close()
     Send(sock, cipher, d, fn)
-    ret = ''
+    ret = None
   except Exception as e:
     return str(e) + ' ⚠️'
 
@@ -95,5 +95,5 @@ while True:
       except Exception as e:
         ret = str(e) + ' ⚠️'
 
-    if ret:
+    if ret != None:
       Send(sock, cipher, res(ret))
