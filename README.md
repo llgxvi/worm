@@ -41,15 +41,15 @@ v = None: blocking
 ```
 
 sendall()
-⚠️ If somehow (unlikely) there are consecutive sendall happening,
-time interval (time.sleep) is necessary.
+⚠️ If somehow (unlikely) there are consecutive sendall (bad design) happening,
+time interval (time.sleep) may be necessary.
 
 ### python crypto
 https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 
 `pip3 install pycrypto`
 
-⚠️ If one side regenerates cipher pair, the other side needs too
+⚠️ If one side regenerates cipher pair, the other side needs too.
 
 ### subprocess
 https://docs.python.org/3/library/subprocess.html#popen-constructor
