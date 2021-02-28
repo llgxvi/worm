@@ -21,8 +21,6 @@ def upload(sock, fn):
     d = f.read()
     f.close()
     Send(sock, cipher, d, fn)
-    time.sleep(1) # TODO
-    return 'File sent 🍺'
   except Exception as e:
     return str(e) + ' ⚠️'
 
