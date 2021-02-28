@@ -28,6 +28,10 @@ v > 0:    raise socket.timeout error after v seconds
 v = None: blocking
 ```
 
+sendall()
+⚠️ If somehow (unlikely) there are consecutive sendall happening,
+time interval (time.sleep) is necessary.
+
 ### python crypto
 https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 
