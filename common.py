@@ -5,7 +5,7 @@ from codec import encode, decode
 pr = print
 cls = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
-def _input(s):
+def _input(s=''):
   while True:
     i = input(s + ': ')
     i = i.strip()
