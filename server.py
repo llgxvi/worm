@@ -42,10 +42,14 @@ while True:
       s, a = server.accept()
     except socket.timeout:
       continue
+    except KeyboardInterrupt:
+      sys.exit()
+
     s.settimeout(None)
     socks.append(s)
     clients.append(str(a))
     refresh()
+
   except KeyboardInterrupt:
     pr('\r')
     while True:
@@ -68,6 +72,7 @@ while True:
     active = True
 
     Send(sock, cipher, 'pwd')
+
   while active:
     try:
       data = Receive(sock, decipher)
