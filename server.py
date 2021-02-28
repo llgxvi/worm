@@ -33,43 +33,48 @@ def refresh():
   for i in range(0, len(clients)):
     pr('➡️ Client %d: %s' % (i, clients[i]))
 
+  pr('Press ctrl + c to continue')
+
 while True:
   refresh()
 
   try:
-    s, a = server.accept()
-  except socket.timeout:
-    continue
+    try:
+      s, a = server.accept()
+    except socket.timeout:
+      continue
+
+    s.settimeout(None)
+    socks.append(s)
+    clients.append(str(a))
+    refresh()
+
   except KeyboardInterrupt:
-    sys.exit()
+    while True:
+      o = input('Enter option: ')
+      o = o.strip()
+      if o:
+        break
 
-  s.settimeout(None)
-  socks.append(s)
-  clients.append(str(a))
-  refresh()
+    o = int(o)
 
-  while True:
-    o = input('Enter option: ')
-    o = o.strip()
-    if o:
-      break
+    if o == -1:
+      continue
 
-  o = int(o)
+    if o == -2:
+      sys.exit()
 
-  if o == -1:
-    continue
+    if o not in range(0, len(socks)):
+      pr('⚠️ Index out of range')
+      continue
 
-  if o not in range(0, len(socks)):
-    pr('⚠️ Index out of range')
-    continue
+    sock = socks[o]
+    client = clients[o]
+    cipher = get_cipher()
+    decipher = get_cipher()
+    active = True
 
-  sock = socks[o]
-  client = clients[o]
-  cipher = get_cipher()
-  decipher = get_cipher()
-  active = True
-
-  Send(sock, cipher, 'pwd')
+    Send(sock, cipher, 'pwd')
 
   while active:
     try:
