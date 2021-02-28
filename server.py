@@ -110,7 +110,7 @@ while True:
         Send(sock, cipher, d, fn)
       except Exception as e:
         pr('⚠️', e)
-        pr(prompt, end='')
+        Send(sock, cipher, 'pwd')
 
     else:
       Send(sock, cipher, nc)
