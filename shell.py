@@ -39,7 +39,7 @@ def dlhttp(sock, url):
     return str(e) + ' ⚠️'
 
 def run(s):
-  global cwd 
+  global cwd
   if s.startswith('cd'):
     try:
       os.chdir(s[3:].strip())
