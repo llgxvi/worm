@@ -45,6 +45,11 @@ def Receive(sock, decipher):
     if data.endswith(EOD):
       break
 
+    # TODO
+    # if the last recv does not end with EOD
+    # script will stuck at next recv (blocking)
+    # one scenario is cipher pair out of sync
+
   pr('⬇️⬇️ recv:', data[-30:])
 
   if data and not data.endswith(EOD):
@@ -57,7 +62,7 @@ def Receive(sock, decipher):
     d = d[:-len(EOF)]
     d = d.split(EFN, 1)
     d[0] = d[0].decode()
-  elif d: 
+  elif d:
     d = d.decode()
 
   return d
