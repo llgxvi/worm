@@ -11,7 +11,7 @@ int() will strip first
 
 `os.chdir('  /  ')` won't trim for you
 
-open(' x.jpg  ') raise error
+`open(' x.jpg  ')` raise error
 
 ⚠️ Blocking socket needs to work with KeyboardInterupt (ctrl + c)
 
