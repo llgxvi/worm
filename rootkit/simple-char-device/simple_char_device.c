@@ -59,6 +59,7 @@ void reverse(char *data_tmp) {
       insert_word(word);
       j = -1;
     }
+    printk("🍺 %s", word);
   }
 }
 
@@ -83,7 +84,7 @@ ssize_t reverse_write(
         const char *buff,
         size_t len,
         loff_t *off) {
-  char data_tmp[DEVICE_SIZE+1];
+  char data_tmp[DEVICE_SIZE - 1];
 
   ssize_t b = copy_from_user(data_tmp, buff, len);
 
