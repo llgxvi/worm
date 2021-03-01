@@ -45,8 +45,13 @@ void reverse(char *data_tmp) {
   int i = data_tmp_len - 1;
   int j = 0;
   for(; i >= 0; i--, j++) {
-    if(data_tmp[i] != ' ')
+    if(data_tmp[i] != ' ') {
       word[j] = data_tmp[i];
+      if(i == 0) {
+        word[j] = '\0';
+        insert_word(word);
+      }
+    }
     else {
       word[j] = '\0';
       insert_word(word);
@@ -54,8 +59,6 @@ void reverse(char *data_tmp) {
     }
   }
 
-  word[j] = '\0';
-  insert_word(word);
   data[data_tmp_len] = '\0';
 }
 
