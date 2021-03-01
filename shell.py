@@ -14,7 +14,7 @@ PORT = 1000
 
 sock = None
 cwd = os.getcwd()
-ret = '' # '' or 'xxx'
+ret = '' # ‼️ '', 'xxx', True
 
 def upload(sock, fn):
   try:
@@ -38,7 +38,7 @@ def dlhttp(sock, url):
   except Exception as e:
     return str(e) + ' ⚠️'
 
-# @return: '' or 'xxx'
+# ‼️ return: '' or 'xxx'
 def run(s):
   global cwd
   if s.startswith('cd'):
