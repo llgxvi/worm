@@ -10,30 +10,30 @@
 #define NAME "simple_char_device"
 #define DEVICE_SIZE 512
 
-char data[DEVICE_SIZE] = "no data has been written yet";
+char data[DEVICE_SIZE - 1] = "no data has been written yet";
 
 //
 void insert_word(char *word)
 {
-  int len = strlen(word)
-  char word_tmp[len + 1];
-  static int first = 1
+  int word_len = strlen(word);
+  int data_len = strlen(data);
+  char word_tmp[word_len + 1];
+  static int first = 1;
 
-  int i = len - 1;
+  int i = word_len - 1;
   int j = 0;
   for(; i >= 0; i--, j++)
     word_tmp[j] = word[i];
 
-  word_tmp[len] = '\0';
+  word_tmp[word_len] = '\0';
 
   if(first) {
     first = 0
     strcpy(data, word_tmp);
   } 
   else {
-    int l = strlen(data)
-    data[l] = ' ';
-    data[l + 1] = '\0';
+    data[data_len] = ' ';
+    data[data_len + 1] = '\0';
     strcat(data, word_tmp);
   }
 }
