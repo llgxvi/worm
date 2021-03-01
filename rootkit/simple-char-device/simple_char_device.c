@@ -29,6 +29,7 @@ void insert_word(char *word)
 
   if(first) {
     first = 0;
+    memset(data, 0, sizeof data);
     strcpy(data, word_tmp);
   } 
   else {
