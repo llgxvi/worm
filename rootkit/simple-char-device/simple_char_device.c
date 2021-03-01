@@ -103,13 +103,13 @@ static struct miscdevice md = {
 //
 int reverse_init(void) {
   misc_register(&md);
-  printk("module simple-char-device loaded\n");
+  printk("simple char device loaded\n");
   return 0;
 }
 
 void reverse_exit(void) {
   misc_deregister(&md);
-  printk("module simple-char-device removed\n");
+  printk("simple char device removed\n");
 }
 
 //
