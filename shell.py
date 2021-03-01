@@ -50,10 +50,10 @@ def run(s):
       return str(e) + ' ⚠️'
   p = sp.Popen(s, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
   out, err = p.communicate()
-  if out or out == b'':
-    return out.decode()
-  else:
+  if err: # ‼️ test order is significant
     return err.decode()
+  else:
+    return out.decode()
 
 def res():
   global cwd, ret
