@@ -18,12 +18,12 @@ void insert_word(char *word, unsigned int n)
   int i, c;
   char tmpword[DEVICE_SIZE+1];
 
-  for (i=strlen(word)-1, c=0; i >= 0; i--, c++)
+  for(i=strlen(word)-1, c=0; i >= 0; i--, c++)
     tmpword[c] = word[i];
   
   tmpword[strlen(word)] = '\0';
 
-  if (n == 0) {
+  if(n == 0) {
     memset(data, 0, sizeof data);
     strcpy(data, tmpword);
   } 
@@ -67,7 +67,7 @@ ssize_t reverse_read(
   ssize_t b = copy_to_user(buff, data, strlen(data));
 
   if(b != 0) {
-    printk( "Kernel -> userspace copy failed\n");
+    printk("Kernel -> userspace copy failed\n");
     return -1;
   }
 
@@ -81,8 +81,8 @@ ssize_t reverse_write(
         loff_t *offp) {
   char tmpdata[DEVICE_SIZE+1];
 
-  if (copy_from_user(tmpdata,buff,count) != 0) {
-    printk( "Userspace -> kernel copy failed\n");
+  if(copy_from_user(tmpdata,buff,count) != 0) {
+    printk("Userspace -> kernel copy failed\n");
     return -1;
   }
 
