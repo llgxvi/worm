@@ -102,7 +102,7 @@ while True:
       break
 
     if nc.startswith('ul '):
-      fn = nc[3:].strip()
+      fn = nc[3:]
       try:
         f = open(fn, 'rb')
         d = f.read()
