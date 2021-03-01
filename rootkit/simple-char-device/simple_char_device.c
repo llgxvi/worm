@@ -15,22 +15,23 @@ char data[DEVICE_SIZE+1]="no data has been written yet";
 //
 void insert_word(char *word, unsigned int n)
 {
-  int i, c;
-  char tmpword[DEVICE_SIZE+1];
+  int i = strlen(word) - 1
+  int j = 0
+  char word_tmp[DEVICE_SIZE+1];
 
-  for(i=strlen(word)-1, c=0; i >= 0; i--, c++)
-    tmpword[c] = word[i];
+  for(; i >= 0; i--, j++)
+    word_tmp[c] = word[i];
   
-  tmpword[strlen(word)] = '\0';
+  word_tmp[strlen(word)] = '\0';
 
   if(n == 0) {
     memset(data, 0, sizeof data);
-    strcpy(data, tmpword);
+    strcpy(data, word_tmp);
   } 
   else {
     data[strlen(data)] = ' ';
     data[strlen(data)+1] = '\0';
-    strcat(data, tmpword);
+    strcat(data, word_tmp);
   }
 }
 
