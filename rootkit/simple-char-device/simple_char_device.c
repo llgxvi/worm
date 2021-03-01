@@ -60,12 +60,14 @@ void reverse(char *tmpdata) {
 
 //
 ssize_t reverse_read(
-        struct file *filep,
+        struct file *fp,
         char *buff,
-        size_t count,
-        loff_t *offp) {
-  if(copy_to_user(buff,data,strlen(data)) != 0) {
-    printk( "Kernel -> userspace copy failed!\n");
+        size_t len,
+        loff_t *off) {
+  ssize_t b = copy_to_user(buff, data, strlen(data));
+
+  if(b != 0) {
+    printk( "Kernel -> userspace copy failed\n");
     return -1;
   }
 
@@ -80,7 +82,7 @@ ssize_t reverse_write(
   char tmpdata[DEVICE_SIZE+1];
 
   if (copy_from_user(tmpdata,buff,count) != 0) {
-    printk( "Userspace -> kernel copy failed!\n");
+    printk( "Userspace -> kernel copy failed\n");
     return -1;
   }
 
