@@ -6,48 +6,43 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define CDEV_DEVICE "simple_char_device"
+#define DEVICE "simple_char_device"
+#define SIZE 511
 
-static char buf[512+1];
+static char buf[SIZE];
 
 int main(int argc, char *argv[]) {
-  int fd, len;
+  int fd = open("/dev/" DEVICE, O_RDWR);
+  int len = strlen(argv[1]);
 
-  if(argc != 2) {
-    printf("Usage: %s <string>\n", argv[0]);
+  if(len > SIZE) {
+    printf("⚠️ String too long\n");
     exit(0);
   }
 
-  if((len = strlen(argv[1]) + 1) > 512) {
-    printf("ERROR: String too long\n");
-    exit(0);
-  }
-
-  fd = fd=open("/dev/" CDEV_DEVICE, O_RDWR);
-
-  if (fd == -1){
-    perror("/dev/" CDEV_DEVICE);
+  if(fd == -1) {
+    perror("/dev/" DEVICE);
     exit(1);
   }
 
-  printf("fd :%d\n",fd);
+  printf("fd: %d\n", fd);
 
-  if (read(fd, buf, len) == -1)
+  if(read(fd, buf, len) == -1)
     perror("read()");
   else
-    printf("Before: \"%s\".\n", buf);
+    printf("Before: %s\n", buf);
 
-  if (write(fd, argv[1], len) == -1)
+  if(write(fd, argv[1], len) == -1)
     perror("write()");
   else
-    printf("Wrote: \"%s\".\n", argv[1]);
+    printf("Wrote: %s\n", argv[1]);
 
-  if (read(fd, buf, len) == -1)
+  if(read(fd, buf, len) == -1)
     perror("read()"); 
   else    
-    printf("After: \"%s\".\n", buf);
+    printf("After: %s\n", buf);
 
-  if ((close(fd)) == -1) {
+  if((close(fd)) == -1) {
     perror("close()");
     exit(1);
   }
