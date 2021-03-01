@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define CDEV_DEVICE "simple char device"
+#define CDEV_DEVICE "simple_char_device"
 
 static char buf[512+1];
 
