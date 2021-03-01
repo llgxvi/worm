@@ -38,7 +38,7 @@ def dlhttp(sock, url):
   except Exception as e:
     return str(e) + ' ⚠️'
 
-# ‼️ return: '' or 'xxx'
+# ‼️ return: '', 'xxx'
 def run(s):
   global cwd
   if s.startswith('cd'):
