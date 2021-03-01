@@ -13,7 +13,7 @@
 char data[DEVICE_SIZE+1]="no data has been written yet";
 
 //
-void insert_word(char *word, unsigned int n)
+void insert_word(char *word, int n)
 {
   int i = strlen(word) - 1;
   int j = 0;
@@ -25,7 +25,6 @@ void insert_word(char *word, unsigned int n)
   word_tmp[strlen(word)] = '\0';
 
   if(n == 0) {
-    memset(data, 0, sizeof data);
     strcpy(data, word_tmp);
   } 
   else {
