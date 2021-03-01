@@ -10,50 +10,52 @@
 #define NAME "simple_char_device"
 #define DEVICE_SIZE 512
 
-char data[DEVICE_SIZE+1]="no data has been written yet";
+char data[DEVICE_SIZE] = "no data has been written yet";
 
 //
-void insert_word(char *word, int n)
+void insert_word(char *word)
 {
-  int i = strlen(word) - 1;
-  int j = 0;
-  char word_tmp[DEVICE_SIZE+1];
+  int len = strlen(word)
+  char word_tmp[len + 1];
+  static int first = 1
 
+  int i = len - 1;
+  int j = 0;
   for(; i >= 0; i--, j++)
     word_tmp[j] = word[i];
-  
-  word_tmp[strlen(word)] = '\0';
 
-  if(n == 0) {
+  word_tmp[len] = '\0';
+
+  if(first) {
+    first = 0
     strcpy(data, word_tmp);
   } 
   else {
-    data[strlen(data)] = ' ';
-    data[strlen(data)+1] = '\0';
+    int l = strlen(data)
+    data[l] = ' ';
+    data[l + 1] = '\0';
     strcat(data, word_tmp);
   }
 }
 
 void reverse(char *data_tmp) {
+  char word[DEVICE_SIZE];
+
   int i = strlen(data_tmp) - 1;
   int j = 0;
-  int n = 0;
-  char word[DEVICE_SIZE+1];
-
   for(; i >= 0; i--, j++) {
     if(data_tmp[i] != ' ')
       word[j] = data_tmp[i];
     else {
       word[j] = '\0';
-      insert_word(word, n);
-      n += 1;
+      insert_word(word);
       j = -1;
     }
   }
 
   word[j] = '\0';
-  insert_word(word, n);
-  data[i+1] = '\0';
+  insert_word(word);
+  data[strlen(data_tmp)] = '\0';
 }
 
 //
