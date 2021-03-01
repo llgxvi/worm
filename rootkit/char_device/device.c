@@ -103,11 +103,13 @@ static struct miscdevice md = {
 //
 int reverse_init(void) {
   misc_register(&md);
+  printk("module device loaded\n")
   return 0;
 }
 
 void reverse_exit(void) {
   misc_deregister(&md);
+  printk("module device removed\n")
 }
 
 //
