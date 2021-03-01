@@ -11,6 +11,8 @@ Just trim all string (input) first.
 
 ```
 ❌ None == ''
+❌ 'xxx' == True
+❌ [] == ''
 ✅ not [] == True
 ✅ [] * 2 == []
 ✅ [None] * 2 == [None, None]
