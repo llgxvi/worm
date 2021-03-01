@@ -1,4 +1,5 @@
 import os
+import re
 import socket
 from codec import encode, decode
 
@@ -13,6 +14,7 @@ def _input(s=''):
     i = i.strip()
     if i:
       break
+  i = re.sub('\s+', ' ', i, 1)
   return i
 
 EOD = b'EOD-EOD-EOD' # end of data
