@@ -13,8 +13,7 @@
 char data[DEVICE_SIZE - 1] = "no data has been written yet";
 
 //
-void insert_word(char *word)
-{
+void insert_word(char *word) {
   int word_len = strlen(word);
   int data_len = strlen(data);
   char word_tmp[DEVICE_SIZE - 1];
@@ -29,7 +28,7 @@ void insert_word(char *word)
 
   if(first) {
     first = 0;
-    memset(data, 0, sizeof data);
+    memset(data, '\0', sizeof(data));
     strcpy(data, word_tmp);
   } 
   else {
@@ -59,8 +58,6 @@ void reverse(char *data_tmp) {
       j = -1;
     }
   }
-
-  data[data_tmp_len] = '\0';
 }
 
 //
