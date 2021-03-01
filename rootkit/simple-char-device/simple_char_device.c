@@ -34,28 +34,26 @@ void insert_word(char *word, unsigned int n)
   }
 }
 
-void reverse(char *tmpdata) {
-  int l;
-  int i, c;
-  unsigned int n = 0;
+void reverse(char *data_tmp) {
+  int i = strlen(data_tmp) - 1;
+  int j = 0;
+  int n = 0;
   char word[DEVICE_SIZE+1];
 
-  l = strlen(tmpdata)-1;
-
-  for(i=l, c = 0; i >= 0; i--, c++) {
-    if (tmpdata[i] == ' ') {
-      word[c] = '\0';
+  for(; i >= 0; i--, j++) {
+    if(data_tmp[i] != ' ')
+      word[j] = data_tmp[i];
+    else {
+      word[j] = '\0';
       insert_word(word, n);
       n += 1;
-      c = -1;
-    } 
-    else
-      word[c] = tmpdata[i];
+      j = -1;
+    }
   }
 
-  word[c] = '\0';
+  word[j] = '\0';
   insert_word(word, n);
-  data[strlen(tmpdata)] = '\0';
+  data[i+1] = '\0';
 }
 
 //
