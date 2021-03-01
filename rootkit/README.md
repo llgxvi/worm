@@ -11,6 +11,6 @@
 
 dmesg -T | grep rooty
 dmesg -T | tail -n 1
-lsmod -T | grep rooty
+lsmod | grep rooty
 grep rooty /proc/modules
 ```
