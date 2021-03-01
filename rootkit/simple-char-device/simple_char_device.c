@@ -48,7 +48,7 @@ void reverse(char *data_tmp) {
     if(data_tmp[i] != ' ') {
       word[j] = data_tmp[i];
       if(i == 0) {
-        word[j] = '\0';
+        word[j + 1] = '\0';
         insert_word(word);
       }
     }
