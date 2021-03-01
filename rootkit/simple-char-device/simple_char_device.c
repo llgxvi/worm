@@ -11,13 +11,13 @@
 #define DEVICE_SIZE 512
 
 char data[DEVICE_SIZE - 1] = "no data has been written yet";
+int first = 1;
 
 //
 void insert_word(char *word) {
   int word_len = strlen(word);
   int data_len = strlen(data);
   char word_tmp[DEVICE_SIZE - 1];
-  static int first = 1;
 
   int i = word_len - 1;
   int j = 0;
@@ -50,6 +50,8 @@ void reverse(char *data_tmp) {
       if(i == 0) {
         word[j + 1] = '\0';
         insert_word(word);
+        data[data_tmp_len] = '\0';
+        first = 1;
       }
     }
     else {
