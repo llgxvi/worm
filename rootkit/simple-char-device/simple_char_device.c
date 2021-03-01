@@ -15,12 +15,12 @@ char data[DEVICE_SIZE+1]="no data has been written yet";
 //
 void insert_word(char *word, unsigned int n)
 {
-  int i = strlen(word) - 1
-  int j = 0
+  int i = strlen(word) - 1;
+  int j = 0;
   char word_tmp[DEVICE_SIZE+1];
 
   for(; i >= 0; i--, j++)
-    word_tmp[c] = word[i];
+    word_tmp[j] = word[i];
   
   word_tmp[strlen(word)] = '\0';
 
