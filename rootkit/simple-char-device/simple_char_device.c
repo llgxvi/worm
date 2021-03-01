@@ -28,7 +28,7 @@ void insert_word(char *word)
   word_tmp[word_len] = '\0';
 
   if(first) {
-    first = 0
+    first = 0;
     strcpy(data, word_tmp);
   } 
   else {
@@ -39,9 +39,10 @@ void insert_word(char *word)
 }
 
 void reverse(char *data_tmp) {
-  char word[DEVICE_SIZE];
+  int data_tmp_len = strlen(data_tmp);
+  char word[data_tmp_len + 1];
 
-  int i = strlen(data_tmp) - 1;
+  int i = data_tmp_len - 1;
   int j = 0;
   for(; i >= 0; i--, j++) {
     if(data_tmp[i] != ' ')
@@ -55,7 +56,7 @@ void reverse(char *data_tmp) {
 
   word[j] = '\0';
   insert_word(word);
-  data[strlen(data_tmp)] = '\0';
+  data[data_tmp_len] = '\0';
 }
 
 //
