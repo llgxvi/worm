@@ -102,18 +102,18 @@ struct miscdevice md = {
 };
 
 //
-int _init() {
+int f_init(void) {
   misc_register(&md);
   printk("%s loaded\n", NAME);
   return 0;
 }
 
-void _exit() {
+void f_exit(void) {
   misc_deregister(&md);
   printk("%s removed\n", NAME);
 }
 
 //
 MODULE_LICENSE("GPL");
-module_init(_init);
-module_exit(_exit);
+module_init(f_init);
+module_exit(f_exit);
