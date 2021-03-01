@@ -4,8 +4,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#define CDEV_DEVICE "reverse"
+#define CDEV_DEVICE "simple char device"
 
 static char buf[512+1];
 
