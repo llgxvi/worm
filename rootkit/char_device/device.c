@@ -11,7 +11,7 @@ MODULE_LICENSE("GPL");
 
 char data[DEVICE_SIZE+1]="no data has been written yet";
 
-#
+//
 void insert_word(char *word, unsigned int n)
 {
   int i, c;
@@ -57,7 +57,7 @@ void reverse(char *tmpdata) {
   data[strlen(tmpdata)] = '\0';
 }
 
-#
+//
 ssize_t reverse_read(
         struct file *filep,
         char *buff,
@@ -87,20 +87,20 @@ ssize_t reverse_write(
   return 0;
 }
 
-# file ops
+// file ops
 struct file_operations fops = {
   read: reverse_read,
   write: reverse_write
 };
 
-# misc device
+// misc device
 static struct miscdevice md = {
   .minor = MISC_DYNAMIC_MINOR,
   .name = "reverse",
   .fops = &fops
 };
 
-#
+//
 int reverse_init(void) {
   misc_register(&md);
   return 0;
@@ -110,6 +110,6 @@ void reverse_exit(void) {
   misc_deregister(&md);
 }
 
-#
+//
 module_init(reverse_init);
 module_exit(reverse_exit);
