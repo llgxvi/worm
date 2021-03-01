@@ -58,3 +58,14 @@ https://docs.python.org/3/library/subprocess.html#popen-constructor
 
 Subprocess change directory
 https://stackoverflow.com/questions/21406887/subprocess-changing-directory
+
+```
+p = sp.Popen('xxx', shell=True)
+p.communicate() # (None, None)
+
+p = sp.Popen('xxx', shell=True, stdout=sp.PIPE)
+p.communicate() # (b'', None)
+
+p = sp.Popen('xxx', shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
+p.communicate() # (b'', b'')
+```
