@@ -7,8 +7,6 @@
 #include <asm/uaccess.h>
 #include <linux/uaccess.h>
 
-MODULE_LICENSE("GPL");
-
 #define NAME "simple_char_device"
 #define DEVICE_SIZE 512
 
@@ -97,7 +95,7 @@ struct file_operations fops = {
 };
 
 // misc device
-static struct miscdevice md = {
+struct miscdevice md = {
   .minor = MISC_DYNAMIC_MINOR,
   .name = NAME,
   .fops = &fops
@@ -116,5 +114,6 @@ void reverse_exit(void) {
 }
 
 //
+MODULE_LICENSE("GPL");
 module_init(reverse_init);
 module_exit(reverse_exit);
