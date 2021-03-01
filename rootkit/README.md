@@ -10,6 +10,6 @@
 /sys/module
 
 dmesg | grep rooty
-
 grep rooty /proc/modules
+lsmod | grep rooty
 ```
