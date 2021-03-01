@@ -2,11 +2,14 @@
 #include <linux/init.h>
 #include <linux/miscdevice.h>
 #include <linux/fs.h>
+
+#TODO
 #include <asm/uaccess.h>
 #include <linux/uaccess.h>
 
 MODULE_LICENSE("GPL");
 
+#define NAME "simple_char_device"
 #define DEVICE_SIZE 512
 
 char data[DEVICE_SIZE+1]="no data has been written yet";
@@ -96,20 +99,20 @@ struct file_operations fops = {
 // misc device
 static struct miscdevice md = {
   .minor = MISC_DYNAMIC_MINOR,
-  .name = "simple char device",
+  .name = NAME,
   .fops = &fops
 };
 
 //
 int reverse_init(void) {
   misc_register(&md);
-  printk("simple char device loaded\n");
+  printk("%s loaded\n", NAME);
   return 0;
 }
 
 void reverse_exit(void) {
   misc_deregister(&md);
-  printk("simple char device removed\n");
+  printk("%s removed\n", NAME);
 }
 
 //
