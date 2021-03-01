@@ -9,8 +9,8 @@
 /proc/modules
 /sys/module
 
-dmesg | grep rooty
-dmesg | tail -n 1
-lsmod | grep rooty
+dmesg -T | grep rooty
+dmesg -T | tail -n 1
+lsmod -T | grep rooty
 grep rooty /proc/modules
 ```
