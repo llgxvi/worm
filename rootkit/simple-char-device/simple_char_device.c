@@ -17,7 +17,7 @@ void insert_word(char *word)
 {
   int word_len = strlen(word);
   int data_len = strlen(data);
-  char word_tmp[word_len + 1];
+  char word_tmp[DEVICE_SIZE - 1];
   static int first = 1;
 
   int i = word_len - 1;
@@ -40,7 +40,7 @@ void insert_word(char *word)
 
 void reverse(char *data_tmp) {
   int data_tmp_len = strlen(data_tmp);
-  char word[data_tmp_len + 1];
+  char word[DEVICE_SIZE - 1];
 
   int i = data_tmp_len - 1;
   int j = 0;
@@ -85,7 +85,7 @@ ssize_t reverse_write(
         loff_t *off) {
   char data_tmp[DEVICE_SIZE+1];
 
-  ssize_t b = copy_from_user(data_tmp, buff, len)
+  ssize_t b = copy_from_user(data_tmp, buff, len);
 
   if(b != 0) {
     printk("Userspace -> kernel copy failed\n");
