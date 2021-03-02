@@ -72,6 +72,8 @@ ssize_t f_read(struct file *f, char *buff, size_t len, loff_t *off) {
     return -1;
   }
 
+  buff[strlen(data)] = '\0';
+
   return strlen(data);
 }
 
