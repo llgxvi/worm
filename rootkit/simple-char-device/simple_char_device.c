@@ -30,7 +30,7 @@ void insert_word(char *word) {
     first = 0;
     memset(data, '\0', sizeof(data));
     strcpy(data, word_tmp);
-  } 
+  }
   else {
     data[data_len] = ' ';
     data[data_len + 1] = '\0';
@@ -39,10 +39,10 @@ void insert_word(char *word) {
 }
 
 void reverse(char *data_tmp) {
-  int data_tmp_len = strlen(data_tmp);
+  int data_tmp_l = strlen(data_tmp);
   char word[DEVICE_SIZE - 1];
 
-  int i = data_tmp_len - 1;
+  int i = data_tmp_l - 1;
   int j = 0;
   for(; i >= 0; i--, j++) {
     if(data_tmp[i] != ' ') {
@@ -50,7 +50,7 @@ void reverse(char *data_tmp) {
       if(i == 0) {
         word[j + 1] = '\0';
         insert_word(word);
-        data[data_tmp_len] = '\0';
+        data[data_tmp_l] = '\0';
         first = 1;
       }
     }
