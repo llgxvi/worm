@@ -64,11 +64,7 @@ void reverse(char *data_tmp) {
 }
 
 //
-ssize_t reverse_read(
-        struct file *fp,
-        char *buff,
-        size_t len,
-        loff_t *off) {
+ssize_t f_read(struct file *f, char *buff, size_t len, loff_t *off) {
   ssize_t b = copy_to_user(buff, data, strlen(data));
 
   if(b != 0) {
@@ -79,11 +75,7 @@ ssize_t reverse_read(
   return strlen(data);
 }
 
-ssize_t reverse_write(
-        struct file *fp,
-        const char *buff,
-        size_t len,
-        loff_t *off) {
+ssize_t f_write(struct file *f, const char *buff, size_t len, loff_t *off) {
   char data_tmp[DEVICE_SIZE - 1];
 
   ssize_t b = copy_from_user(data_tmp, buff, len);
@@ -99,8 +91,8 @@ ssize_t reverse_write(
 
 // file ops
 struct file_operations fops = {
-  read: reverse_read,
-  write: reverse_write
+  read: f_read,
+  write: f_write
 };
 
 // misc device
@@ -113,13 +105,13 @@ struct miscdevice md = {
 //
 int f_init(void) {
   misc_register(&md);
-  printk("%s loaded\n", NAME);
+  printk(KERN_INFO "%s loaded\n", NAME);
   return 0;
 }
 
 void f_exit(void) {
   misc_deregister(&md);
-  printk("%s removed\n", NAME);
+  printk(KERN_INFO "%s removed\n", NAME);
 }
 
 //
