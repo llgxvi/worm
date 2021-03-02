@@ -52,15 +52,15 @@ void reverse(char *data_tmp) {
         insert_word(word);
         data[data_tmp_l] = '\0';
         first = 1;
-        printk("🍺 %s", word);
-        printk("⚽️ %s", data);
+        printk("🥤 %s\n", word);
+        printk("⚽️ %s\n", data);
       }
     }
     else {
       word[j] = '\0';
       insert_word(word);
       j = -1;
-      printk("🍺 %s", word);
+      printk("🍺 %s\n", word);
     }
   }
 }
@@ -84,7 +84,7 @@ ssize_t f_write(struct file *f, const char *buff, size_t len, loff_t *off) {
     return -1;
   }
 
-  printk("🥃 %s %ld", data_tmp, strlen(data_tmp));
+  printk("🥃 %s %ld\n", data_tmp, strlen(data_tmp));
   reverse(data_tmp);
 
   return 0;
