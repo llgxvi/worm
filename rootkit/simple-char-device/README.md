@@ -3,9 +3,9 @@ input (device is written to): string
 output (device is read from): string
 
 This character device will:
-take a string when written to,
-reverse the string,
-output the reversed string when read from.
+- take a string when written to,
+- reverse the string,
+- output the reversed string when read from.
 
 ### original
 https://exploit.ph/linux-kernel-hacking/2014/06/06/a-simple-character-device/
