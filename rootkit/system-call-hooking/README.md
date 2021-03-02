@@ -27,3 +27,10 @@ struct linux_dirent {
   char           d_type;
 };
 ```
+
+### sys_call_table
+```
+grep sys_call_table /boot/System.map-$(uname -r)
+```
+
+https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
