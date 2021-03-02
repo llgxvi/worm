@@ -7,7 +7,7 @@
 #include <linux/dirent.h>
 #include <asm/cacheflush.h>
 
-#define FILE_NAME "thisisatestfile.txt"
+#define FILE_NAME "test.txt"
 
 void **sys_call_table;
 
