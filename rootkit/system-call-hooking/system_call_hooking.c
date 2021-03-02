@@ -46,14 +46,14 @@ d_name:   Filename (null-terminated)
   return rtn;
 }
 
-int set_page_w(unsigned long addr) {
+int set_page_w(uintptr_t addr) {
   unsigned int level;
   pte_t *pte = lookup_address(addr, &level);
   if (pte->pte &~ _PAGE_RW) pte->pte |= _PAGE_RW;
     return 0;
 }
 
-int set_page_r(unsigned long addr) {
+int set_page_r(uintptr_t addr) {
   unsigned int level;
   pte_t *pte = lookup_address(addr, &level);
   pte->pte = pte->pte &~_PAGE_RW;
