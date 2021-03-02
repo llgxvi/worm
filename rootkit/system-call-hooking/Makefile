@@ -12,7 +12,6 @@ clean:
     make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 
 test:
-    dmesg -C
     insmod $N.ko
     rmmod $N
-    dmesg -T
+    dmesg -T | tail -n 5
