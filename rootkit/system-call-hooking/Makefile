@@ -1,0 +1,18 @@
+CONFIG_MODULE_SIG=n
+CONFIG_MODULE_SIG_ALL=n
+
+N=system_call_hooking
+
+obj-m += $N.o
+
+all:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+test:
+    dmesg -C
+    insmod $N.ko
+    rmmod $N
+    dmesg -T
