@@ -52,6 +52,8 @@ void reverse(char *data_tmp) {
         insert_word(word);
         data[data_tmp_l] = '\0';
         first = 1;
+        printk("🍺 %s", word);
+        printk("⚽️ %s", data);
       }
     }
     else {
@@ -74,6 +76,7 @@ ssize_t f_read(struct file *f, char *buff, size_t len, loff_t *off) {
 }
 
 ssize_t f_write(struct file *f, const char *buff, size_t len, loff_t *off) {
+  // copy_from_user doesn't append \0
   char data_tmp[DEVICE_SIZE - 1] = {0};
 
   if(copy_from_user(data_tmp, buff, len) != 0) {
