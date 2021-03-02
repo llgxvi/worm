@@ -81,6 +81,7 @@ ssize_t f_write(struct file *f, const char *buff, size_t len, loff_t *off) {
     return -1;
   }
 
+  printk("🥃 %s %s", data_tmp, strlen(data_tmp))
   reverse(data_tmp);
 
   return 0;
