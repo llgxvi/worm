@@ -10,6 +10,14 @@ int getdents64(
   unsigned int count
 )
 
+struct linux_dirent64 {
+  ino64_t        d_ino;
+  off64_t        d_off;
+  unsigned short d_reclen;
+  unsigned char  d_type;
+  char           d_name[];
+};
+
 struct linux_dirent {
   unsigned long  d_ino;
   unsigned long  d_off;
@@ -17,6 +25,5 @@ struct linux_dirent {
   char           d_name[];
   char           pad;
   char           d_type;
-}
-
+};
 ```
