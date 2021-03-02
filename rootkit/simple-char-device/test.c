@@ -12,42 +12,38 @@
 static char buf[SIZE];
 
 int main(int argc, char *argv[]) {
-  int fd = open("/dev/" DEVICE, O_RDWR);
-  int len = strlen(argv[1]);
+  char mode[1];  // r, w
+  char str[SIZE];
+  int len;
+  int fd;
 
-  if(len > SIZE) {
-    printf("⚠️ String too long\n");
-    exit(0);
+  mode = argv[1];
+  if(mode == 'w') {
+    str = argv[2];
+    len = strlen(str);
   }
 
+  fd = open("/dev/"DEVICE, O_RDWR);
   if(fd == -1) {
-    perror("/dev/" DEVICE);
+    perror("⚠️ device");
     exit(1);
   }
 
-  printf("fd: %d\n", fd);
-
-  if(read(fd, buf, len) == -1)
-    perror("read()");
-  else
-    printf("Before: %s\n", buf);
-
-  if(write(fd, argv[1], len) == -1)
-    perror("write()");
-  else
-    printf("Wrote: %s\n", argv[1]);
-
-  memset(buf, 0, sizeof(buf));
-
-  if(read(fd, buf, len) == -1)
-    perror("read()");
-  else
-    printf("After: %s\n", buf);
-
-  if((close(fd)) == -1) {
-    perror("close()");
-    exit(1);
+  if(mode == 'w') {
+    if(write(fd, str, len) == 0)
+      printf("write to device ✅");
+    else
+      perror("⚠️ write");
   }
 
+  if(mode == 'r') {
+    if(read(fd, str) != -1)
+      printf("read from device ✅");
+      printf("\n%s\n", str);
+    else
+      perror("⚠️ read");
+  }
+
+  close(fd);
   exit(0);
 }
