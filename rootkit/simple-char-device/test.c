@@ -11,14 +11,14 @@
 
 int main(int argc, char *argv[]) {
   char buf[SIZE];
-  char mode[1];  // r, w
+  char mode;  // r, w
   char str[SIZE];
   int len;
   int fd;
 
-  mode = argv[1];
+  mode = argv[1][0];
   if(mode == 'w') {
-    str = argv[2];
+    memcpy(str, argv[2]);
     len = strlen(str);
   }
 
@@ -36,9 +36,10 @@ int main(int argc, char *argv[]) {
   }
 
   if(mode == 'r') {
-    if(read(fd, buf) != -1)
+    if(read(fd, buf, strlen(buf)) != -1) {
       printf("read from device ✅");
       printf("\n%s\n", str);
+    }
     else
       perror("⚠️ read");
   }
