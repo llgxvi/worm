@@ -15,16 +15,16 @@ int first = 1;
 
 //
 void insert_word(char *word) {
-  int word_len = strlen(word);
-  int data_len = strlen(data);
+  int word_l = strlen(word);
+  int data_l = strlen(data);
   char word_tmp[DEVICE_SIZE - 1];
 
-  int i = word_len - 1;
+  int i = word_l - 1;
   int j = 0;
   for(; i >= 0; i--, j++)
     word_tmp[j] = word[i];
 
-  word_tmp[word_len] = '\0';
+  word_tmp[word_l] = '\0';
 
   if(first) {
     first = 0;
@@ -32,8 +32,8 @@ void insert_word(char *word) {
     strcpy(data, word_tmp);
   }
   else {
-    data[data_len] = ' ';
-    data[data_len + 1] = '\0';
+    data[data_l] = ' ';
+    data[data_l + 1] = '\0';
     strcat(data, word_tmp);
   }
 }
@@ -58,8 +58,8 @@ void reverse(char *data_tmp) {
       word[j] = '\0';
       insert_word(word);
       j = -1;
+      printk("🍺 %s", word);
     }
-    printk("🍺 %s", word);
   }
 }
 
