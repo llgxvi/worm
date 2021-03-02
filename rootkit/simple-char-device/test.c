@@ -30,15 +30,15 @@ int main(int argc, char *argv[]) {
 
   if(mode == 'w') {
     if(write(fd, str, len) == 0)
-      printf("write to device ✅");
+      printf("write to device ✅\n");
     else
       perror("⚠️ write");
   }
 
   if(mode == 'r') {
     if(read(fd, buf, strlen(buf)) != -1) {
-      printf("read from device ✅");
-      printf("\n%s\n", str);
+      printf("read from device ✅\n");
+      printf("%s\n", buf);
     }
     else
       perror("⚠️ read");
