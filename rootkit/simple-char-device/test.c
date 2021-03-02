@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
   mode = argv[1][0];
   if(mode == 'w') {
-    memcpy(str, argv[2]);
+    strcpy(str, argv[2]);
     len = strlen(str);
   }
 
