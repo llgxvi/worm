@@ -12,3 +12,5 @@ it doesn't append `\0`,
 if the last copy is longer,
 extra characters will appear at the end
 https://stackoverflow.com/questions/59000547/clear-buffer-user-data-before-doing-another-write-on-a-linux-device-driver
+
+simple_char_device: module verification failed: signature and/or required key missing - tainting kernel
