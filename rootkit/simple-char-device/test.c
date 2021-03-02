@@ -9,9 +9,8 @@
 #define DEVICE "simple_char_device"
 #define SIZE 511
 
-static char buf[SIZE];
-
 int main(int argc, char *argv[]) {
+  char buf[SIZE];
   char mode[1];  // r, w
   char str[SIZE];
   int len;
@@ -37,7 +36,7 @@ int main(int argc, char *argv[]) {
   }
 
   if(mode == 'r') {
-    if(read(fd, str) != -1)
+    if(read(fd, buf) != -1)
       printf("read from device ✅");
       printf("\n%s\n", str);
     else
