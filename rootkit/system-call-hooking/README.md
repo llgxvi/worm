@@ -34,3 +34,6 @@ grep sys_call_table /boot/System.map-$(uname -r)
 ```
 
 https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
+
+### ~
+https://stackoverflow.com/questions/791328/how-does-the-bitwise-complement-operator-tilde-work
