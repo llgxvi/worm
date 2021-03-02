@@ -54,9 +54,10 @@ int set_page_rw(uintptr_t addr, int f) {
   unsigned int level;
   pte_t *pte = lookup_address(addr, &level);
 
-  if(f == 1)
+  if(f == 1) {
     if(pte->pte &~ _PAGE_RW)
       pte->pte |= _PAGE_RW;
+  }
   else
     pte->pte = pte->pte &~_PAGE_RW;
 
