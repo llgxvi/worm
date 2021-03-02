@@ -22,7 +22,7 @@ with the static constant FILE_NAME,
 if it matches recalculating
 what is being returned
 
-d_reclen: Size of this dirent
+d_reclen: Size of this dirent (directory entry struct)
 d_name:   Filename (null-terminated)
 
 nob: number of bytes
