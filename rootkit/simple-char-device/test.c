@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   else
     printf("Wrote: %s\n", argv[1]);
 
-  buf = memset(buf, 0, strlen(buf) * sizeof(buf));
+  memset(buf, 0, strlen(buf) * sizeof(buf));
 
   if(read(fd, buf, len) == -1)
     perror("read()");
