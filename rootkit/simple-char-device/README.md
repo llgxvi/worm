@@ -5,7 +5,7 @@ https://www.kernel.org/doc/htmldocs/kernel-api/API---copy-from-user.html
 
 `copy_from_user()` doesn't append `\0`
 
-`printk()` must have `\0` for guaranteed showing with `dmesg`
+`printk()` must have `\n` for guaranteed showing with `dmesg`
 
 clear buffer in user space before `copy_to_user()` again,
 it doesn't append `\0`,
