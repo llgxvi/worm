@@ -25,8 +25,9 @@ what is being returned
 d_reclen: Size of this dirent (directory entry struct)
 d_name:   Filename (null-terminated)
 
-nob: number of bytes
-cur: current
+nob:  number of bytes
+dirp: directory entry struck pointer
+cur:  tmp dirp
 */
   int nob = getdents64_original(fd, dirp, count);
   struct linux_dirent64 *cur = dirp;
