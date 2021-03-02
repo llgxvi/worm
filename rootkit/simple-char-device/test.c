@@ -10,7 +10,7 @@
 #define SIZE 511
 
 int main(int argc, char *argv[]) {
-  char buf[SIZE];
+  char buf[SIZE] = {0};
   char mode;  // r, w
   char str[SIZE];
   int len;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   if(mode == 'r') {
     if(read(fd, buf, strlen(buf)) != -1) {
       printf("read from device ✅\n");
-      printf("%s\n", buf);
+      printf("🍺 %s\n", buf);
     }
     else
       perror("⚠️ read");
