@@ -50,17 +50,13 @@ void reverse(char *data_tmp) {
       if(i == 0) {
         word[j + 1] = '\0';
         insert_word(word);
-        data[data_tmp_l] = '\0';
         first = 1;
-        printk("🥤 %s\n", word);
-        printk("⚽️ %s\n", data);
       }
     }
     else {
       word[j] = '\0';
       insert_word(word);
       j = -1;
-      printk("🍺 %s\n", word);
     }
   }
 }
@@ -71,8 +67,6 @@ ssize_t f_read(struct file *f, char *buff, size_t len, loff_t *off) {
     printk("⚠️ copy_to_user\n");
     return -1;
   }
-
-  printk("🌐 %s\n", buff);
 
   return strlen(data);
 }
@@ -86,7 +80,6 @@ ssize_t f_write(struct file *f, const char *buff, size_t len, loff_t *off) {
     return -1;
   }
 
-  printk("🥃 %s %ld\n", data_tmp, strlen(data_tmp));
   reverse(data_tmp);
 
   return 0;
