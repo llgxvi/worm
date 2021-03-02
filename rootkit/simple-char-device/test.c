@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     printf("Wrote: %s\n", argv[1]);
 
   if(read(fd, buf, len) == -1)
-    perror("read()"); 
-  else    
+    perror("read()");
+  else
     printf("After: %s\n", buf);
 
   if((close(fd)) == -1) {
