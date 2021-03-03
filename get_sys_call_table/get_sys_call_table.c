@@ -2,9 +2,9 @@
 
 // sct: sys_call_table
 uintptr_t **get_sct(void) {
-  // ksys_close: kernel version > 5.3
+  // ksys_close:  kernel version > 5.3
   // PAGE_OFFSET: kernel memory starting point
-  // ULLONG_MAX: unsigned long long int max value
+  // ULLONG_MAX:  unsigned long long int max value
 
   uintptr_t **sct;
   uintptr_t offset = PAGE_OFFSET;
@@ -24,8 +24,10 @@ uintptr_t **get_sct(void) {
 }
 
 int f_init(void) {
-  get_sct();
-  return 0;
+  if(get_sct() == NULL)
+    return -1;
+  else
+    return 0;
 }
 
 void f_exit(void) {
