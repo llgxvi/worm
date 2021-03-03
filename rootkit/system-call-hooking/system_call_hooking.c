@@ -6,6 +6,7 @@
 #include <linux/semaphore.h>
 #include <linux/dirent.h>
 #include <asm/cacheflush.h>
+#include <stdint.h>
 
 #define FILE_NAME "test.txt"
 
