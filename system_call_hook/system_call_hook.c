@@ -88,7 +88,8 @@ void get_sct(void) {
 }
 
 int f_init(void) {
-  get_sct();
+  // get_sct();
+  sct = (uintptr_t)0xffffffff820013a0;
 
   if(sct == NULL) {
     printk("⚠️ Failed to get sys_call_table addr\n");
