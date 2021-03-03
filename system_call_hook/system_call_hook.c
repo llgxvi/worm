@@ -34,6 +34,8 @@ next: next    dirp
   while(i < nob) {
     int size = curr->d_reclen;
 
+    printk("🥃\n");
+
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       printk("🍺 Found the file\n");
       char *next = (char*)curr + size;
