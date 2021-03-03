@@ -33,8 +33,9 @@ grep sys_call_table /boot/System.map-$(uname -r)
 grep sys_call_table /proc/kallsyms
 ```
 
-https://stackoverflow.com/questions/28936630/what-is-the-need-of-having-both-system-map-file-and-proc-kallsyms
-https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
+- https://security.stackexchange.com/questions/210897/why-is-there-a-need-to-modify-system-call-tables-in-linux
+- https://stackoverflow.com/questions/28936630/what-is-the-need-of-having-both-system-map-file-and-proc-kallsyms
+- https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
 
 ### One's Complement Operator
 https://stackoverflow.com/questions/791328/how-does-the-bitwise-complement-operator-tilde-work
