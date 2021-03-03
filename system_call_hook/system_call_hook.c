@@ -10,7 +10,8 @@
 
 #define FILE_NAME "test.txt"
 
-uint64_t **sct;
+// uint64_t **sct;
+void **sct;
 
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
@@ -89,7 +90,7 @@ void get_sct(void) {
 
 int f_init(void) {
   // get_sct();
-  sct = (uintptr_t)0xffffffff820013a0;
+  sct = (void*)0xffffffff820013a0;
 
   if(sct == NULL) {
     printk("⚠️ Failed to get sys_call_table addr\n");
