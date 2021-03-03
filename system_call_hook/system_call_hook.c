@@ -1,12 +1,5 @@
 #include <linux/syscalls.h>
-#include <linux/module.h>
-#include <linux/init.h>
-#include <linux/kernel.h>
-#include <linux/moduleparam.h>
-#include <linux/unistd.h>
-#include <linux/semaphore.h>
 #include <linux/dirent.h>
-#include <asm/cacheflush.h>
 
 #define FILE_NAME "test.txt"
 
