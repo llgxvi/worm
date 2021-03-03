@@ -1,7 +1,7 @@
 #include <linux/syscalls.h>
 
-uintptr_t **get_table(void) {
-  // sct: sys_call_table
+// sct: sys_call_table
+uintptr_t **get_sct(void) {
   // ksys_close: kernel version > 5.3
   // PAGE_OFFSET: kernel memory starting point
   // ULLONG_MAX: unsigned long long int max value
@@ -24,7 +24,7 @@ uintptr_t **get_table(void) {
 }
 
 int f_init(void) {
-  get_table();
+  get_sct();
   return 0;
 }
 
