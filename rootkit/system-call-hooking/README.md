@@ -33,6 +33,7 @@ grep sys_call_table /boot/System.map-$(uname -r)
 grep sys_call_table /proc/kallsyms
 ```
 
+https://stackoverflow.com/questions/28936630/what-is-the-need-of-having-both-system-map-file-and-proc-kallsyms
 https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
 
 ### One's Complement Operator
