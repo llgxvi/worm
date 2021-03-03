@@ -22,8 +22,8 @@ uint64_t **get_table(void) {
 }
 
 int f_init(void) {
-  int a = get_table();
-  printk("🍺 %lu\n", (void*)a);
+  void **a = get_table();
+  printk("🍺 %lu\n", (uintptr_t)a);
   return 0;
 }
 
