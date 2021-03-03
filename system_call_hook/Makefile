@@ -1,6 +1,3 @@
-CONFIG_MODULE_SIG=n
-CONFIG_MODULE_SIG_ALL=n
-
 N=system_call_hook
 
 obj-m += $N.o
