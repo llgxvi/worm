@@ -1,3 +1,6 @@
+#include <linux/syscalls.h>
+#include <linux/fcntl.h>
+#include <asm/uaccess.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/init.h>
@@ -10,8 +13,8 @@ uint64_t **get_table(void) {
   while(offset < ULLONG_MAX) {
     sct = (uint64_t **)offset;
 
-    if(sct[__NR_close] == (uint64_t *) sys_close) {
-      printk("🍺 sys_call_table found at address: 0x%p\n", sys_call_table);
+    if(sct[__NR_close] == (uint64_t *) ksys_close) {
+      printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
     }
 
@@ -22,7 +25,7 @@ uint64_t **get_table(void) {
 }
 
 int f_init(void) {
-  void **a = get_table();
+  uint64_t **a = get_table();
   printk("🍺 %lu\n", (uintptr_t)a);
   return 0;
 }
