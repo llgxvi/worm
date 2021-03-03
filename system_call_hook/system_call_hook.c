@@ -70,8 +70,10 @@ int set_page_rw(unsigned long addr, int f) {
       pte->pte |= _PAGE_RW;
     printk("⭐️\n");
   }
-  else
-    pte->pte = pte->pte &~_PAGE_RW;
+  else {
+    pte->pte = pte->pte &~ _PAGE_RW;
+    printk("🥤\n");
+  }
 
   return 0;
 }
