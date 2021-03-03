@@ -30,6 +30,7 @@ struct linux_dirent {
 ### sys_call_table
 ```
 grep sys_call_table /boot/System.map-$(uname -r)
+grep sys_call_table /proc/kallsyms
 ```
 
 https://stackoverflow.com/questions/31396090/kernel-sys-call-table-address-does-not-match-address-specified-in-system-map
