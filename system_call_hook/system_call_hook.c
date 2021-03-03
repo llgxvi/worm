@@ -20,6 +20,7 @@ run the actual system call,
 loop through the structs returned,
 compare filename with constant FILE_NAME,
 if matches recalculate what is being returned (nob, dirp)
+
 d_reclen: Size of this dirent (directory entry struct)
 d_name:   Filename (null-terminated)
 nob:  number of bytes (of all dirent structs)
