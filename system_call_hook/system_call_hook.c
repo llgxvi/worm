@@ -78,13 +78,13 @@ uint64_t **get_table(void) {
     offset += sizeof(void*);
   }
 
-  return -1;
+  return NULL;
 }
 
 int f_init(void) {
   uint64_t **a = get_table();
 
-  if(a == -1) {
+  if(a == NULL) {
     printk("⚠️ Failed to get sys_call_table addr\n");
     return -1;
   }
