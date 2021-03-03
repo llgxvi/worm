@@ -10,7 +10,7 @@
 
 #define FILE_NAME "test.txt"
 
-void **sys_call_table;
+uint64_t **sys_call_table;
 
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
@@ -92,7 +92,7 @@ int f_init(void) {
     return -1;
   }
 
-  sys_call_table = (void*)(uintptr_t)a;
+  sys_call_table = a;
 
   set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
