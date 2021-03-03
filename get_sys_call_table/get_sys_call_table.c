@@ -1,6 +1,6 @@
 #include <linux/syscalls.h>
 
-uint64_t **get_table() {
+uint64_t **get_table(void) {
   // sct: sys_call_table
   // ksys_close: kernel version > 5.3
   // PAGE_OFFSET: kernel memory starting point
@@ -24,6 +24,7 @@ uint64_t **get_table() {
 }
 
 int f_init(void) {
+  get_table();
   return 0;
 }
 
