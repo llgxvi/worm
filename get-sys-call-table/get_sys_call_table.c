@@ -1,10 +1,4 @@
-#include <linux/syscalls.h>
-#include <linux/fcntl.h>
-#include <asm/uaccess.h>
-#include <linux/kernel.h>
-#include <linux/module.h>
-#include <linux/init.h>
-#include <linux/unistd.h>
+#include <linux/syscalls.h> // ksys_close
 
 uint64_t **get_table(void) {
   uint64_t offset = PAGE_OFFSET;
