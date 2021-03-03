@@ -66,7 +66,7 @@ int set_page_rw(unsigned long addr, int f) {
   return 0;
 }
 
-void get_table(void) {
+void get_sct(void) {
   uint64_t offset = PAGE_OFFSET;
 
   while(offset < ULLONG_MAX) {
@@ -74,6 +74,7 @@ void get_table(void) {
 
     if(sct[__NR_close] == (uint64_t*)ksys_close) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
+      return;
     }
 
     offset += sizeof(void*);
@@ -81,7 +82,7 @@ void get_table(void) {
 }
 
 int f_init(void) {
-  get_table();
+  get_sct();
 
   if(sct == NULL) {
     printk("⚠️ Failed to get sys_call_table addr\n");
