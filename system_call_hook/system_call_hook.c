@@ -1,3 +1,4 @@
+#include <linux/syscalls.h>
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/kernel.h>
@@ -77,15 +78,15 @@ uint64_t **get_table(void) {
     offset += sizeof(void*);
   }
 
-  return NULL;
+  return -1;
 }
 
 int f_init(void) {
   uint64_t **a = get_table();
 
-  if(a == NULL) {
+  if(a == -1) {
     printk("⚠️ Failed to get sys_call_table addr\n");
-    return NULL;
+    return -1;
   }
 
   sys_call_table = (void*)a;
