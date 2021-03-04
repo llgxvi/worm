@@ -3,11 +3,13 @@
 import sys
 import socket
 from cipher import get_cipher
+from socket import SOL_SOCKET, SO_REUSEADDR
 from common import pr, cls, _input, Send, Receive
 
 # server socket
+# SOL: SOcket Level
 server = socket.socket()
-server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 server.bind(('', 1000))
 server.listen()
 server.settimeout(10)
