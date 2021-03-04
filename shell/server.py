@@ -2,6 +2,7 @@
 
 import sys
 import socket
+import keyboard 
 from cipher import get_cipher
 from common import pr, cls, _input, Send, Receive
 
@@ -18,6 +19,13 @@ clients = []
 active = False
 
 prompt = ''
+inputt = ''
+
+keyboard.add_hotkey('tab', tab)
+
+def tab():
+  print('\r%s' % inputt)
+  inputt = keyboard.record(until='tab')
 
 def close(sock, client):
   socks.remove(sock)
@@ -94,6 +102,7 @@ while True:
         pr('⚠️', e)
       pr(prompt, end='')
 
+    inputt = keyboard.record(until='tab')
     nc = _input()
 
     if nc == '-1':
