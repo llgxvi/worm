@@ -42,6 +42,8 @@ def dlhttp(sock, url):
 def run(s):
   global cwd
   if s.startswith('cd'):
+    if s == 'cd':
+      s += ' ' + os.path.expanduser('~')
     try:
       os.chdir(s[3:])
       cwd = os.getcwd()
