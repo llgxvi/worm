@@ -44,6 +44,6 @@ p.communicate()
 ```
 
 - https://docs.python.org/3/howto/sockets.html
+- https://stackoverflow.com/questions/39815633/i-have-get-really-confused-in-ip-types-with-sockets-empty-string-local-host
 - https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 - https://stackoverflow.com/questions/21406887/subprocess-changing-directory
-- https://stackoverflow.com/questions/39815633/i-have-get-really-confused-in-ip-types-with-sockets-empty-string-local-host
