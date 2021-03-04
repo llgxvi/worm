@@ -35,6 +35,9 @@ def Send(sock, cipher, data, fn=None):
     sock.sendall(data)
   except socket.error as e:
     pr('⚠️ sendall:', e)
+    return -1
+
+  return 0
 
 def Receive(sock, decipher):
   data = b''
