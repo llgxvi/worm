@@ -1,14 +1,3 @@
-### python
-People choose python for its simplicity (like implicit typing);
-this should also be the guiding principle in `if` condition - 
-unless necessary, make it as short as possible.
-
-Some function will trim its string argument,
-problem is we'll never remember which one.
-Intuition doesn't always work (I thought this function should do it for me 🤷🏿).
-It's a good consideration until it becomes just one more memory load.
-Just trim all string (input) first.
-
 ```
 ❌ None == ''
 ❌ 'xxx' == True
@@ -42,21 +31,12 @@ v > 0:    raise socket.timeout error after v seconds
 v = None: blocking
 ```
 
-sendall()
-⚠️ If somehow (unlikely) there are consecutive sendall (bad design) happening,
-time interval (time.sleep) may be necessary.
-
 ### python crypto
 https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 
 `pip3 install pycrypto`
 
-⚠️ If one side regenerates cipher pair, the other side needs too.
-
-### subprocess
-https://docs.python.org/3/library/subprocess.html#popen-constructor
-
-Subprocess change directory
+### subprocessocess
 https://stackoverflow.com/questions/21406887/subprocess-changing-directory
 
 ```
