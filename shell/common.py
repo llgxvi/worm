@@ -67,6 +67,9 @@ def Receive(sock, decipher):
 
   pr('⬇️⬇️ recv:', data[-30:])
 
+  if not data:
+    return b''
+
   if data and not data.endswith(EOD):
     pr('⚠️ Data not end with EOD')
     return b''
@@ -77,7 +80,7 @@ def Receive(sock, decipher):
     d = d[:-len(EOF)]
     d = d.split(EFN, 1)
     d[0] = d[0].decode()
-  elif d:
+  else:
     d = d.decode()
 
   return d
