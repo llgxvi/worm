@@ -2,13 +2,13 @@
 
 unsigned long * get_sct(void) {
   unsigned long *sct;
-  unsigned long i;
+  unsigned long i, j;
 
-  i = (unsigned long)ksys_close;
+  i = j = (unsigned long)ksys_close;
   for(; i < ULONG_MAX; i += sizeof(void*)) {
     sct = (unsigned long *)i;
 
-    if(sct[__NR_close] == i) {
+    if(sct[__NR_close] == j) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
     }
