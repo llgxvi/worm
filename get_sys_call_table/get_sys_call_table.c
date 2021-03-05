@@ -12,7 +12,7 @@ uintptr_t **get_sct(void) {
   while(offset < ULLONG_MAX) {
     sct = (uintptr_t**)offset;
 
-    if(sct[__NR_close] == (uintptr_t*)ksys_close) {
+    if(sct[__NR_close] == (uintptr_t)ksys_close) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
     }
@@ -26,8 +26,8 @@ uintptr_t **get_sct(void) {
 int f_init(void) {
   if(get_sct() == NULL)
     return -1;
-  else
-    return 0;
+
+  return 0;
 }
 
 void f_exit(void) {
