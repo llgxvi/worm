@@ -6,13 +6,13 @@ uintptr_t **get_sct(void) {
   // PAGE_OFFSET: kernel memory starting point
   // ULLONG_MAX:  unsigned long long int max value
 
-  void **sct;
+  uintptr_t **sct;
   uintptr_t offset = PAGE_OFFSET;
 
   while(offset < ULLONG_MAX) {
     sct = (uintptr_t**)offset;
 
-    if(sct[__NR_close] == ksys_close) {
+    if(sct[__NR_close] == (uintptr_t*)ksys_close) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
     }
