@@ -7,7 +7,7 @@ uintptr_t **get_sct(void) {
   // ULLONG_MAX:  unsigned long long int max value
 
   uintptr_t **sct;
-  uintptr_t offset = PAGE_OFFSET;
+  uintptr_t offset = (uintptr_t)ksys_close;
 
   while(offset < ULLONG_MAX) {
     sct = (uintptr_t**)offset;
