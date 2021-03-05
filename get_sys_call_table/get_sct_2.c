@@ -1,14 +1,14 @@
 #include <linux/syscalls.h>
 
-unsigned long * get_sct(void) {
+unsigned long *get_sct(void) {
   unsigned long *sct;
-  unsigned long i, j;
+  unsigned long i;
 
-  i = j = (unsigned long)ksys_close;
+  i = (unsigned long)ksys_close;
   for(; i < ULONG_MAX; i += sizeof(void*)) {
     sct = (unsigned long *)i;
 
-    if(sct[__NR_close] == j) {
+    if(sct[__NR_close] == ksys_close) {
       printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
     }
