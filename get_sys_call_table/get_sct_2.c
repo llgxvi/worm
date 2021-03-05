@@ -8,8 +8,10 @@ unsigned long * get_sct(void) {
   for(; i < ULONG_MAX; i += sizeof(void*)) {
     sct = (unsigned long *)i;
 
-    if(sct[__NR_close] == i)
+    if(sct[__NR_close] == i) {
+      printk("🍺 sys_call_table found at address: 0x%p\n", sct);
       return sct;
+    }
   }
 
   return NULL;
